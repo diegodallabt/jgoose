@@ -96,7 +96,6 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import static javax.swing.text.StyleConstants.ALIGN_CENTER;
 import org.apache.log4j.Logger;
-import sun.print.PSPrinterJob;
 
 /**
  *

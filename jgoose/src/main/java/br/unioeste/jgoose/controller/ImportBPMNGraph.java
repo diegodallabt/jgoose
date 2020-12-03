@@ -170,10 +170,13 @@ public class ImportBPMNGraph extends AbstractAction {
         // 1) get elements of this edge
         mxCell source = (mxCell) cell.getSource();
         mxCell target = (mxCell) cell.getTarget();
-        
-        System.out.println("source id " + source.getId() + " target id: " + target.getId());
+   
+        System.out.println("source id " + source.getId());
+        System.out.println(" target id: " + target.getId());
         // 2) get mapped elements to create a link between then
+        
         Object mappedSource = mapped.get(source);
+        
         if (mappedSource == null) {
             LOG.error("mapped source dont founded.");
         }

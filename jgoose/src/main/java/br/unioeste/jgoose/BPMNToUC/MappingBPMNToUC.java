@@ -107,7 +107,11 @@ public class MappingBPMNToUC {
                 actor.setBpmnElementoCode(bpmnParticipant.getCode());
                 actor.setName(bpmnParticipant.getLabel());
 
-                UCActor father = getActor(bpmnParticipant.getParent()); // Get father actor                 
+                System.out.println(bpmnParticipant.getCode());
+                System.out.println(bpmnParticipant.getLabel());
+                System.out.println(bpmnParticipant.getParent());
+                
+                UCActor father = getActor("100"+bpmnParticipant.getParent()); // Get father actor                 
                 actor.setFather(father); //Set father actor            
                 father.addChild(actor);
 
