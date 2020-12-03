@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns="http://www.daa.com.au/~james/dia-shape-ns" xmlns:svg="http://www.w3.org/2000/svg">
+  <name>Lane</name>
+  <icon>lane.png</icon>
+  <connections>
+    <point x="6" y="0"/>
+    <point x="12" y="6"/>
+    <point x="6" y="12"/>
+    <point x="0" y="6"/>
+    <point x="9" y="3"/>
+    <point x="9" y="9"/>
+    <point x="3" y="9"/>
+    <point x="3" y="3"/>
+  </connections>
+  <aspectratio type="fixed"/>
+  <svg:svg>
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="2048" height="2048" preserveAspectRatio="xMidYMid meet" viewBox="0 0 2048 2048" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"><path d="M96 402v1280h1856V402zm1756 97.7v1091.542H480V499.702l1372-.003zM192 499.7h192v1091.541H192z" fill="black"/><rect x="0" y="0" width="2048" height="2048" fill="rgba(0, 0, 0, 0)" /></svg>	
+  </svg:svg>  
+</shape>
+
