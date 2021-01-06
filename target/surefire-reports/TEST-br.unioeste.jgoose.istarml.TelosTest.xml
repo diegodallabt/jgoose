@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="55" failures="0" name="br.unioeste.jgoose.istarml.TelosTest" time="0.202" errors="0" skipped="5">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="java.vm.version" value="15.0.1+9-18"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-15.0.1\bin"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\Users\PC\Desktop\JGOOSE\jgoose"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="path.separator" value=";"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="BR"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="C:\Users\PC\Desktop\JGOOSE\jgoose"/>
+    <property name="java.vm.compressedOopsMode" value="32-bit"/>
+    <property name="java.runtime.version" value="15.0.1+9-18"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\PC\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 10"/>
+    <property name="maven.ext.class.path" value="C:\Program Files\NetBeans-12.1\netbeans\java\maven-nblib\netbeans-eventspy.jar"/>
+    <property name="classworlds.conf" value="C:\Program Files\NetBeans-12.1\netbeans\java\maven\bin\..\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk-15.0.1\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\PC\AppData\Local\Microsoft\WindowsApps;C:\Users\PC\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\PC\AppData\Roaming\npm;C:\flutter\flutter\bin;;."/>
+    <property name="maven.conf" value="C:\Program Files\NetBeans-12.1\netbeans\java\maven\bin\../conf"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="java.class.version" value="59.0"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="10.0"/>
+    <property name="library.jansi.path" value="C:\Program Files\NetBeans-12.1\netbeans\java\maven\bin\..\lib\jansi-native"/>
+    <property name="user.home" value="C:\Users\PC"/>
+    <property name="user.timezone" value="America/Sao_Paulo"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.specification.version" value="15"/>
+    <property name="user.name" value="PC"/>
+    <property name="java.class.path" value="C:\Program Files\NetBeans-12.1\netbeans\java\maven\bin\..\boot\plexus-classworlds-2.6.0.jar"/>
+    <property name="java.vm.specification.version" value="15"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=C:\Program Files\NetBeans-12.1\netbeans\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 clean install"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk-15.0.1"/>
+    <property name="user.language" value="pt"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.version" value="15.0.1"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Program Files\NetBeans-12.1\netbeans\java\maven\bin\.."/>
+    <property name="file.separator" value="\"/>
+    <property name="java.version.date" value="2020-10-20"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countPosition[0]" time="0.025"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countCovers[0]" time="0"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countAgents[0]" time="0.015"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countOccupies[0]" time="0.037"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countINS[0]" time="0.004"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countAllElements[0]" time="0.005">
+    <skipped message="Not implemented yet"/>
+  </testcase>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countISA[0]" time="0.003"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countIsPartOf[0]" time="0.005"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countRoles[0]" time="0.006"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countPlays[0]" time="0.003"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countActors[0]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countPosition[1]" time="0.015"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countCovers[1]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countAgents[1]" time="0.005"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countOccupies[1]" time="0.007"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countINS[1]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countAllElements[1]" time="0.002">
+    <skipped message="Not implemented yet"/>
+  </testcase>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countISA[1]" time="0.003"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countIsPartOf[1]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countRoles[1]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countPlays[1]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countActors[1]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countPosition[2]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countCovers[2]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countAgents[2]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countOccupies[2]" time="0.003"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countINS[2]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countAllElements[2]" time="0.002">
+    <skipped message="Not implemented yet"/>
+  </testcase>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countISA[2]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countIsPartOf[2]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countRoles[2]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countPlays[2]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countActors[2]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countPosition[3]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countCovers[3]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countAgents[3]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countOccupies[3]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countINS[3]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countAllElements[3]" time="0.002">
+    <skipped message="Not implemented yet"/>
+  </testcase>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countISA[3]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countIsPartOf[3]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countRoles[3]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countPlays[3]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countActors[3]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countPosition[4]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countCovers[4]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countAgents[4]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countOccupies[4]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countINS[4]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countAllElements[4]" time="0.002">
+    <skipped message="Not implemented yet"/>
+  </testcase>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countISA[4]" time="0.002"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countIsPartOf[4]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countRoles[4]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countPlays[4]" time="0.001"/>
+  <testcase classname="br.unioeste.jgoose.istarml.TelosTest" name="countActors[4]" time="0.001"/>
+</testsuite>

@@ -288,25 +288,20 @@ public class CustomGraphBPMN extends mxGraph {
 
     @Override
     public void cellLabelChanged(Object cellChanged, Object newValue, boolean autoSize) {
-        //System.out.println("cell label changed");
+        mxCell cell = (mxCell) cellChanged;
+        Object v = cell.getValue();
         if (cellChanged instanceof mxCell && newValue != null) {
-            mxCell cell = (mxCell) cellChanged;
-            Object v = cell.getValue();
-            
             if (v instanceof Element) {
                 Element value = (Element) v;
-                
                 String label = newValue.toString();
                 value.setAttribute("label", label);
                 //se for um grupo, quando ele estiver Collapse e for editado, tbm editar o shape atras...
-                if (cell.getChildCount() > 0) {
-                    super.cellLabelChanged(cell.getChildAt(0), newValue, autoSize);
+                if (cell.getChildCount() >= 1) {
+                    super.cellLabelChanged(cellChanged, newValue, autoSize);
                 }
-                newValue = v;
-             
             }
         }
-        super.cellLabelChanged(cellChanged, newValue, autoSize);
+        super.cellLabelChanged(cellChanged, v, autoSize);
     }
 
     @Override

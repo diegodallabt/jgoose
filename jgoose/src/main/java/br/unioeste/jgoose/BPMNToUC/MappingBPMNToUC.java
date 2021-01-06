@@ -88,7 +88,9 @@ public class MappingBPMNToUC {
 
         // Passo 1 : DRD1 - Cada Pool originará um ator
         for (BPMNParticipant bpmnParticipant : BPMNController.getTokensBPMN().getParticipants()) {
-
+            
+            System.out.println("Poool:"+ bpmnParticipant.getLabel());
+            System.out.println(":"+bpmnParticipant.getChildren());
             if (bpmnParticipant.getParticipantType().equals(BPMNParticipant.POOL)) {
                 UCActor actor = new UCActor();
                 actor.setCode("100" + bpmnParticipant.getCode());
