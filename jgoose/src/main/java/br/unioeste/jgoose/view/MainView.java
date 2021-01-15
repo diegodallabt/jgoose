@@ -24,14 +24,12 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
-import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -54,15 +52,15 @@ public class MainView extends javax.swing.JFrame {
     private JFrame E4JTraceability = null;
     private BasicBPMNEditor editor;
     
+    private Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
+    
     /**
      * Creates new form MainView
      */
     public MainView() {
         initComponents();                        
         setLocationRelativeTo(null);
-        Image Icone;
-        Icone = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
-        setIconImage(Icone);
+        setIconImage(iconJGOOSE);
         //Set the theme of swing equals to SO.
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -1043,6 +1041,8 @@ public class MainView extends javax.swing.JFrame {
          if (E4JiStar == null) {
             E4JiStar = new EditorJFrame(0);
             E4JiStar.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            E4JiStar.setIconImage(iconJGOOSE);
+            E4JiStar.setExtendedState(MAXIMIZED_BOTH);
             EditorWindowListener windowListener = new EditorWindowListener(this, E4JiStar);
             this.addWindowListener(windowListener);
             E4JiStar.addWindowListener(windowListener);
@@ -1088,6 +1088,8 @@ public class MainView extends javax.swing.JFrame {
         if (E4JUseCases == null) {
             E4JUseCases = new EditorJFrame(1);
             E4JUseCases.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            E4JUseCases.setIconImage(iconJGOOSE);
+            E4JUseCases.setExtendedState(MAXIMIZED_BOTH);
             EditorWindowListener windowListener = new EditorWindowListener(this, E4JUseCases);
             this.addWindowListener(windowListener);
             E4JUseCases.addWindowListener(windowListener);
@@ -1114,7 +1116,8 @@ public class MainView extends javax.swing.JFrame {
                 E4JBPMN = new EditorJFrame(2);
                 E4JBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 EditorWindowListener windowListener = new EditorWindowListener(this, E4JBPMN);
-                
+                E4JBPMN.setIconImage(iconJGOOSE);
+                E4JBPMN.setExtendedState(MAXIMIZED_BOTH);
                 this.addWindowListener(windowListener);
                 E4JBPMN.addWindowListener(windowListener);
                 this.addWindowListener(windowListener);
@@ -1160,6 +1163,8 @@ public class MainView extends javax.swing.JFrame {
                 E4JTraceability = new EditorJFrame(3);
                 E4JTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 EditorWindowListener windowListener = new EditorWindowListener(this, E4JTraceability);
+                E4JTraceability.setIconImage(iconJGOOSE);
+                E4JTraceability.setExtendedState(MAXIMIZED_BOTH);
                 /*
                 this.addWindowListener(windowListener);
                 E4JBPMN.addWindowListener(windowListener);
