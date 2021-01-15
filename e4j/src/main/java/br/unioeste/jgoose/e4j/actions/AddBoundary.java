@@ -17,7 +17,7 @@
 /*    */ {
 /* 18 */   final int PORT_DIAMETER = 80;
 /*    */   
-/* 20 */   final int PORT_RADIUS = 40;
+/* 20 */   final int PORT_RADIUS = 140;
 /*    */   
 /*    */   public void actionPerformed(ActionEvent e)
 /*    */   {
@@ -35,11 +35,11 @@
 /*    */         
 /*    */ 
 /*    */ 
-/* 38 */         mxGeometry geo = new mxGeometry(0.0D, 0.5D, 80.0D, 80.0D);
+/* 38 */         mxGeometry geo = new mxGeometry(0, 0.5, 80.0D, 80.0D);
 /*    */         
 /*    */ 
 /*    */ 
-/* 42 */         geo.setOffset(new mxPoint(-40.0D, -40.0D));
+/* 42 */         geo.setOffset(new mxPoint(-25.0D, -25.0D));
 /* 43 */         geo.setRelative(true);
 /*    */         
 /*    */ 
@@ -59,7 +59,7 @@
 /*    */         }
 /*    */         
 /*    */         
-/*    */ 
+/*    */         
 /* 63 */         mxCell port = new mxCell(cell.getAttribute("label"), geo, style);/*    */         
 /* 65 */         port.setVertex(true);
 /*    */         

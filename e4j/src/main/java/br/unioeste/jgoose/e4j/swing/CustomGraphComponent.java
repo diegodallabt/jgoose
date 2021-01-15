@@ -79,10 +79,10 @@ public class CustomGraphComponent extends mxGraphComponent {
                 for (Object c : cells) {                    
                     if (c instanceof mxCell) {                        
                         mxCell cell = (mxCell) c;                        
-                        JOptionPane.showMessageDialog(null, "CustomGraphComponente - Cells BPMN" + cell.getId());
+                        //JOptionPane.showMessageDialog(null, "CustomGraphComponente - Cells BPMN" + cell.getId());
                                               
                         mxCellState state = CustomGraphComponent.this.getGraph().getView().getState(cell);                        
-                        
+    
                         if (cell.isCollapsed()) {
 //                            state.setLabel("actor-collapsed");
                             mxGeometry geom = cell.getGeometry();
@@ -134,7 +134,7 @@ public class CustomGraphComponent extends mxGraphComponent {
                     
                     if (c instanceof mxCell) {
                         mxCell cell = (mxCell) c;
-                        JOptionPane.showMessageDialog(null, "CustomGraphComponente - Cells Not BPMN" + cell.getId());
+                        //JOptionPane.showMessageDialog(null, "CustomGraphComponente - Cells Not BPMN" + cell.getId());
                         
                         mxCellState state = CustomGraphComponent.this.getGraph().getView().getState(cell);
                         if (cell.isCollapsed()) {
