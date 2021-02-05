@@ -18,10 +18,17 @@ import br.unioeste.jgoose.model.BPMNLink;
 import br.unioeste.jgoose.model.IStarElement;
 import br.unioeste.jgoose.model.IStarLink;
 import com.mxgraph.util.mxResources;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import javax.swing.JFrame;
@@ -40,6 +47,8 @@ import org.apache.log4j.Logger;
 /**
  *
  * @author Diego Peliser
+ * Alysson Girotto
+ * @Victor Augusto Pozzan
  */
 public class MainView extends javax.swing.JFrame {
 
@@ -53,7 +62,7 @@ public class MainView extends javax.swing.JFrame {
     private BasicBPMNEditor editor;
     
     private Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
-    
+    Font roboto;
     /**
      * Creates new form MainView
      */
@@ -62,12 +71,31 @@ public class MainView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setIconImage(iconJGOOSE);
         //Set the theme of swing equals to SO.
+        
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             LOG.error("LookAndFeel Error!", e);
         }
+        
+        setDefaultLookAndFeelDecorated(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setResizable(true);
+        dispose();
+        setVisible(true);
+       
+        try{
+            System.out.println("here");
+            InputStream myStream = new BufferedInputStream(new FileInputStream("./src/main/resources/fonts/Roboto-Black.ttf"))  ;
+            roboto = Font.createFont(Font.TRUETYPE_FONT, myStream);
+            roboto = roboto.deriveFont(30f);
+            
+        }catch(IOException | FontFormatException e){
+            System.out.println(e);
+        }
+        //about.setFont(roboto);
     }
 
     /**
@@ -108,12 +136,6 @@ public class MainView extends javax.swing.JFrame {
                 return false;
             }
         };
-        buttonOpenE4JiStar = new javax.swing.JButton();
-        buttonBPMNToUseCases = new javax.swing.JButton();
-        buttonOpenTelosFile = new javax.swing.JButton();
-        buttonOpenE4JUseCases = new javax.swing.JButton();
-        buttonOpenE4JBPMN = new javax.swing.JButton();
-        buttunMappingUseCases = new javax.swing.JButton();
         tabsMenu2 = new javax.swing.JTabbedPane();
         elementosMapeados2 = new javax.swing.JScrollPane();
         tableElementsBPMN = new javax.swing.JTable() {
@@ -143,6 +165,13 @@ public class MainView extends javax.swing.JFrame {
                 return false;
             }
         };
+        jPanel1 = new javax.swing.JPanel();
+        buttonOpenE4JBPMN = new javax.swing.JButton();
+        buttonOpenE4JiStar = new javax.swing.JButton();
+        buttonOpenE4JUseCases = new javax.swing.JButton();
+        buttunMappingUseCases = new javax.swing.JButton();
+        buttonOpenTelosFile = new javax.swing.JButton();
+        buttonBPMNToUseCases = new javax.swing.JButton();
         btnTraceability = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
@@ -154,9 +183,12 @@ public class MainView extends javax.swing.JFrame {
         menuHelp = new javax.swing.JMenu();
         helpGuidelines = new javax.swing.JMenuItem();
         helpAbout = new javax.swing.JMenuItem();
+        about = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("JGOOSE");
+        setTitle("Home");
+        setMaximumSize(null);
+        setName("home"); // NOI18N
         setResizable(false);
 
         tabsMenu.setToolTipText("");
@@ -225,63 +257,6 @@ public class MainView extends javax.swing.JFrame {
 
         tabsMenu.addTab("Actors i* Mapped", atoresMapeados);
 
-        buttonOpenE4JiStar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonOpenE4JiStar.setText("E4J i*");
-        buttonOpenE4JiStar.setToolTipText("Abrir Arquivo Telos");
-        buttonOpenE4JiStar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonOpenE4JiStarActionPerformed(evt);
-            }
-        });
-
-        buttonBPMNToUseCases.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonBPMNToUseCases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/toUC_32x32.png"))); // NOI18N
-        buttonBPMNToUseCases.setText("Mapping BPMN to Use Cases");
-        buttonBPMNToUseCases.setToolTipText("Derivar Casos de Uso a partir de BPMN");
-        buttonBPMNToUseCases.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonBPMNToUseCasesActionPerformed(evt);
-            }
-        });
-
-        buttonOpenTelosFile.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonOpenTelosFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/folder_open_32x32.png"))); // NOI18N
-        buttonOpenTelosFile.setText("Open Telos File");
-        buttonOpenTelosFile.setToolTipText("Abrir Arquivo Telos");
-        buttonOpenTelosFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonOpenTelosFileActionPerformed(evt);
-            }
-        });
-
-        buttonOpenE4JUseCases.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonOpenE4JUseCases.setText("E4J Use Cases");
-        buttonOpenE4JUseCases.setToolTipText("Abrir Arquivo Telos");
-        buttonOpenE4JUseCases.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonOpenE4JUseCasesActionPerformed(evt);
-            }
-        });
-
-        buttonOpenE4JBPMN.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonOpenE4JBPMN.setText("E4J BPMN");
-        buttonOpenE4JBPMN.setToolTipText("Abrir Editor BPMN");
-        buttonOpenE4JBPMN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonOpenE4JBPMNActionPerformed(evt);
-            }
-        });
-
-        buttunMappingUseCases.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttunMappingUseCases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/usecases_32x32.png"))); // NOI18N
-        buttunMappingUseCases.setText("Mapping Use Cases UML");
-        buttunMappingUseCases.setToolTipText("Mapear Casos de Uso UML");
-        buttunMappingUseCases.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttunMappingUseCasesActionPerformed(evt);
-            }
-        });
-
         tabsMenu2.setToolTipText("");
 
         tableElementsBPMN.setAutoCreateRowSorter(true);
@@ -348,6 +323,66 @@ public class MainView extends javax.swing.JFrame {
 
         tabsMenu2.addTab("Swimlanes", atoresMapeados2);
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setMaximumSize(new java.awt.Dimension(2147483647, 0));
+
+        buttonOpenE4JBPMN.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        buttonOpenE4JBPMN.setText("E4J BPMN");
+        buttonOpenE4JBPMN.setToolTipText("Abrir Editor BPMN");
+        buttonOpenE4JBPMN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonOpenE4JBPMNActionPerformed(evt);
+            }
+        });
+
+        buttonOpenE4JiStar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        buttonOpenE4JiStar.setText("E4J i*");
+        buttonOpenE4JiStar.setToolTipText("Abrir Arquivo Telos");
+        buttonOpenE4JiStar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonOpenE4JiStarActionPerformed(evt);
+            }
+        });
+
+        buttonOpenE4JUseCases.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        buttonOpenE4JUseCases.setText("E4J Use Cases");
+        buttonOpenE4JUseCases.setToolTipText("Abrir Arquivo Telos");
+        buttonOpenE4JUseCases.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonOpenE4JUseCasesActionPerformed(evt);
+            }
+        });
+
+        buttunMappingUseCases.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        buttunMappingUseCases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/usecases_32x32.png"))); // NOI18N
+        buttunMappingUseCases.setText("Mapping Use Cases UML");
+        buttunMappingUseCases.setToolTipText("Mapear Casos de Uso UML");
+        buttunMappingUseCases.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttunMappingUseCasesActionPerformed(evt);
+            }
+        });
+
+        buttonOpenTelosFile.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        buttonOpenTelosFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/folder_open_32x32.png"))); // NOI18N
+        buttonOpenTelosFile.setText("Open Telos File");
+        buttonOpenTelosFile.setToolTipText("Abrir Arquivo Telos");
+        buttonOpenTelosFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonOpenTelosFileActionPerformed(evt);
+            }
+        });
+
+        buttonBPMNToUseCases.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        buttonBPMNToUseCases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/toUC_32x32.png"))); // NOI18N
+        buttonBPMNToUseCases.setText("Mapping BPMN to Use Cases");
+        buttonBPMNToUseCases.setToolTipText("Derivar Casos de Uso a partir de BPMN");
+        buttonBPMNToUseCases.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBPMNToUseCasesActionPerformed(evt);
+            }
+        });
+
         btnTraceability.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnTraceability.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/traceability_32x32.png"))); // NOI18N
         btnTraceability.setText("Traceability");
@@ -357,9 +392,49 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonOpenE4JiStar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttunMappingUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonOpenTelosFile, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonBPMNToUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttunMappingUseCases)
+                    .addComponent(buttonOpenTelosFile)
+                    .addComponent(buttonBPMNToUseCases)
+                    .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
+        );
+
+        menuBar.setMaximumSize(new java.awt.Dimension(154, 50));
+        menuBar.setMinimumSize(new java.awt.Dimension(154, 25));
+        menuBar.setPreferredSize(new java.awt.Dimension(154, 50));
+
         menuFile.setText("File");
 
-        fileOpenTelosFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
+        fileOpenTelosFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         fileOpenTelosFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/folder_open_16x16.png"))); // NOI18N
         fileOpenTelosFile.setText("Open Telos File");
         fileOpenTelosFile.addActionListener(new java.awt.event.ActionListener() {
@@ -373,7 +448,7 @@ public class MainView extends javax.swing.JFrame {
 
         menuTools.setText("Tools");
 
-        toolsOpenE4JBPMNEditor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_MASK));
+        toolsOpenE4JBPMNEditor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         toolsOpenE4JBPMNEditor.setText("E4J BPMN");
         toolsOpenE4JBPMNEditor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -382,7 +457,7 @@ public class MainView extends javax.swing.JFrame {
         });
         menuTools.add(toolsOpenE4JBPMNEditor);
 
-        toolsOpenE4JEditor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        toolsOpenE4JEditor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         toolsOpenE4JEditor.setText("E4J i*");
         toolsOpenE4JEditor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -391,7 +466,7 @@ public class MainView extends javax.swing.JFrame {
         });
         menuTools.add(toolsOpenE4JEditor);
 
-        toolsOpenE4JUCEditor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        toolsOpenE4JUCEditor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         toolsOpenE4JUCEditor.setText("E4J Use Cases");
         toolsOpenE4JUCEditor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -426,60 +501,38 @@ public class MainView extends javax.swing.JFrame {
 
         menuBar.add(menuHelp);
 
+        about.setText("About");
+        about.setFont(roboto);
+        menuBar.add(about);
+
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(97, 97, 97)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonBPMNToUseCases))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(buttonOpenTelosFile, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(buttunMappingUseCases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(20, 20, 20)
-                .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tabsMenu2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tabsMenu))
                 .addContainerGap())
-            .addComponent(tabsMenu2, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
-            .addComponent(tabsMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {buttonBPMNToUseCases, buttonOpenE4JUseCases, buttonOpenE4JiStar, buttonOpenTelosFile});
-
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonBPMNToUseCases)
-                    .addComponent(buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttunMappingUseCases))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonOpenTelosFile)
-                    .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(276, 276, 276)
                 .addComponent(tabsMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabsMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
+                .addGap(6, 6, 6)
+                .addComponent(tabsMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {buttonBPMNToUseCases, buttonOpenE4JUseCases});
+        getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1226,6 +1279,7 @@ public class MainView extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu about;
     private javax.swing.JScrollPane atoresMapeados;
     private javax.swing.JScrollPane atoresMapeados2;
     private javax.swing.JButton btnTraceability;
@@ -1242,6 +1296,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JMenuItem helpGuidelines;
     private javax.swing.JScrollPane informacoesArquivo;
     private javax.swing.JScrollPane informacoesArquivo2;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane linksMapeados;
     private javax.swing.JScrollPane linksMapeados2;
     private javax.swing.JMenuBar menuBar;
