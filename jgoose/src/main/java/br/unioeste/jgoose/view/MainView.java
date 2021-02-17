@@ -18,8 +18,10 @@ import br.unioeste.jgoose.model.BPMNLink;
 import br.unioeste.jgoose.model.IStarElement;
 import br.unioeste.jgoose.model.IStarLink;
 import com.mxgraph.util.mxResources;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.awt.Image;
@@ -31,6 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -40,6 +43,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.basic.BasicMenuBarUI;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
 import org.apache.log4j.Logger;
@@ -87,7 +91,6 @@ public class MainView extends javax.swing.JFrame {
         setVisible(true);
        
         try{
-            System.out.println("here");
             InputStream myStream = new BufferedInputStream(new FileInputStream("./src/main/resources/fonts/Roboto-Black.ttf"))  ;
             roboto = Font.createFont(Font.TRUETYPE_FONT, myStream);
             roboto = roboto.deriveFont(30f);
@@ -95,7 +98,14 @@ public class MainView extends javax.swing.JFrame {
         }catch(IOException | FontFormatException e){
             System.out.println(e);
         }
-        //about.setFont(roboto);
+        menuBar.setOpaque(true);
+        menuBar.setUI(new BasicMenuBarUI() {
+            public void paint(Graphics g, JComponent c) {
+                g.setColor(new java.awt.Color(11, 113, 165));
+                g.fillRect(0, 0, c.getWidth(), c.getHeight());
+            }         
+    });
+        
     }
 
     /**
@@ -173,6 +183,8 @@ public class MainView extends javax.swing.JFrame {
         buttonOpenTelosFile = new javax.swing.JButton();
         buttonBPMNToUseCases = new javax.swing.JButton();
         btnTraceability = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         fileOpenTelosFile = new javax.swing.JMenuItem();
@@ -184,9 +196,12 @@ public class MainView extends javax.swing.JFrame {
         helpGuidelines = new javax.swing.JMenuItem();
         helpAbout = new javax.swing.JMenuItem();
         about = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setForeground(java.awt.Color.white);
         setMaximumSize(null);
         setName("home"); // NOI18N
         setResizable(false);
@@ -396,43 +411,61 @@ public class MainView extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addComponent(buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonOpenE4JiStar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttunMappingUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(buttunMappingUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(buttonOpenTelosFile, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonBPMNToUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(buttonBPMNToUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttunMappingUseCases)
-                    .addComponent(buttonOpenTelosFile)
-                    .addComponent(buttonBPMNToUseCases)
-                    .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19))
+                    .addComponent(buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttunMappingUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonOpenTelosFile, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonBPMNToUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
+        jLabel1.setText("JGOOSE");
+
+        jLabel2.setText("helping software engeneerings");
+
+        menuBar.setBackground(new java.awt.Color(255, 102, 0));
+        menuBar.setForeground(new java.awt.Color(153, 0, 102));
+        menuBar.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         menuBar.setMaximumSize(new java.awt.Dimension(154, 50));
         menuBar.setMinimumSize(new java.awt.Dimension(154, 25));
+        menuBar.setName(""); // NOI18N
         menuBar.setPreferredSize(new java.awt.Dimension(154, 50));
+        menuBar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                menuBarFocusGained(evt);
+            }
+        });
 
-        menuFile.setText("File");
+        menuFile.setBackground(new java.awt.Color(11, 113, 165));
+        menuFile.setForeground(new java.awt.Color(254, 254, 254));
+        menuFile.setText("Files");
+        menuFile.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        menuFile.setMargin(new java.awt.Insets(0, 20, 0, 20));
+        menuFile.setOpaque(true);
 
         fileOpenTelosFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         fileOpenTelosFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/folder_open_16x16.png"))); // NOI18N
@@ -446,7 +479,12 @@ public class MainView extends javax.swing.JFrame {
 
         menuBar.add(menuFile);
 
+        menuTools.setBackground(new java.awt.Color(11, 113, 165));
+        menuTools.setForeground(new java.awt.Color(254, 254, 254));
         menuTools.setText("Tools");
+        menuTools.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        menuTools.setMargin(new java.awt.Insets(0, 20, 0, 20));
+        menuTools.setOpaque(true);
 
         toolsOpenE4JBPMNEditor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         toolsOpenE4JBPMNEditor.setText("E4J BPMN");
@@ -477,7 +515,13 @@ public class MainView extends javax.swing.JFrame {
 
         menuBar.add(menuTools);
 
+        menuHelp.setBackground(new java.awt.Color(11, 113, 165));
+        menuHelp.setForeground(new java.awt.Color(254, 254, 254));
         menuHelp.setText("Help");
+        menuHelp.setFocusTraversalPolicyProvider(true);
+        menuHelp.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        menuHelp.setMargin(new java.awt.Insets(0, 20, 0, 20));
+        menuHelp.setOpaque(true);
 
         helpGuidelines.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         helpGuidelines.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/guidelines_16x16.png"))); // NOI18N
@@ -501,9 +545,21 @@ public class MainView extends javax.swing.JFrame {
 
         menuBar.add(menuHelp);
 
+        about.setBackground(new java.awt.Color(11, 113, 165));
+        about.setForeground(new java.awt.Color(254, 254, 254));
         about.setText("About");
-        about.setFont(roboto);
+        about.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        about.setMargin(new java.awt.Insets(0, 20, 0, 20));
+        about.setOpaque(true);
         menuBar.add(about);
+
+        jMenu1.setBackground(new java.awt.Color(11, 113, 165));
+        jMenu1.setForeground(new java.awt.Color(254, 254, 254));
+        jMenu1.setText("Les");
+        jMenu1.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
+        jMenu1.setMargin(new java.awt.Insets(0, 20, 0, 20));
+        jMenu1.setOpaque(true);
+        menuBar.add(jMenu1);
 
         setJMenuBar(menuBar);
 
@@ -512,21 +568,30 @@ public class MainView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tabsMenu2)
+                    .addComponent(tabsMenu, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(20, 20, 20))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(441, 441, 441)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tabsMenu2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tabsMenu))
-                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(79, 79, 79)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(90, 90, 90)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(276, 276, 276)
+                .addGap(123, 123, 123)
                 .addComponent(tabsMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(tabsMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -537,27 +602,13 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonOpenE4JiStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JiStarActionPerformed
+    private void btnTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraceabilityActionPerformed
         try {
-            this.showE4JiStar();
+            this.showTraceability();
         } catch (HeadlessException ex) {
             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_buttonOpenE4JiStarActionPerformed
-
-    private void helpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpAboutActionPerformed
-        this.showAboutDialog();
-    }//GEN-LAST:event_helpAboutActionPerformed
-
-    private void fileOpenTelosFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileOpenTelosFileActionPerformed
-        Controller.openTelosFile();
-    }//GEN-LAST:event_fileOpenTelosFileActionPerformed
-
-    private void helpGuidelinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpGuidelinesActionPerformed
-        this.showGuidelinesDialog();
-    }//GEN-LAST:event_helpGuidelinesActionPerformed
+    }//GEN-LAST:event_btnTraceabilityActionPerformed
 
     private void buttonBPMNToUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBPMNToUseCasesActionPerformed
         BPMNController.mapUseCases();
@@ -566,63 +617,13 @@ public class MainView extends javax.swing.JFrame {
             useCasesViewBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         }
         useCasesViewBPMN.updateTable();
-        useCasesViewBPMN.setVisible(true);        
+        useCasesViewBPMN.setVisible(true);
     }//GEN-LAST:event_buttonBPMNToUseCasesActionPerformed
-
-    private void toolsOpenE4JEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolsOpenE4JEditorActionPerformed
-        try {
-            this.showE4JiStar();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_toolsOpenE4JEditorActionPerformed
 
     private void buttonOpenTelosFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenTelosFileActionPerformed
         Controller.setMainView(this);
         Controller.openTelosFile();
     }//GEN-LAST:event_buttonOpenTelosFileActionPerformed
-
-    private void buttonOpenE4JUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JUseCasesActionPerformed
-        try {
-            this.showE4JUseCases();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_buttonOpenE4JUseCasesActionPerformed
-
-    private void toolsOpenE4JUCEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolsOpenE4JUCEditorActionPerformed
-        try {
-            this.showE4JUseCases();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_toolsOpenE4JUCEditorActionPerformed
-
-    private void toolsOpenE4JBPMNEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolsOpenE4JBPMNEditorActionPerformed
-        try {
-            this.showE4JBPMN();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_toolsOpenE4JBPMNEditorActionPerformed
-
-    private void buttonOpenE4JBPMNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JBPMNActionPerformed
-        try {
-            this.showE4JBPMN();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_buttonOpenE4JBPMNActionPerformed
 
     private void buttunMappingUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesActionPerformed
         Controller.mapUseCases();
@@ -634,13 +635,81 @@ public class MainView extends javax.swing.JFrame {
         useCasesView.setVisible(true);
     }//GEN-LAST:event_buttunMappingUseCasesActionPerformed
 
-    private void btnTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraceabilityActionPerformed
+    private void buttonOpenE4JUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JUseCasesActionPerformed
         try {
-            this.showTraceability();
+            this.showE4JUseCases();
         } catch (HeadlessException ex) {
             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnTraceabilityActionPerformed
+    }//GEN-LAST:event_buttonOpenE4JUseCasesActionPerformed
+
+    private void buttonOpenE4JiStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JiStarActionPerformed
+        try {
+            this.showE4JiStar();
+        } catch (HeadlessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonOpenE4JiStarActionPerformed
+
+    private void buttonOpenE4JBPMNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JBPMNActionPerformed
+        try {
+            this.showE4JBPMN();
+        } catch (HeadlessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonOpenE4JBPMNActionPerformed
+
+    private void menuBarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_menuBarFocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuBarFocusGained
+
+    private void helpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpAboutActionPerformed
+        this.showAboutDialog();
+    }//GEN-LAST:event_helpAboutActionPerformed
+
+    private void helpGuidelinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpGuidelinesActionPerformed
+        this.showGuidelinesDialog();
+    }//GEN-LAST:event_helpGuidelinesActionPerformed
+
+    private void toolsOpenE4JUCEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolsOpenE4JUCEditorActionPerformed
+        try {
+            this.showE4JUseCases();
+        } catch (HeadlessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_toolsOpenE4JUCEditorActionPerformed
+
+    private void toolsOpenE4JEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolsOpenE4JEditorActionPerformed
+        try {
+            this.showE4JiStar();
+        } catch (HeadlessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_toolsOpenE4JEditorActionPerformed
+
+    private void toolsOpenE4JBPMNEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolsOpenE4JBPMNEditorActionPerformed
+        try {
+            this.showE4JBPMN();
+        } catch (HeadlessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_toolsOpenE4JBPMNEditorActionPerformed
+
+    private void fileOpenTelosFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileOpenTelosFileActionPerformed
+        Controller.openTelosFile();
+    }//GEN-LAST:event_fileOpenTelosFileActionPerformed
 
     /**
      * Abre uma janela GuidelinesDialogView
@@ -1296,6 +1365,9 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JMenuItem helpGuidelines;
     private javax.swing.JScrollPane informacoesArquivo;
     private javax.swing.JScrollPane informacoesArquivo2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane linksMapeados;
     private javax.swing.JScrollPane linksMapeados2;
