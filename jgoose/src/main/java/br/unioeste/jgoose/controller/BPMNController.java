@@ -53,8 +53,6 @@ public class BPMNController {
     
     // Altera tabelas na janela principal
     public static void updateTables(){
-        mainView.updateTableBPMN();
-        
         MappingBPMNToUC bpmnToUC = new MappingBPMNToUC();
         bpmnToUC.derivation();
         

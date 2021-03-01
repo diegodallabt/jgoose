@@ -22,12 +22,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.BufferedInputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,13 +48,15 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author Diego Peliser
- * Alysson Girotto
+ * @authors 
+ * @Diego Peliser
+ * @Alysson Girotto
  * @Victor Augusto Pozzan
  */
 public class MainView extends javax.swing.JFrame {
 
     private UseCasesView useCasesView = null;
+    private TableArtifacts tableArtifacts = null;
     private UseCasesViewBPMN useCasesViewBPMN = null;
     private static final Logger LOG = Logger.getLogger("console");
     private EditorJFrame E4JiStar = null;
@@ -87,8 +87,8 @@ public class MainView extends javax.swing.JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(true);
-        dispose();
-        setVisible(true);
+        //dispose();
+        //setVisible(true);
        
         try{
             InputStream myStream = new BufferedInputStream(new FileInputStream("./src/main/resources/fonts/Roboto-Black.ttf"))  ;
@@ -117,64 +117,6 @@ public class MainView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tabsMenu = new javax.swing.JTabbedPane();
-        elementosMapeados = new javax.swing.JScrollPane();
-        tableElements = new javax.swing.JTable() {
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
-        linksMapeados = new javax.swing.JScrollPane();
-        tableLinks = new javax.swing.JTable() {
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
-        informacoesArquivo = new javax.swing.JScrollPane();
-        tableFile = new javax.swing.JTable() {
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
-        atoresMapeados = new javax.swing.JScrollPane();
-        tableActors = new javax.swing.JTable() {
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
-        tabsMenu2 = new javax.swing.JTabbedPane();
-        elementosMapeados2 = new javax.swing.JScrollPane();
-        tableElementsBPMN = new javax.swing.JTable() {
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
-        linksMapeados2 = new javax.swing.JScrollPane();
-        tableLinksBPMN = new javax.swing.JTable() {
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
-        informacoesArquivo2 = new javax.swing.JScrollPane();
-        tableBPMNInfo = new javax.swing.JTable() {
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
-        atoresMapeados2 = new javax.swing.JScrollPane();
-        tableSwimlanes = new javax.swing.JTable() {
-            @Override
-            public boolean isCellEditable(int row, int column){
-                return false;
-            }
-        };
         jPanel1 = new javax.swing.JPanel();
         buttonOpenE4JBPMN = new javax.swing.JButton();
         buttonOpenE4JiStar = new javax.swing.JButton();
@@ -192,6 +134,7 @@ public class MainView extends javax.swing.JFrame {
         toolsOpenE4JBPMNEditor = new javax.swing.JMenuItem();
         toolsOpenE4JEditor = new javax.swing.JMenuItem();
         toolsOpenE4JUCEditor = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
         helpGuidelines = new javax.swing.JMenuItem();
         helpAbout = new javax.swing.JMenuItem();
@@ -205,138 +148,6 @@ public class MainView extends javax.swing.JFrame {
         setMaximumSize(null);
         setName("home"); // NOI18N
         setResizable(false);
-
-        tabsMenu.setToolTipText("");
-
-        tableElements.setAutoCreateRowSorter(true);
-        tableElements.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Cod", "Name", "Element Type"
-            }
-        ));
-        elementosMapeados.setViewportView(tableElements);
-        if (tableElements.getColumnModel().getColumnCount() > 0) {
-            tableElements.getColumnModel().getColumn(0).setMaxWidth(35);
-            tableElements.getColumnModel().getColumn(1).setMaxWidth(100);
-        }
-
-        tabsMenu.addTab("Elements i* Mapped", elementosMapeados);
-
-        tableLinks.setAutoCreateRowSorter(true);
-        tableLinks.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Cod", "From", "To", "Link Type"
-            }
-        ));
-        linksMapeados.setViewportView(tableLinks);
-        if (tableLinks.getColumnModel().getColumnCount() > 0) {
-            tableLinks.getColumnModel().getColumn(0).setMaxWidth(50);
-        }
-
-        tabsMenu.addTab("Links i* Mapped", linksMapeados);
-
-        tableFile.setAutoCreateRowSorter(true);
-        tableFile.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Description", "Description"
-            }
-        ));
-        informacoesArquivo.setViewportView(tableFile);
-
-        tabsMenu.addTab("i* File Information", informacoesArquivo);
-
-        tableActors.setAutoCreateRowSorter(true);
-        tableActors.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Cod", "Name", "Childrens"
-            }
-        ));
-        atoresMapeados.setViewportView(tableActors);
-        if (tableActors.getColumnModel().getColumnCount() > 0) {
-            tableActors.getColumnModel().getColumn(0).setMaxWidth(35);
-            tableActors.getColumnModel().getColumn(1).setMaxWidth(100);
-            tableActors.getColumnModel().getColumn(3).setMaxWidth(70);
-        }
-
-        tabsMenu.addTab("Actors i* Mapped", atoresMapeados);
-
-        tabsMenu2.setToolTipText("");
-
-        tableElementsBPMN.setAutoCreateRowSorter(true);
-        tableElementsBPMN.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Cod", "Name", "Element Type"
-            }
-        ));
-        elementosMapeados2.setViewportView(tableElementsBPMN);
-        if (tableElementsBPMN.getColumnModel().getColumnCount() > 0) {
-            tableElementsBPMN.getColumnModel().getColumn(0).setMaxWidth(35);
-            tableElementsBPMN.getColumnModel().getColumn(1).setMaxWidth(100);
-        }
-
-        tabsMenu2.addTab("Elements", elementosMapeados2);
-
-        tableLinksBPMN.setAutoCreateRowSorter(true);
-        tableLinksBPMN.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Cod", "From", "To", "Link Type"
-            }
-        ));
-        linksMapeados2.setViewportView(tableLinksBPMN);
-        if (tableLinksBPMN.getColumnModel().getColumnCount() > 0) {
-            tableLinksBPMN.getColumnModel().getColumn(0).setMaxWidth(50);
-        }
-
-        tabsMenu2.addTab("Links", linksMapeados2);
-
-        tableBPMNInfo.setAutoCreateRowSorter(true);
-        tableBPMNInfo.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Description", "Description"
-            }
-        ));
-        informacoesArquivo2.setViewportView(tableBPMNInfo);
-
-        tabsMenu2.addTab("BPMN Information", informacoesArquivo2);
-
-        tableSwimlanes.setAutoCreateRowSorter(true);
-        tableSwimlanes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID", "Cod", "Name", "Childrens"
-            }
-        ));
-        atoresMapeados2.setViewportView(tableSwimlanes);
-        if (tableSwimlanes.getColumnModel().getColumnCount() > 0) {
-            tableSwimlanes.getColumnModel().getColumn(0).setMaxWidth(35);
-            tableSwimlanes.getColumnModel().getColumn(1).setMaxWidth(100);
-            tableSwimlanes.getColumnModel().getColumn(3).setMaxWidth(70);
-        }
-
-        tabsMenu2.addTab("Swimlanes", atoresMapeados2);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setMaximumSize(new java.awt.Dimension(2147483647, 0));
@@ -412,21 +223,21 @@ public class MainView extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addComponent(buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(buttunMappingUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(buttonOpenTelosFile, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(buttonBPMNToUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -443,8 +254,12 @@ public class MainView extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(7, 69, 101));
         jLabel1.setText("JGOOSE");
 
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(52, 63, 75));
         jLabel2.setText("helping software engeneerings");
 
         menuBar.setBackground(new java.awt.Color(255, 102, 0));
@@ -513,6 +328,14 @@ public class MainView extends javax.swing.JFrame {
         });
         menuTools.add(toolsOpenE4JUCEditor);
 
+        jMenuItem1.setText("Tabelas");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuTools.add(jMenuItem1);
+
         menuBar.add(menuTools);
 
         menuHelp.setBackground(new java.awt.Color(11, 113, 165));
@@ -551,6 +374,14 @@ public class MainView extends javax.swing.JFrame {
         about.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         about.setMargin(new java.awt.Insets(0, 20, 0, 20));
         about.setOpaque(true);
+        about.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                aboutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                aboutMouseExited(evt);
+            }
+        });
         menuBar.add(about);
 
         jMenu1.setBackground(new java.awt.Color(11, 113, 165));
@@ -568,15 +399,11 @@ public class MainView extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tabsMenu2)
-                    .addComponent(tabsMenu, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(20, 20, 20)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(20, 20, 20))
             .addGroup(layout.createSequentialGroup()
-                .addGap(441, 441, 441)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
@@ -587,14 +414,11 @@ public class MainView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(79, 79, 79)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
                 .addGap(90, 90, 90)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(123, 123, 123)
-                .addComponent(tabsMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(tabsMenu2, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(309, Short.MAX_VALUE))
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -711,6 +535,24 @@ public class MainView extends javax.swing.JFrame {
         Controller.openTelosFile();
     }//GEN-LAST:event_fileOpenTelosFileActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        try {
+            this.showArtfactTables();
+        } catch (HeadlessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void aboutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMouseEntered
+           
+        about.setBackground(Color.GREEN);
+    }//GEN-LAST:event_aboutMouseEntered
+
+    private void aboutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMouseExited
+         about.setBackground(Color.BLACK);
+    }//GEN-LAST:event_aboutMouseExited
+
     /**
      * Abre uma janela GuidelinesDialogView
      */
@@ -739,421 +581,6 @@ public class MainView extends javax.swing.JFrame {
         int y = this.getY() + (this.getHeight() - about.getHeight()) / 2;
         about.setLocation(x, y);
         about.setVisible(true);
-    }
-
-    /**
-     * Atualiza as Tabelas relacionadas à BPMN
-     */
-    public void updateTableBPMN(){
-        /*
-         * Atualiza Informações Arquivo
-         */
-        DefaultTableModel bpmnInfo = new DefaultTableModel();
-        String vetArquivo[] = new String[2];
-        bpmnInfo.addColumn("Description");
-        bpmnInfo.addColumn("Description");
-
-        vetArquivo[0] = "Number of swimlanes";
-        vetArquivo[1] = String.valueOf(BPMNController.getTokensBPMN().getParticipants().size());
-        bpmnInfo.addRow(vetArquivo);                
-        
-        vetArquivo[0] = "Number of elements";
-        vetArquivo[1] = String.valueOf(
-                            BPMNController.getTokensBPMN().getActivities().size() +
-                            BPMNController.getTokensBPMN().getEvents().size() +
-                            BPMNController.getTokensBPMN().getGateways().size() +
-                            BPMNController.getTokensBPMN().getArtifacts().size()
-                        );
-        bpmnInfo.addRow(vetArquivo);
-        
-        vetArquivo[0] = "Number of links";
-        vetArquivo[1] = String.valueOf(BPMNController.getTokensBPMN().getLinks().size());
-        bpmnInfo.addRow(vetArquivo);
-        
-        tableBPMNInfo.setModel(bpmnInfo);
-        
-        // Seta swimlanes mapeadas        
-        DefaultTableModel tabSwimlanes = new DefaultTableModel();
-        String vetAtores[] = new String[4];
-        tabSwimlanes.addColumn("ID");
-        tabSwimlanes.addColumn("Cod");
-        tabSwimlanes.addColumn("Name");
-        tabSwimlanes.addColumn("Childrens");
-        
-        for (int i = 0; i < BPMNController.getTokensBPMN().getParticipants().size(); i++) {
-            vetAtores[0] = String.valueOf(i + 1);
-            vetAtores[1] = BPMNController.getTokensBPMN().getParticipants().get(i).getCode();
-            vetAtores[2] = BPMNController.getTokensBPMN().getParticipants().get(i).getLabel();
-            
-            if (BPMNController.getTokensBPMN().getParticipants().get(i).getChildren().size() > 0) {
-                vetAtores[3] = "YES";
-            } else {
-                vetAtores[3] = "NO";
-            }
-            tabSwimlanes.addRow(vetAtores);
-        }
-        
-        tableSwimlanes.setModel(tabSwimlanes);
-        
-        // Seta larguda das colunas
-        tableSwimlanes.getColumnModel().getColumn(0).setPreferredWidth(10);
-        tableSwimlanes.getColumnModel().getColumn(1).setPreferredWidth(50);
-        tableSwimlanes.getColumnModel().getColumn(2).setPreferredWidth(500);
-        tableSwimlanes.getColumnModel().getColumn(3).setPreferredWidth(50);
-        
-        // Seta elementos mapeados
-        DefaultTableModel tabElementos = new DefaultTableModel();
-        String vetElementos[] = new String[4];
-        tabElementos.addColumn("ID");
-        tabElementos.addColumn("Cod");
-        tabElementos.addColumn("Name");
-        tabElementos.addColumn("Type");
-        
-        int cont = 1; // count id        
-        
-        vetElementos[3] = "Event";        
-        for (int i = 0; i < BPMNController.getTokensBPMN().getEvents().size(); i++) {
-            vetElementos[0] = String.valueOf(cont++);
-            vetElementos[1] = BPMNController.getTokensBPMN().getEvents().get(i).getCode();
-            vetElementos[2] = BPMNController.getTokensBPMN().getEvents().get(i).getLabel();            
-            tabElementos.addRow(vetElementos);
-        }
-        
-        vetElementos[3] = "Activity";        
-        for (int i = 0; i < BPMNController.getTokensBPMN().getActivities().size(); i++) {
-            vetElementos[0] = String.valueOf(cont++);
-            vetElementos[1] = BPMNController.getTokensBPMN().getActivities().get(i).getCode();
-            vetElementos[2] = BPMNController.getTokensBPMN().getActivities().get(i).getLabel();            
-            tabElementos.addRow(vetElementos);
-        }
-        
-        vetElementos[3] = "Gateway";        
-        for (int i = 0; i < BPMNController.getTokensBPMN().getGateways().size(); i++) {
-            vetElementos[0] = String.valueOf(cont++);
-            vetElementos[1] = BPMNController.getTokensBPMN().getGateways().get(i).getCode();
-            vetElementos[2] = BPMNController.getTokensBPMN().getGateways().get(i).getLabel();            
-            tabElementos.addRow(vetElementos);
-        }
-        
-        vetElementos[3] = "Artifact";        
-        for (int i = 0; i < BPMNController.getTokensBPMN().getArtifacts().size(); i++) {
-            vetElementos[0] = String.valueOf(cont++);
-            vetElementos[1] = BPMNController.getTokensBPMN().getArtifacts().get(i).getCode();
-            vetElementos[2] = BPMNController.getTokensBPMN().getArtifacts().get(i).getLabel();            
-            tabElementos.addRow(vetElementos);
-        }
-        
-        tableElementsBPMN.setModel(tabElementos);
-        
-        // seta largura das colunas
-        tableElementsBPMN.getColumnModel().getColumn(0).setPreferredWidth(10);
-        tableElementsBPMN.getColumnModel().getColumn(1).setPreferredWidth(80);
-        tableElementsBPMN.getColumnModel().getColumn(2).setPreferredWidth(500);
-        tableElementsBPMN.getColumnModel().getColumn(3).setPreferredWidth(80);
-        
-        // Seta links
-        DefaultTableModel tabLinks = new DefaultTableModel();
-        String vetLinks[] = new String[5];
-        tabLinks.addColumn("ID");
-        tabLinks.addColumn("Cod");
-        tabLinks.addColumn("From");
-        tabLinks.addColumn("To");
-        tabLinks.addColumn("Link Type");
-        
-        cont = 1; // id count
-
-        for (int i = 0; i < BPMNController.getTokensBPMN().getLinks().size(); i++) {
-            vetLinks[0] = String.valueOf(cont++);
-            vetLinks[1] = BPMNController.getTokensBPMN().getLinks().get(i).getCode();
-            vetLinks[2] = BPMNController.getTokensBPMN().getLinks().get(i).getFrom().getCode() + " - " + BPMNController.getTokensBPMN().getLinks().get(i).getFrom().getLabel();
-            vetLinks[3] = BPMNController.getTokensBPMN().getLinks().get(i).getTo().getCode() + " - " + BPMNController.getTokensBPMN().getLinks().get(i).getTo().getLabel();
-            
-            int linkType = BPMNController.getTokensBPMN().getLinks().get(i).getType();
-            
-            if (linkType == BPMNLink.SEQUENCE)
-                vetLinks[4] = "Sequence";
-            else if (linkType == BPMNLink.ASSOCIATION)
-                vetLinks[4] = "Association";
-            else if (linkType == BPMNLink.DATA_ASSOCIATION)
-                vetLinks[4] = "Data association";
-            else if (linkType == BPMNLink.MESSAGE)
-                vetLinks[4] = "Message";
-            
-            tabLinks.addRow(vetLinks);
-        }
-
-        tableLinksBPMN.setModel(tabLinks);
-        
-        // seta largura das colunas
-        tableLinksBPMN.getColumnModel().getColumn(0).setPreferredWidth(10);
-        tableLinksBPMN.getColumnModel().getColumn(1).setPreferredWidth(60);
-        tableLinksBPMN.getColumnModel().getColumn(2).setPreferredWidth(300);
-        tableLinksBPMN.getColumnModel().getColumn(3).setPreferredWidth(300);
-        tableLinksBPMN.getColumnModel().getColumn(4).setPreferredWidth(60);
-        
-    }
-    
-    /**
-     * Atualiza as Tabelas: Informações do Arquivo, Atores i* Mapeados,
-     * Elementos i* Mapeados e Links i* Mapeados
-     */
-    public void updateTableIStar(){
-        /*
-         * Atualiza Informações Arquivo
-         */
-        DefaultTableModel tabArquivo = new DefaultTableModel();
-        String vetArquivo[] = new String[2];
-        tabArquivo.addColumn("Description");
-        tabArquivo.addColumn("Description");
-        vetArquivo[0] = "File Name";
-        vetArquivo[1] = Controller.getOme().getDirIn();
-        tabArquivo.addRow(vetArquivo);
-        vetArquivo[0] = "System Actor";
-        int posAtor = Controller.getOme().searchActorCod(Controller.getSystemActor());
-        vetArquivo[1] = Controller.getOme().getActor(posAtor).getName();
-        tabArquivo.addRow(vetArquivo);
-        vetArquivo[0] = "System Actor Cod";
-        vetArquivo[1] = Controller.getSystemActor();
-        tabArquivo.addRow(vetArquivo);
-        int nlinks_mapeados = Controller.getOme().getDependenciess().size() + Controller.getOme().getDecompositions().size() + Controller.getOme().getMeansEnds().size() + Controller.getOme().getIsas().size();
-        nlinks_mapeados += Controller.getOme().getInss().size() + Controller.getOme().getContributions().size() + Controller.getOme().getIsPartOfs().size() + Controller.getOme().getOccupiess().size() + Controller.getOme().getPlayss().size() + Controller.getOme().getCoverss().size();
-        int nelementos_mapeados = Controller.getOme().getTasks().size() + Controller.getOme().getGoals().size() + Controller.getOme().getSoftgoals().size() + Controller.getOme().getResourcess().size();
-        int natores_mapeados = Controller.getOme().getActors().size() + Controller.getOme().getAgents().size() + Controller.getOme().getRoles().size() + Controller.getOme().getPositions().size();
-        vetArquivo[0] = "Number of Actors";
-        vetArquivo[1] = String.valueOf(natores_mapeados);
-        tabArquivo.addRow(vetArquivo);
-        vetArquivo[0] = "Number of Elements";
-        vetArquivo[1] = String.valueOf(nelementos_mapeados);
-        tabArquivo.addRow(vetArquivo);
-        vetArquivo[0] = "Number of Links";
-        vetArquivo[1] = String.valueOf(nlinks_mapeados);
-        tabArquivo.addRow(vetArquivo);
-        vetArquivo[0] = "SD/SR Diagram";
-        if (Controller.getOme().checkSDSR(Controller.getSystemActor())) {
-            vetArquivo[1] = "Strategic Rationale Model (SR)";
-        } else {
-            vetArquivo[1] = "Strategic Dependency Model (SD)";
-        }
-        tabArquivo.addRow(vetArquivo);
-        tableFile.setModel(tabArquivo);
-        /*
-         * Atualiza Atores i* Mapeados
-         */
-        DefaultTableModel tabAtores = new DefaultTableModel();
-        String vetAtores[] = new String[4];
-        tabAtores.addColumn("ID");
-        tabAtores.addColumn("Cod");
-        tabAtores.addColumn("Name");
-        tabAtores.addColumn("Childrens");
-        for (int i = 0; i < Controller.getOme().getActors().size(); i++) {
-            vetAtores[0] = String.valueOf(i + 1);
-            vetAtores[1] = Controller.getOme().getActor(i).getCod();
-            vetAtores[2] = Controller.getOme().getActor(i).getName();
-            if (Controller.getOme().getActor(i).getChildrens().size() > 0) {
-                vetAtores[3] = "YES";
-            } else {
-                vetAtores[3] = "NO";
-            }
-            tabAtores.addRow(vetAtores);
-        }
-        int atores = Controller.getOme().getActors().size();
-        for (int i = 0; i < Controller.getOme().getAgents().size(); i++) {
-            vetAtores[0] = String.valueOf(i + atores);
-            vetAtores[1] = Controller.getOme().getAgent(i).getCod();
-            vetAtores[2] = Controller.getOme().getAgent(i).getName();
-            if (Controller.getOme().getAgent(i).getChildrens().size() > 0) {
-                vetAtores[3] = "YES";
-            } else {
-                vetAtores[3] = "NO";
-            }
-            tabAtores.addRow(vetAtores);
-        }
-        atores += Controller.getOme().getAgents().size();
-        for (int i = 0; i < Controller.getOme().getRoles().size(); i++) {
-            vetAtores[0] = String.valueOf(i + atores);
-            vetAtores[1] = Controller.getOme().getRole(i).getCod();
-            vetAtores[2] = Controller.getOme().getRole(i).getName();
-            if (Controller.getOme().getRole(i).getChildrens().size() > 0) {
-                vetAtores[3] = "YES";
-            } else {
-                vetAtores[3] = "NO";
-            }
-            tabAtores.addRow(vetAtores);
-        }
-        atores += Controller.getOme().getRoles().size();
-        for (int i = 0; i < Controller.getOme().getPositions().size(); i++) {
-            vetAtores[0] = String.valueOf(i + atores);
-            vetAtores[1] = Controller.getOme().getPosition(i).getCod();
-            vetAtores[2] = Controller.getOme().getPosition(i).getName();
-            if (Controller.getOme().getPosition(i).getChildrens().size() > 0) {
-                vetAtores[3] = "YES";
-            } else {
-                vetAtores[3] = "NO";
-            }
-            tabAtores.addRow(vetAtores);
-        }
-        tableActors.setModel(tabAtores);
-        // Seta larguda das colunas
-        tableActors.getColumnModel().getColumn(0).setPreferredWidth(10);
-        tableActors.getColumnModel().getColumn(1).setPreferredWidth(50);
-        tableActors.getColumnModel().getColumn(2).setPreferredWidth(500);
-        tableActors.getColumnModel().getColumn(3).setPreferredWidth(50);
-        /*
-         * Atualiza Elementos i* Mapeados
-         */
-        DefaultTableModel tabElementos = new DefaultTableModel();
-        String vetElementos[] = new String[4];
-        tabElementos.addColumn("ID");
-        tabElementos.addColumn("Cod");
-        tabElementos.addColumn("Name");
-        tabElementos.addColumn("Element Type");
-        int cont = 1;
-        ArrayList<IStarElement> goals = Controller.getOme().getGoals();
-        vetElementos[3] = "Goal";
-        for (int i = 0; i < goals.size(); i++) {
-            vetElementos[0] = String.valueOf(cont++);
-            vetElementos[1] = goals.get(i).getCod();
-            vetElementos[2] = goals.get(i).getName();
-            tabElementos.addRow(vetElementos);
-        }
-        ArrayList<IStarElement> tasks = Controller.getOme().getTasks();
-        vetElementos[3] = "Task";
-        for (int i = 0; i < tasks.size(); i++) {
-            vetElementos[0] = String.valueOf(cont++);
-            vetElementos[1] = tasks.get(i).getCod();
-            vetElementos[2] = tasks.get(i).getName();
-            tabElementos.addRow(vetElementos);
-        }
-        ArrayList<IStarElement> resources = Controller.getOme().getResourcess();
-        vetElementos[3] = "Resource";
-        for (int i = 0; i < resources.size(); i++) {
-            vetElementos[0] = String.valueOf(cont++);
-            vetElementos[1] = resources.get(i).getCod();
-            vetElementos[2] = resources.get(i).getName();
-            tabElementos.addRow(vetElementos);
-        }
-        ArrayList<IStarElement> softgoals = Controller.getOme().getSoftgoals();
-        vetElementos[3] = "Softgoal";
-        for (int i = 0; i < softgoals.size(); i++) {
-            vetElementos[0] = String.valueOf(cont++);
-            vetElementos[1] = softgoals.get(i).getCod();
-            vetElementos[2] = softgoals.get(i).getName();
-            tabElementos.addRow(vetElementos);
-        }
-        tableElements.setModel(tabElementos);
-        // seta largura das colunas
-        tableElements.getColumnModel().getColumn(0).setPreferredWidth(10);
-        tableElements.getColumnModel().getColumn(1).setPreferredWidth(80);
-        tableElements.getColumnModel().getColumn(2).setPreferredWidth(500);
-        tableElements.getColumnModel().getColumn(3).setPreferredWidth(80);
-        /*
-         * Atualiza Links i* Mapeados
-         */
-        DefaultTableModel tabLinks = new DefaultTableModel();
-        String vetLinks[] = new String[5];
-        tabLinks.addColumn("ID");
-        tabLinks.addColumn("Cod");
-        tabLinks.addColumn("From");
-        tabLinks.addColumn("To");
-        tabLinks.addColumn("Link Type");
-        cont = 1;
-        ArrayList<IStarLink> isas = Controller.getOme().getIsas();
-        vetLinks[4] = "ISA";
-        for (int i = 0; i < isas.size(); i++) {
-            vetLinks[0] = String.valueOf(cont++);
-            vetLinks[1] = isas.get(i).getCod();
-            vetLinks[2] = isas.get(i).getFrom();
-            vetLinks[3] = isas.get(i).getTo();
-            tabLinks.addRow(vetLinks);
-        }
-        ArrayList<IStarLink> inss = Controller.getOme().getInss();
-        vetLinks[4] = "INS";
-        for (int i = 0; i < inss.size(); i++) {
-            vetLinks[0] = String.valueOf(cont++);
-            vetLinks[1] = inss.get(i).getCod();
-            vetLinks[2] = inss.get(i).getFrom();
-            vetLinks[3] = inss.get(i).getTo();
-            tabLinks.addRow(vetLinks);
-        }
-        ArrayList<IStarLink> ispartofs = Controller.getOme().getIsPartOfs();
-        vetLinks[4] = "Is-Part-Of";
-        for (int i = 0; i < ispartofs.size(); i++) {
-            vetLinks[0] = String.valueOf(cont++);
-            vetLinks[1] = ispartofs.get(i).getCod();
-            vetLinks[2] = ispartofs.get(i).getFrom();
-            vetLinks[3] = ispartofs.get(i).getTo();
-            tabLinks.addRow(vetLinks);
-        }
-        ArrayList<IStarLink> occupiess = Controller.getOme().getOccupiess();
-        vetLinks[4] = "Occupies";
-        for (int i = 0; i < occupiess.size(); i++) {
-            vetLinks[0] = String.valueOf(cont++);
-            vetLinks[1] = occupiess.get(i).getCod();
-            vetLinks[2] = occupiess.get(i).getFrom();
-            vetLinks[3] = occupiess.get(i).getTo();
-            tabLinks.addRow(vetLinks);
-        }
-        ArrayList<IStarLink> playss = Controller.getOme().getPlayss();
-        vetLinks[4] = "Plays";
-        for (int i = 0; i < playss.size(); i++) {
-            vetLinks[0] = String.valueOf(cont++);
-            vetLinks[1] = playss.get(i).getCod();
-            vetLinks[2] = playss.get(i).getFrom();
-            vetLinks[3] = playss.get(i).getTo();
-            tabLinks.addRow(vetLinks);
-        }
-        ArrayList<IStarLink> coverss = Controller.getOme().getCoverss();
-        vetLinks[4] = "Covers";
-        for (int i = 0; i < coverss.size(); i++) {
-            vetLinks[0] = String.valueOf(cont++);
-            vetLinks[1] = coverss.get(i).getCod();
-            vetLinks[2] = coverss.get(i).getFrom();
-            vetLinks[3] = coverss.get(i).getTo();
-            tabLinks.addRow(vetLinks);
-        }
-        ArrayList<IStarLink> contributions = Controller.getOme().getContributions();
-        vetLinks[4] = "Contribution";
-        for (int i = 0; i < contributions.size(); i++) {
-            vetLinks[0] = String.valueOf(cont++);
-            vetLinks[1] = contributions.get(i).getCod();
-            vetLinks[2] = contributions.get(i).getFrom();
-            vetLinks[3] = contributions.get(i).getTo();
-            tabLinks.addRow(vetLinks);
-        }
-        ArrayList<IStarLink> dependencias = Controller.getOme().getDependenciess();
-        vetLinks[4] = "Dependencie";
-        for (int i = 0; i < dependencias.size(); i++) {
-            vetLinks[0] = String.valueOf(cont++);
-            vetLinks[1] = dependencias.get(i).getCod();
-            vetLinks[2] = dependencias.get(i).getFrom();
-            vetLinks[3] = dependencias.get(i).getTo();
-            tabLinks.addRow(vetLinks);
-        }
-        ArrayList<IStarLink> decompositions = Controller.getOme().getDecompositions();
-        vetLinks[4] = "Task-Decomposition";
-        for (int i = 0; i < decompositions.size(); i++) {
-            vetLinks[0] = String.valueOf(cont++);
-            vetLinks[1] = decompositions.get(i).getCod();
-            vetLinks[2] = decompositions.get(i).getFrom();
-            vetLinks[3] = decompositions.get(i).getTo();
-            tabLinks.addRow(vetLinks);
-        }
-        ArrayList<IStarLink> meansEnds = Controller.getOme().getMeansEnds();
-        vetLinks[4] = "Means-End";
-        for (int i = 0; i < meansEnds.size(); i++) {
-            vetLinks[0] = String.valueOf(cont++);
-            vetLinks[1] = meansEnds.get(i).getCod();
-            vetLinks[2] = meansEnds.get(i).getFrom();
-            vetLinks[3] = meansEnds.get(i).getTo();
-            tabLinks.addRow(vetLinks);
-        }
-        tableLinks.setModel(tabLinks);
-        // seta largura das colunas
-        tableLinks.getColumnModel().getColumn(0).setPreferredWidth(10);
-        tableLinks.getColumnModel().getColumn(1).setPreferredWidth(100);
-        tableLinks.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tableLinks.getColumnModel().getColumn(3).setPreferredWidth(100);
-        tableLinks.getColumnModel().getColumn(4).setPreferredWidth(100);
     }
     
     /**
@@ -1313,6 +740,37 @@ public class MainView extends javax.swing.JFrame {
     }
     
     /**
+     * Abre a janela de tabelas
+    */
+    private void showArtfactTables (){
+        try{
+            if (tableArtifacts == null) {            
+                tableArtifacts = new TableArtifacts();
+                tableArtifacts.setIconImage(iconJGOOSE);
+                tableArtifacts.setExtendedState(MAXIMIZED_BOTH);
+                tableArtifacts.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                EditorWindowListener windowListener = new EditorWindowListener(this, tableArtifacts);
+                this.addWindowListener(windowListener);
+                tableArtifacts.addWindowListener(windowListener);
+                this.addWindowListener(windowListener);
+
+            }
+            tableArtifacts.setVisible(true); 
+            this.setVisible(false);
+
+        }catch(Exception e){
+            StringBuilder sb = new StringBuilder(e.toString());
+                for (StackTraceElement ste : e.getStackTrace()) {
+                    sb.append("\n\tat ");
+                    sb.append(ste);
+                }
+            String trace = sb.toString();
+            JOptionPane.showMessageDialog(null, trace);
+        }
+    }
+    
+    
+    /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -1349,8 +807,6 @@ public class MainView extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu about;
-    private javax.swing.JScrollPane atoresMapeados;
-    private javax.swing.JScrollPane atoresMapeados2;
     private javax.swing.JButton btnTraceability;
     private javax.swing.JButton buttonBPMNToUseCases;
     private javax.swing.JButton buttonOpenE4JBPMN;
@@ -1358,33 +814,18 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton buttonOpenE4JiStar;
     private javax.swing.JButton buttonOpenTelosFile;
     private javax.swing.JButton buttunMappingUseCases;
-    private javax.swing.JScrollPane elementosMapeados;
-    private javax.swing.JScrollPane elementosMapeados2;
     private javax.swing.JMenuItem fileOpenTelosFile;
     private javax.swing.JMenuItem helpAbout;
     private javax.swing.JMenuItem helpGuidelines;
-    private javax.swing.JScrollPane informacoesArquivo;
-    private javax.swing.JScrollPane informacoesArquivo2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane linksMapeados;
-    private javax.swing.JScrollPane linksMapeados2;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
     private javax.swing.JMenu menuTools;
-    private javax.swing.JTable tableActors;
-    private javax.swing.JTable tableBPMNInfo;
-    private javax.swing.JTable tableElements;
-    private javax.swing.JTable tableElementsBPMN;
-    private javax.swing.JTable tableFile;
-    private javax.swing.JTable tableLinks;
-    private javax.swing.JTable tableLinksBPMN;
-    private javax.swing.JTable tableSwimlanes;
-    private javax.swing.JTabbedPane tabsMenu;
-    private javax.swing.JTabbedPane tabsMenu2;
     private javax.swing.JMenuItem toolsOpenE4JBPMNEditor;
     private javax.swing.JMenuItem toolsOpenE4JEditor;
     private javax.swing.JMenuItem toolsOpenE4JUCEditor;

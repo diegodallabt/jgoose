@@ -9,6 +9,7 @@ import br.unioeste.jgoose.model.TokensUseCase;
 import br.unioeste.jgoose.model.UCActor;
 import br.unioeste.jgoose.view.MainView;
 import br.unioeste.jgoose.view.SelectActorView;
+import br.unioeste.jgoose.view.TableArtifacts;
 import br.unioeste.jgoose.view.UseCasesDiagramView;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -142,7 +143,6 @@ public class Controller {
     public static void setSystemActor(int pos) {
         IStarActorElement Actor = ome.getActor(pos);
         systemActor = Actor.getCod();
-        mainView.updateTableIStar();
         mainView.setEnabled(true);
     }
 
