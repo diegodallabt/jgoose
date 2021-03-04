@@ -24,13 +24,17 @@ import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.HeadlessException;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -105,7 +109,7 @@ public class MainView extends javax.swing.JFrame {
                 g.fillRect(0, 0, c.getWidth(), c.getHeight());
             }         
     });
-        
+
     }
 
     /**
@@ -117,16 +121,36 @@ public class MainView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        buttonOpenE4JBPMN = new javax.swing.JButton();
-        buttonOpenE4JiStar = new javax.swing.JButton();
-        buttonOpenE4JUseCases = new javax.swing.JButton();
-        buttunMappingUseCases = new javax.swing.JButton();
-        buttonOpenTelosFile = new javax.swing.JButton();
-        buttonBPMNToUseCases = new javax.swing.JButton();
-        btnTraceability = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jPanelTitleAndButtons = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel4buttonOpenE4JiStar = new javax.swing.JPanel();
+        buttonOpenE4JiStar = new javax.swing.JButton();
+        jPanel4buttonOpenE4JBPMN = new javax.swing.JPanel();
+        buttonOpenE4JBPMN = new javax.swing.JButton();
+        jPanel4buttonOpenE4JUseCases = new javax.swing.JPanel();
+        buttonOpenE4JUseCases = new javax.swing.JButton();
+        jPanel4buttunMappingUseCases = new javax.swing.JPanel();
+        buttunMappingUseCases = new javax.swing.JButton();
+        jPanel4buttonBPMNToUseCases = new javax.swing.JPanel();
+        buttonBPMNToUseCases = new javax.swing.JButton();
+        jPanel4buttonVerticalTraceability = new javax.swing.JPanel();
+        buttonVerticalTraceability = new javax.swing.JButton();
+        jPanel4buttonHorizontalTraceability = new javax.swing.JPanel();
+        buttonHorizontalTraceability = new javax.swing.JButton();
+        jPanelImages = new javax.swing.JPanel();
+        jLabelImage1 = new javax.swing.JLabel();
+        jLabelImage3 = new javax.swing.JLabel();
+        jLabelImage2 = new javax.swing.JLabel();
+        jLabelImg1 = new javax.swing.JLabel();
+        jLabelImg2 = new javax.swing.JLabel();
+        jLabelImg3 = new javax.swing.JLabel();
+        jLabelSubTitleImg2 = new javax.swing.JLabel();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        jPanelFooter = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         fileOpenTelosFile = new javax.swing.JMenuItem();
@@ -138,8 +162,8 @@ public class MainView extends javax.swing.JFrame {
         menuHelp = new javax.swing.JMenu();
         helpGuidelines = new javax.swing.JMenuItem();
         helpAbout = new javax.swing.JMenuItem();
-        about = new javax.swing.JMenu();
-        jMenu1 = new javax.swing.JMenu();
+        menuAbout = new javax.swing.JMenu();
+        menuLes = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Home");
@@ -149,118 +173,431 @@ public class MainView extends javax.swing.JFrame {
         setName("home"); // NOI18N
         setResizable(false);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanelTitleAndButtons.setBackground(new java.awt.Color(254, 254, 254));
+        jPanelTitleAndButtons.setAutoscrolls(true);
+
+        jLabel2.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(52, 63, 75));
+        jLabel2.setText("helping software engeneerings");
+
+        jLabel1.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(7, 69, 101));
+        jLabel1.setText("JGOOSE");
+
+        jPanel1.setBackground(new java.awt.Color(254, 254, 254));
         jPanel1.setMaximumSize(new java.awt.Dimension(2147483647, 0));
 
-        buttonOpenE4JBPMN.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonOpenE4JBPMN.setText("E4J BPMN");
-        buttonOpenE4JBPMN.setToolTipText("Abrir Editor BPMN");
-        buttonOpenE4JBPMN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonOpenE4JBPMNActionPerformed(evt);
-            }
-        });
+        jPanel4buttonOpenE4JiStar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(90, 100, 120), 4, true));
+        jPanel4buttonOpenE4JiStar.setMaximumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttonOpenE4JiStar.setMinimumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttonOpenE4JiStar.setPreferredSize(new java.awt.Dimension(126, 114));
 
-        buttonOpenE4JiStar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonOpenE4JiStar.setText("E4J i*");
-        buttonOpenE4JiStar.setToolTipText("Abrir Arquivo Telos");
+        buttonOpenE4JiStar.setBackground(new java.awt.Color(255, 255, 255));
+        buttonOpenE4JiStar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        buttonOpenE4JiStar.setForeground(new java.awt.Color(15, 157, 229));
+        buttonOpenE4JiStar.setText("i*");
+        buttonOpenE4JiStar.setToolTipText("Open i* Editor");
+        buttonOpenE4JiStar.setBorder(null);
+        buttonOpenE4JiStar.setBorderPainted(false);
+        buttonOpenE4JiStar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        buttonOpenE4JiStar.setFocusable(false);
+        buttonOpenE4JiStar.setIconTextGap(0);
+        buttonOpenE4JiStar.setName(""); // NOI18N
         buttonOpenE4JiStar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonOpenE4JiStarActionPerformed(evt);
             }
         });
 
-        buttonOpenE4JUseCases.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonOpenE4JUseCases.setText("E4J Use Cases");
-        buttonOpenE4JUseCases.setToolTipText("Abrir Arquivo Telos");
+        javax.swing.GroupLayout jPanel4buttonOpenE4JiStarLayout = new javax.swing.GroupLayout(jPanel4buttonOpenE4JiStar);
+        jPanel4buttonOpenE4JiStar.setLayout(jPanel4buttonOpenE4JiStarLayout);
+        jPanel4buttonOpenE4JiStarLayout.setHorizontalGroup(
+            jPanel4buttonOpenE4JiStarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4buttonOpenE4JiStarLayout.createSequentialGroup()
+                .addGap(0, 1, Short.MAX_VALUE)
+                .addComponent(buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel4buttonOpenE4JiStarLayout.setVerticalGroup(
+            jPanel4buttonOpenE4JiStarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4buttonOpenE4JiStarLayout.createSequentialGroup()
+                .addComponent(buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanel4buttonOpenE4JBPMN.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(90, 100, 120), 4, true));
+        jPanel4buttonOpenE4JBPMN.setMaximumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttonOpenE4JBPMN.setMinimumSize(new java.awt.Dimension(126, 114));
+
+        buttonOpenE4JBPMN.setBackground(new java.awt.Color(255, 255, 255));
+        buttonOpenE4JBPMN.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        buttonOpenE4JBPMN.setForeground(new java.awt.Color(15, 157, 229));
+        buttonOpenE4JBPMN.setText("BPMN");
+        buttonOpenE4JBPMN.setToolTipText("Open BPMN Editor");
+        buttonOpenE4JBPMN.setBorder(null);
+        buttonOpenE4JBPMN.setBorderPainted(false);
+        buttonOpenE4JBPMN.setFocusable(false);
+        buttonOpenE4JBPMN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonOpenE4JBPMNActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4buttonOpenE4JBPMNLayout = new javax.swing.GroupLayout(jPanel4buttonOpenE4JBPMN);
+        jPanel4buttonOpenE4JBPMN.setLayout(jPanel4buttonOpenE4JBPMNLayout);
+        jPanel4buttonOpenE4JBPMNLayout.setHorizontalGroup(
+            jPanel4buttonOpenE4JBPMNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4buttonOpenE4JBPMNLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel4buttonOpenE4JBPMNLayout.setVerticalGroup(
+            jPanel4buttonOpenE4JBPMNLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        buttonOpenE4JBPMN.setMargin(new Insets(20, 20, 20, 20));
+
+        jPanel4buttonOpenE4JUseCases.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(90, 100, 120), 4, true));
+        jPanel4buttonOpenE4JUseCases.setMaximumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttonOpenE4JUseCases.setMinimumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttonOpenE4JUseCases.setPreferredSize(new java.awt.Dimension(126, 114));
+
+        buttonOpenE4JUseCases.setBackground(new java.awt.Color(255, 255, 255));
+        buttonOpenE4JUseCases.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        buttonOpenE4JUseCases.setForeground(new java.awt.Color(15, 157, 229));
+        buttonOpenE4JUseCases.setText("Use Cases");
+        buttonOpenE4JUseCases.setToolTipText("Editor Use Cases");
+        buttonOpenE4JUseCases.setBorder(null);
+        buttonOpenE4JUseCases.setBorderPainted(false);
+        buttonOpenE4JUseCases.setFocusable(false);
         buttonOpenE4JUseCases.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonOpenE4JUseCasesActionPerformed(evt);
             }
         });
 
-        buttunMappingUseCases.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttunMappingUseCases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/usecases_32x32.png"))); // NOI18N
-        buttunMappingUseCases.setText("Mapping Use Cases UML");
-        buttunMappingUseCases.setToolTipText("Mapear Casos de Uso UML");
+        javax.swing.GroupLayout jPanel4buttonOpenE4JUseCasesLayout = new javax.swing.GroupLayout(jPanel4buttonOpenE4JUseCases);
+        jPanel4buttonOpenE4JUseCases.setLayout(jPanel4buttonOpenE4JUseCasesLayout);
+        jPanel4buttonOpenE4JUseCasesLayout.setHorizontalGroup(
+            jPanel4buttonOpenE4JUseCasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4buttonOpenE4JUseCasesLayout.createSequentialGroup()
+                .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
+        );
+        jPanel4buttonOpenE4JUseCasesLayout.setVerticalGroup(
+            jPanel4buttonOpenE4JUseCasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4buttonOpenE4JUseCasesLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel4buttunMappingUseCases.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(90, 100, 120), 4, true));
+        jPanel4buttunMappingUseCases.setMaximumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttunMappingUseCases.setMinimumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttunMappingUseCases.setPreferredSize(new java.awt.Dimension(126, 114));
+
+        buttunMappingUseCases.setBackground(new java.awt.Color(255, 255, 255));
+        buttunMappingUseCases.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        buttunMappingUseCases.setForeground(new java.awt.Color(15, 157, 229));
+        buttunMappingUseCases.setText("<html><center>\nUse Cases <br> ( i* )");
+        buttunMappingUseCases.setToolTipText("Use Cases UML from i*");
+        buttunMappingUseCases.setBorder(null);
+        buttunMappingUseCases.setBorderPainted(false);
+        buttunMappingUseCases.setFocusable(false);
         buttunMappingUseCases.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttunMappingUseCasesActionPerformed(evt);
             }
         });
 
-        buttonOpenTelosFile.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonOpenTelosFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/folder_open_32x32.png"))); // NOI18N
-        buttonOpenTelosFile.setText("Open Telos File");
-        buttonOpenTelosFile.setToolTipText("Abrir Arquivo Telos");
-        buttonOpenTelosFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonOpenTelosFileActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel4buttunMappingUseCasesLayout = new javax.swing.GroupLayout(jPanel4buttunMappingUseCases);
+        jPanel4buttunMappingUseCases.setLayout(jPanel4buttunMappingUseCasesLayout);
+        jPanel4buttunMappingUseCasesLayout.setHorizontalGroup(
+            jPanel4buttunMappingUseCasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4buttunMappingUseCasesLayout.createSequentialGroup()
+                .addComponent(buttunMappingUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
+        );
+        jPanel4buttunMappingUseCasesLayout.setVerticalGroup(
+            jPanel4buttunMappingUseCasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4buttunMappingUseCasesLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(buttunMappingUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
-        buttonBPMNToUseCases.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonBPMNToUseCases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/toUC_32x32.png"))); // NOI18N
-        buttonBPMNToUseCases.setText("Mapping BPMN to Use Cases");
-        buttonBPMNToUseCases.setToolTipText("Derivar Casos de Uso a partir de BPMN");
+        jPanel4buttonBPMNToUseCases.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(90, 100, 120), 4));
+        jPanel4buttonBPMNToUseCases.setMaximumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttonBPMNToUseCases.setMinimumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttonBPMNToUseCases.setPreferredSize(new java.awt.Dimension(126, 114));
+
+        buttonBPMNToUseCases.setBackground(new java.awt.Color(255, 255, 255));
+        buttonBPMNToUseCases.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        buttonBPMNToUseCases.setForeground(new java.awt.Color(15, 157, 229));
+        buttonBPMNToUseCases.setText("<html><center>\nUse Cases <br>  BPMN\n");
+        buttonBPMNToUseCases.setToolTipText("Use Cases from BPMN");
+        buttonBPMNToUseCases.setBorder(null);
+        buttonBPMNToUseCases.setBorderPainted(false);
+        buttonBPMNToUseCases.setFocusable(false);
         buttonBPMNToUseCases.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonBPMNToUseCasesActionPerformed(evt);
             }
         });
 
-        btnTraceability.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnTraceability.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/traceability_32x32.png"))); // NOI18N
-        btnTraceability.setText("Traceability");
-        btnTraceability.addActionListener(new java.awt.event.ActionListener() {
+        javax.swing.GroupLayout jPanel4buttonBPMNToUseCasesLayout = new javax.swing.GroupLayout(jPanel4buttonBPMNToUseCases);
+        jPanel4buttonBPMNToUseCases.setLayout(jPanel4buttonBPMNToUseCasesLayout);
+        jPanel4buttonBPMNToUseCasesLayout.setHorizontalGroup(
+            jPanel4buttonBPMNToUseCasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4buttonBPMNToUseCasesLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(buttonBPMNToUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel4buttonBPMNToUseCasesLayout.setVerticalGroup(
+            jPanel4buttonBPMNToUseCasesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4buttonBPMNToUseCasesLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(buttonBPMNToUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel4buttonVerticalTraceability.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(90, 100, 120), 4, true));
+        jPanel4buttonVerticalTraceability.setMaximumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttonVerticalTraceability.setMinimumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttonVerticalTraceability.setPreferredSize(new java.awt.Dimension(126, 114));
+
+        buttonVerticalTraceability.setBackground(new java.awt.Color(255, 255, 255));
+        buttonVerticalTraceability.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        buttonVerticalTraceability.setForeground(new java.awt.Color(15, 157, 229));
+        buttonVerticalTraceability.setText("<html><center> Vertical <br>  Traceability");
+        buttonVerticalTraceability.setBorder(null);
+        buttonVerticalTraceability.setBorderPainted(false);
+        buttonVerticalTraceability.setFocusable(false);
+        buttonVerticalTraceability.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTraceabilityActionPerformed(evt);
+                buttonVerticalTraceabilityActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel4buttonVerticalTraceabilityLayout = new javax.swing.GroupLayout(jPanel4buttonVerticalTraceability);
+        jPanel4buttonVerticalTraceability.setLayout(jPanel4buttonVerticalTraceabilityLayout);
+        jPanel4buttonVerticalTraceabilityLayout.setHorizontalGroup(
+            jPanel4buttonVerticalTraceabilityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4buttonVerticalTraceabilityLayout.createSequentialGroup()
+                .addComponent(buttonVerticalTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 2, Short.MAX_VALUE))
+        );
+        jPanel4buttonVerticalTraceabilityLayout.setVerticalGroup(
+            jPanel4buttonVerticalTraceabilityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4buttonVerticalTraceabilityLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(buttonVerticalTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        jPanel4buttonHorizontalTraceability.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(90, 100, 120), 4));
+        jPanel4buttonHorizontalTraceability.setMaximumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttonHorizontalTraceability.setMinimumSize(new java.awt.Dimension(126, 114));
+        jPanel4buttonHorizontalTraceability.setPreferredSize(new java.awt.Dimension(126, 114));
+
+        buttonHorizontalTraceability.setBackground(new java.awt.Color(255, 255, 255));
+        buttonHorizontalTraceability.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        buttonHorizontalTraceability.setForeground(new java.awt.Color(15, 157, 229));
+        buttonHorizontalTraceability.setText("<html><center> Horizontal <br>  Traceability");
+        buttonHorizontalTraceability.setToolTipText("");
+        buttonHorizontalTraceability.setBorder(null);
+        buttonHorizontalTraceability.setBorderPainted(false);
+        buttonHorizontalTraceability.setFocusable(false);
+        buttonHorizontalTraceability.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonHorizontalTraceabilityActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4buttonHorizontalTraceabilityLayout = new javax.swing.GroupLayout(jPanel4buttonHorizontalTraceability);
+        jPanel4buttonHorizontalTraceability.setLayout(jPanel4buttonHorizontalTraceabilityLayout);
+        jPanel4buttonHorizontalTraceabilityLayout.setHorizontalGroup(
+            jPanel4buttonHorizontalTraceabilityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4buttonHorizontalTraceabilityLayout.createSequentialGroup()
+                .addComponent(buttonHorizontalTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 2, Short.MAX_VALUE))
+        );
+        jPanel4buttonHorizontalTraceabilityLayout.setVerticalGroup(
+            jPanel4buttonHorizontalTraceabilityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4buttonHorizontalTraceabilityLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(buttonHorizontalTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
-                .addComponent(buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(buttunMappingUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(buttonOpenTelosFile, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(buttonBPMNToUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jPanel4buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jPanel4buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jPanel4buttunMappingUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jPanel4buttonBPMNToUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jPanel4buttonVerticalTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(jPanel4buttonHorizontalTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonOpenE4JBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonOpenE4JUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttunMappingUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonOpenTelosFile, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonBPMNToUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel4buttunMappingUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4buttonBPMNToUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4buttonVerticalTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4buttonHorizontalTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4buttonOpenE4JiStar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel4buttonOpenE4JUseCases, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel4buttonOpenE4JBPMN, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(22, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanelTitleAndButtonsLayout = new javax.swing.GroupLayout(jPanelTitleAndButtons);
+        jPanelTitleAndButtons.setLayout(jPanelTitleAndButtonsLayout);
+        jPanelTitleAndButtonsLayout.setHorizontalGroup(
+            jPanelTitleAndButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTitleAndButtonsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelTitleAndButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTitleAndButtonsLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanelTitleAndButtonsLayout.setVerticalGroup(
+            jPanelTitleAndButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTitleAndButtonsLayout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addGroup(jPanelTitleAndButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jLabelImage1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img1-undraw_Mind_map-svg (1).png"))); // NOI18N
+        jLabelImage1.setIconTextGap(0);
+        jLabelImage1.setMinimumSize(new java.awt.Dimension(1, 1));
+
+        jLabelImage3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelImage3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img3-undraw_software_engineer_lvl5 (1)-svg (2).png"))); // NOI18N
+        jLabelImage3.setIconTextGap(0);
+        jLabelImage3.setMinimumSize(new java.awt.Dimension(1, 1));
+
+        jLabelImage2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelImage2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img2-undraw_analyze_17kw-svg (1).png"))); // NOI18N
+        jLabelImage2.setToolTipText("");
+        jLabelImage2.setIconTextGap(0);
+        jLabelImage2.setMinimumSize(new java.awt.Dimension(1, 1));
+
+        jLabelImg1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabelImg1.setText("Create diagrams in BMPN, i* and Use Case");
+
+        jLabelImg2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabelImg2.setText("Discovery requeriments  ");
+
+        jLabelImg3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabelImg3.setText("Traceability your requeriments");
+        jLabelImg3.setToolTipText("");
+
+        jLabelSubTitleImg2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jLabelSubTitleImg2.setForeground(new java.awt.Color(71, 92, 84));
+        jLabelSubTitleImg2.setText("BPMN for Use Case or i* for Use Cases");
+
+        javax.swing.GroupLayout jPanelImagesLayout = new javax.swing.GroupLayout(jPanelImages);
+        jPanelImages.setLayout(jPanelImagesLayout);
+        jPanelImagesLayout.setHorizontalGroup(
+            jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelImagesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelImagesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(368, 368, 368))
+                    .addGroup(jPanelImagesLayout.createSequentialGroup()
+                        .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelImagesLayout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addComponent(jLabelImg1)
+                                .addGap(189, 189, 189)
+                                .addComponent(jLabelImg2)
+                                .addGap(222, 222, 222)
+                                .addComponent(jLabelImg3))
+                            .addGroup(jPanelImagesLayout.createSequentialGroup()
+                                .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelImagesLayout.createSequentialGroup()
+                                        .addComponent(jLabelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(71, 71, 71)
+                                        .addComponent(jLabelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelImagesLayout.createSequentialGroup()
+                                        .addComponent(jLabelSubTitleImg2)
+                                        .addGap(47, 47, 47)))
+                                .addGap(71, 71, 71)
+                                .addComponent(jLabelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+        jPanelImagesLayout.setVerticalGroup(
+            jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelImagesLayout.createSequentialGroup()
+                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelImg1)
+                    .addComponent(jLabelImg2)
+                    .addComponent(jLabelImg3))
+                .addGap(5, 5, 5)
+                .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(5, 5, 5)
+                .addComponent(jLabelSubTitleImg2)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(7, 69, 101));
-        jLabel1.setText("JGOOSE");
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo_unioeste_Les.png"))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(52, 63, 75));
-        jLabel2.setText("helping software engeneerings");
+        jLabel4.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(71, 82, 94));
+        jLabel4.setText("version 5.7");
+
+        javax.swing.GroupLayout jPanelFooterLayout = new javax.swing.GroupLayout(jPanelFooter);
+        jPanelFooter.setLayout(jPanelFooterLayout);
+        jPanelFooterLayout.setHorizontalGroup(
+            jPanelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFooterLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(10, 10, 10))
+        );
+        jPanelFooterLayout.setVerticalGroup(
+            jPanelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFooterLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanelFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+        );
 
         menuBar.setBackground(new java.awt.Color(255, 102, 0));
         menuBar.setForeground(new java.awt.Color(153, 0, 102));
@@ -281,6 +618,14 @@ public class MainView extends javax.swing.JFrame {
         menuFile.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         menuFile.setMargin(new java.awt.Insets(0, 20, 0, 20));
         menuFile.setOpaque(true);
+        menuFile.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuFileMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuFileMouseExited(evt);
+            }
+        });
 
         fileOpenTelosFile.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         fileOpenTelosFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/folder_open_16x16.png"))); // NOI18N
@@ -300,6 +645,14 @@ public class MainView extends javax.swing.JFrame {
         menuTools.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         menuTools.setMargin(new java.awt.Insets(0, 20, 0, 20));
         menuTools.setOpaque(true);
+        menuTools.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuToolsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuToolsMouseExited(evt);
+            }
+        });
 
         toolsOpenE4JBPMNEditor.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         toolsOpenE4JBPMNEditor.setText("E4J BPMN");
@@ -345,6 +698,14 @@ public class MainView extends javax.swing.JFrame {
         menuHelp.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         menuHelp.setMargin(new java.awt.Insets(0, 20, 0, 20));
         menuHelp.setOpaque(true);
+        menuHelp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuHelpMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuHelpMouseExited(evt);
+            }
+        });
 
         helpGuidelines.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         helpGuidelines.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/guidelines_16x16.png"))); // NOI18N
@@ -368,29 +729,37 @@ public class MainView extends javax.swing.JFrame {
 
         menuBar.add(menuHelp);
 
-        about.setBackground(new java.awt.Color(11, 113, 165));
-        about.setForeground(new java.awt.Color(254, 254, 254));
-        about.setText("About");
-        about.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        about.setMargin(new java.awt.Insets(0, 20, 0, 20));
-        about.setOpaque(true);
-        about.addMouseListener(new java.awt.event.MouseAdapter() {
+        menuAbout.setBackground(new java.awt.Color(11, 113, 165));
+        menuAbout.setForeground(new java.awt.Color(254, 254, 254));
+        menuAbout.setText("About");
+        menuAbout.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        menuAbout.setMargin(new java.awt.Insets(0, 20, 0, 20));
+        menuAbout.setOpaque(true);
+        menuAbout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                aboutMouseEntered(evt);
+                menuAboutMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                aboutMouseExited(evt);
+                menuAboutMouseExited(evt);
             }
         });
-        menuBar.add(about);
+        menuBar.add(menuAbout);
 
-        jMenu1.setBackground(new java.awt.Color(11, 113, 165));
-        jMenu1.setForeground(new java.awt.Color(254, 254, 254));
-        jMenu1.setText("Les");
-        jMenu1.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
-        jMenu1.setMargin(new java.awt.Insets(0, 20, 0, 20));
-        jMenu1.setOpaque(true);
-        menuBar.add(jMenu1);
+        menuLes.setBackground(new java.awt.Color(11, 113, 165));
+        menuLes.setForeground(new java.awt.Color(254, 254, 254));
+        menuLes.setText("Les");
+        menuLes.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
+        menuLes.setMargin(new java.awt.Insets(0, 20, 0, 20));
+        menuLes.setOpaque(true);
+        menuLes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuLesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuLesMouseExited(evt);
+            }
+        });
+        menuBar.add(menuLes);
 
         setJMenuBar(menuBar);
 
@@ -398,27 +767,21 @@ public class MainView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanelTitleAndButtons, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelImages, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanelFooter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(79, 79, 79)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1))
-                .addGap(90, 90, 90)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(309, Short.MAX_VALUE))
+                .addComponent(jPanelTitleAndButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelImages, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(jPanelFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -426,13 +789,13 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraceabilityActionPerformed
+    private void buttonHorizontalTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHorizontalTraceabilityActionPerformed
         try {
             this.showTraceability();
         } catch (HeadlessException ex) {
             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnTraceabilityActionPerformed
+    }//GEN-LAST:event_buttonHorizontalTraceabilityActionPerformed
 
     private void buttonBPMNToUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBPMNToUseCasesActionPerformed
         BPMNController.mapUseCases();
@@ -443,11 +806,6 @@ public class MainView extends javax.swing.JFrame {
         useCasesViewBPMN.updateTable();
         useCasesViewBPMN.setVisible(true);
     }//GEN-LAST:event_buttonBPMNToUseCasesActionPerformed
-
-    private void buttonOpenTelosFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenTelosFileActionPerformed
-        Controller.setMainView(this);
-        Controller.openTelosFile();
-    }//GEN-LAST:event_buttonOpenTelosFileActionPerformed
 
     private void buttunMappingUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesActionPerformed
         Controller.mapUseCases();
@@ -468,16 +826,6 @@ public class MainView extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonOpenE4JUseCasesActionPerformed
-
-    private void buttonOpenE4JiStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JiStarActionPerformed
-        try {
-            this.showE4JiStar();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_buttonOpenE4JiStarActionPerformed
 
     private void buttonOpenE4JBPMNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JBPMNActionPerformed
         try {
@@ -544,14 +892,59 @@ public class MainView extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void aboutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMouseEntered
-           
-        about.setBackground(Color.GREEN);
-    }//GEN-LAST:event_aboutMouseEntered
+    private void menuAboutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseEntered
+        menuAbout.setBackground(new java.awt.Color(59,141,183));
+    }//GEN-LAST:event_menuAboutMouseEntered
 
-    private void aboutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aboutMouseExited
-         about.setBackground(Color.BLACK);
-    }//GEN-LAST:event_aboutMouseExited
+    private void menuAboutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseExited
+        menuAbout.setBackground(new java.awt.Color(11,113,165));
+    }//GEN-LAST:event_menuAboutMouseExited
+
+    private void menuHelpMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuHelpMouseEntered
+        menuHelp.setBackground(new java.awt.Color(59,141,183));
+    }//GEN-LAST:event_menuHelpMouseEntered
+
+    private void menuHelpMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuHelpMouseExited
+        menuHelp.setBackground(new java.awt.Color(11,113,165));
+    }//GEN-LAST:event_menuHelpMouseExited
+
+    private void menuToolsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuToolsMouseEntered
+        menuTools.setBackground(new java.awt.Color(59,141,183));
+    }//GEN-LAST:event_menuToolsMouseEntered
+
+    private void menuToolsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuToolsMouseExited
+       menuTools.setBackground(new java.awt.Color(11,113,165));
+    }//GEN-LAST:event_menuToolsMouseExited
+
+    private void menuFileMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuFileMouseEntered
+        menuFile.setBackground(new java.awt.Color(59,141,183));
+    }//GEN-LAST:event_menuFileMouseEntered
+
+    private void menuFileMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuFileMouseExited
+        menuFile.setBackground(new java.awt.Color(11,113,165));
+    }//GEN-LAST:event_menuFileMouseExited
+
+    private void menuLesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLesMouseEntered
+        menuLes.setBackground(new java.awt.Color(59,141,183));
+    }//GEN-LAST:event_menuLesMouseEntered
+
+    private void menuLesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLesMouseExited
+        menuLes.setBackground(new java.awt.Color(11,113,165));
+    }//GEN-LAST:event_menuLesMouseExited
+
+    private void buttonVerticalTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVerticalTraceabilityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonVerticalTraceabilityActionPerformed
+
+    private void buttonOpenE4JiStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JiStarActionPerformed
+        try {
+            this.showE4JiStar();
+        } catch (HeadlessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonOpenE4JiStarActionPerformed
 
     /**
      * Abre uma janela GuidelinesDialogView
@@ -806,25 +1199,46 @@ public class MainView extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu about;
-    private javax.swing.JButton btnTraceability;
     private javax.swing.JButton buttonBPMNToUseCases;
-    private javax.swing.JButton buttonOpenE4JBPMN;
+    private javax.swing.JButton buttonHorizontalTraceability;
+    public javax.swing.JButton buttonOpenE4JBPMN;
     private javax.swing.JButton buttonOpenE4JUseCases;
     private javax.swing.JButton buttonOpenE4JiStar;
-    private javax.swing.JButton buttonOpenTelosFile;
+    private javax.swing.JButton buttonVerticalTraceability;
     private javax.swing.JButton buttunMappingUseCases;
     private javax.swing.JMenuItem fileOpenTelosFile;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JMenuItem helpAbout;
     private javax.swing.JMenuItem helpGuidelines;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelImage1;
+    private javax.swing.JLabel jLabelImage2;
+    private javax.swing.JLabel jLabelImage3;
+    private javax.swing.JLabel jLabelImg1;
+    private javax.swing.JLabel jLabelImg2;
+    private javax.swing.JLabel jLabelImg3;
+    private javax.swing.JLabel jLabelSubTitleImg2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4buttonBPMNToUseCases;
+    private javax.swing.JPanel jPanel4buttonHorizontalTraceability;
+    private javax.swing.JPanel jPanel4buttonOpenE4JBPMN;
+    private javax.swing.JPanel jPanel4buttonOpenE4JUseCases;
+    private javax.swing.JPanel jPanel4buttonOpenE4JiStar;
+    private javax.swing.JPanel jPanel4buttonVerticalTraceability;
+    private javax.swing.JPanel jPanel4buttunMappingUseCases;
+    private javax.swing.JPanel jPanelFooter;
+    private javax.swing.JPanel jPanelImages;
+    private javax.swing.JPanel jPanelTitleAndButtons;
+    private javax.swing.JMenu menuAbout;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
+    private javax.swing.JMenu menuLes;
     private javax.swing.JMenu menuTools;
     private javax.swing.JMenuItem toolsOpenE4JBPMNEditor;
     private javax.swing.JMenuItem toolsOpenE4JEditor;
