@@ -803,8 +803,34 @@ public class MainView extends javax.swing.JFrame {
             useCasesViewBPMN = new UseCasesViewBPMN();
             useCasesViewBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         }
-        useCasesViewBPMN.updateTable();
         useCasesViewBPMN.setVisible(true);
+        
+        
+        
+         /*       try{
+            if (tableArtifacts == null) {            
+                tableArtifacts = new TableArtifacts();
+                tableArtifacts.setIconImage(iconJGOOSE);
+                tableArtifacts.setExtendedState(MAXIMIZED_BOTH);
+                tableArtifacts.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                EditorWindowListener windowListener = new EditorWindowListener(this, tableArtifacts);
+                this.addWindowListener(windowListener);
+                tableArtifacts.addWindowListener(windowListener);
+                this.addWindowListener(windowListener);
+
+            }
+            tableArtifacts.setVisible(true); 
+            this.setVisible(false);
+
+        }catch(Exception e){
+            StringBuilder sb = new StringBuilder(e.toString());
+                for (StackTraceElement ste : e.getStackTrace()) {
+                    sb.append("\n\tat ");
+                    sb.append(ste);
+                }
+            String trace = sb.toString();
+            JOptionPane.showMessageDialog(null, trace);
+        }*/
     }//GEN-LAST:event_buttonBPMNToUseCasesActionPerformed
 
     private void buttunMappingUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesActionPerformed
