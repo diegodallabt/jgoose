@@ -21,6 +21,7 @@ import com.mxgraph.shape.mxStencilShape;
 import com.mxgraph.util.mxResources;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxGraph;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -44,19 +45,26 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.RowFilter;
 import javax.swing.UIManager;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.SimpleAttributeSet;
@@ -74,20 +82,17 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
     private String selectedCase = "";
     private EditorJFrame e4jInstance = null;
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger("console");
-
+    
     /**
      * Creates new form UseCasesView
      */
     public UseCasesViewBPMN() {
-        initComponents();
         setLocationRelativeTo(null);
-        buttonDelete.setEnabled(false);
-        Image Icone;
-        Icone = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/usecases_32x32.png");
-        setIconImage(Icone);
+        initComponents();
         UIManager.put("OptionPane.yesButtonText", "Yes");
         UIManager.put("OptionPane.noButtonText", "No");
         updateTable();
+
     }
 
     /*
@@ -109,41 +114,56 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             vetCasosDeUso[1] = useCase.getName();
             vetCasosDeUso[2] = "";
             vetCasosDeUso[3] = "";
-            //vetCasosDeUso[2] = useCase.getPrimaryActor().getName();
-
-            //String actors = "";
-            // Percorre os atores, identificando atores associados ao atual
-            //for(UCActor actor : useCase.getSecondaryActors()){
-            //    actors += actor.getName() + "; ";
-            //}
-            //vetCasosDeUso[3] = actors;
-            //String includedUseCases = "";
-            // Percorre os casos de usos incluídos
-            //for(UCUseCase useCaseIncluded : useCase.getIncludedUseCases()){
-            //    includedUseCases += (Integer.parseInt(useCaseIncluded.getCode())+1) + " - " + useCaseIncluded.getName() + "; ";
-            //}
-            //vetCasosDeUso[4] = includedUseCases;
-            //vetCasosDeUso[5] = useCase.getGuidelineUsed();
             tabCasosDeUso.addRow(vetCasosDeUso);
 
         }
-
+        tabelUseCases.setAutoResizeMode(MAXIMIZED_HORIZ);
         tabelUseCases.setModel(tabCasosDeUso);
         // seta a largura das colunas da tabela
-        tabelUseCases.getColumnModel().getColumn(0).setPreferredWidth(30);
-        tabelUseCases.getColumnModel().getColumn(1).setPreferredWidth(170);
-        tabelUseCases.getColumnModel().getColumn(2).setPreferredWidth(20);
-        tabelUseCases.getColumnModel().getColumn(3).setPreferredWidth(20);
+        tabelUseCases.getColumnModel().getColumn(0).setMaxWidth(20);
+        tabelUseCases.getColumnModel().getColumn(1).setMinWidth(MAXIMIZED_HORIZ);
+        tabelUseCases.getColumnModel().getColumn(2).setMaxWidth(20);
+        tabelUseCases.getColumnModel().getColumn(3).setMaxWidth(20);
 
         tabelUseCases.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
         tabelUseCases.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(new JTextField()));
 
         tabelUseCases.getColumnModel().getColumn(3).setCellRenderer(new ButtonRendererDelete());
         tabelUseCases.getColumnModel().getColumn(3).setCellEditor(new ButtonDelete(new JTextField(), 0));
-        //tabelUseCases.getColumnModel().getColumn(3).setCellRenderer(new ButtonRenderer());
+        
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabelUseCases.getModel());
+        tabelUseCases.setRowSorter(rowSorter);
+        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
 
-        //tabelUseCases.getColumnModel().getColumn(4).setPreferredWidth(140);
-        //tabelUseCases.getColumnModel().getColumn(5).setPreferredWidth(90);
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = jtfFilter.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = jtfFilter.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
+        
     }
 
     /*
@@ -169,7 +189,6 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
 
     private void tabelUseCasesValueChanged(ListSelectionEvent evt) {
 
-        buttonDelete.setEnabled(true);
         buttonDiagram.setEnabled(true);
         int colunm = tabelUseCases.getSelectedColumn();
         int linha = tabelUseCases.getSelectedRow();
@@ -268,7 +287,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-    @SuppressWarnings("unchecked")
+     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -276,9 +295,20 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         jPanelHeader = new javax.swing.JPanel();
         buttonDiagram = new javax.swing.JButton();
         buttonGuidelines = new javax.swing.JButton();
-        buttonDelete = new javax.swing.JButton();
         JLabelUseCasesFromBPMN = new javax.swing.JLabel();
         buttonSaveUseCases = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        labelSearchIcon = new javax.swing.JLabel();
+        jtfFilter = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        textUseCases = new javax.swing.JTextPane();
+        labelCasosDeUso = new javax.swing.JLabel();
+        buttonSaveDescription = new javax.swing.JButton();
+        buttonExportThisSpecification = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelUseCases = new javax.swing.JTable(){
             @Override
@@ -287,32 +317,37 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             }
         };
         jPanelMenuButtons = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        textUseCases = new javax.swing.JTextPane();
-        labelCasosDeUso = new javax.swing.JLabel();
-        buttonSaveDescription = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         menuUseCases = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Use Cases");
-        setResizable(false);
 
         jPanelBackground.setBackground(new java.awt.Color(244, 244, 244));
+        jPanelBackground.setMaximumSize(new java.awt.Dimension(3276799, 32767999));
 
         jPanelHeader.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelHeader.setMaximumSize(new java.awt.Dimension(32767999, 32767999));
 
-        buttonDiagram.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonDiagram.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/usecase_diagram_wiz.gif"))); // NOI18N
+        buttonDiagram.setBackground(new java.awt.Color(15, 157, 229));
+        buttonDiagram.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        buttonDiagram.setForeground(new java.awt.Color(250, 250, 250));
         buttonDiagram.setText("Diagram");
+        buttonDiagram.setBorder(null);
         buttonDiagram.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonDiagramActionPerformed(evt);
             }
         });
 
-        buttonGuidelines.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonGuidelines.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/guidelines_32x32.png"))); // NOI18N
+        buttonGuidelines.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         buttonGuidelines.setText("Guidelines");
         buttonGuidelines.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -320,60 +355,184 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             }
         });
 
-        buttonDelete.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete_32x32.png"))); // NOI18N
-        buttonDelete.setText("Delete");
-        buttonDelete.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonDeleteActionPerformed(evt);
-            }
-        });
-
-        JLabelUseCasesFromBPMN.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        JLabelUseCasesFromBPMN.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
+        JLabelUseCasesFromBPMN.setForeground(new java.awt.Color(37, 172, 241));
         JLabelUseCasesFromBPMN.setText("Use Cases Mapped from BPMN");
 
-        buttonSaveUseCases.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonSaveUseCases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save_32x32.png"))); // NOI18N
-        buttonSaveUseCases.setText("Save Use Cases");
+        buttonSaveUseCases.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        buttonSaveUseCases.setText("Export all Requirements");
         buttonSaveUseCases.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonSaveUseCasesActionPerformed(evt);
             }
         });
 
+        jButton4.setBackground(new java.awt.Color(15, 157, 229));
+        jButton4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(250, 250, 250));
+        jButton4.setText("Add Requirement");
+        jButton4.setBorder(null);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/undraw_file_analysis.png"))); // NOI18N
+
+        jPanel2.setBackground(new java.awt.Color(244, 251, 255));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(213, 239, 255), 2, true));
+
+        labelSearchIcon.setBackground(new java.awt.Color(244, 251, 255));
+        labelSearchIcon.setForeground(new java.awt.Color(244, 251, 255));
+        labelSearchIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelSearchIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/searchIcon (3).png"))); // NOI18N
+        labelSearchIcon.setToolTipText("");
+        labelSearchIcon.setOpaque(true);
+
+        jtfFilter.setBackground(new java.awt.Color(244, 251, 255));
+        jtfFilter.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        jtfFilter.setToolTipText("");
+        jtfFilter.setBorder(null);
+        jtfFilter.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfFilterActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addComponent(jtfFilter, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelSearchIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jtfFilter, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(labelSearchIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
         jPanelHeader.setLayout(jPanelHeaderLayout);
         jPanelHeaderLayout.setHorizontalGroup(
             jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelHeaderLayout.createSequentialGroup()
-                        .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonGuidelines, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(buttonDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(116, 116, 116))
-            .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(JLabelUseCasesFromBPMN)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JLabelUseCasesFromBPMN))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonGuidelines, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanelHeaderLayout.setVerticalGroup(
             jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(JLabelUseCasesFromBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(buttonDelete)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonSaveUseCases)
-                    .addComponent(buttonGuidelines, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelHeaderLayout.createSequentialGroup()
+                                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(21, 21, 21))))
+                    .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(JLabelUseCasesFromBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(10, 10, 10)
+                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buttonGuidelines, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(10, 10, 10))
+        );
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        textUseCases.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(53, 178, 242)));
+        textUseCases.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jScrollPane3.setViewportView(textUseCases);
+
+        labelCasosDeUso.setBackground(new java.awt.Color(53, 178, 242));
+        labelCasosDeUso.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        labelCasosDeUso.setForeground(new java.awt.Color(53, 178, 242));
+        labelCasosDeUso.setText("Use Case Specification");
+
+        buttonSaveDescription.setBackground(new java.awt.Color(53, 178, 242));
+        buttonSaveDescription.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        buttonSaveDescription.setForeground(new java.awt.Color(250, 250, 250));
+        buttonSaveDescription.setText("Save");
+        buttonSaveDescription.setToolTipText("");
+        buttonSaveDescription.setBorder(null);
+        buttonSaveDescription.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSaveDescriptionActionPerformed(evt);
+            }
+        });
+
+        buttonExportThisSpecification.setBackground(new java.awt.Color(53, 178, 242));
+        buttonExportThisSpecification.setFont(new java.awt.Font("Roboto", 0, 16)); // NOI18N
+        buttonExportThisSpecification.setForeground(new java.awt.Color(250, 250, 250));
+        buttonExportThisSpecification.setText("Export this Specification");
+        buttonExportThisSpecification.setToolTipText("");
+        buttonExportThisSpecification.setBorder(null);
+        buttonExportThisSpecification.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonExportThisSpecificationActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(labelCasosDeUso)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(200, 200, 200)
+                                .addComponent(buttonSaveDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonExportThisSpecification, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(labelCasosDeUso)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buttonSaveDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonExportThisSpecification, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10))
         );
 
         tabelUseCases.setAutoCreateRowSorter(true);
@@ -396,6 +555,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             }
         });
         tabelUseCases.setGridColor(new java.awt.Color(254, 254, 254));
+        tabelUseCases.setPreferredSize(null);
         tabelUseCases.setRowHeight(30);
         tabelUseCases.setSelectionBackground(new java.awt.Color(199, 235, 254));
         tabelUseCases.setSelectionForeground(new java.awt.Color(37, 172, 241));
@@ -424,63 +584,15 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         tabelUseCases.getAccessibleContext().setAccessibleDescription("");
         tabelUseCases.getTableHeader().setForeground(new java.awt.Color(71, 92, 84));
 
-        jPanelMenuButtons.setBackground(new java.awt.Color(11, 113, 165));
-
-        javax.swing.GroupLayout jPanelMenuButtonsLayout = new javax.swing.GroupLayout(jPanelMenuButtons);
-        jPanelMenuButtons.setLayout(jPanelMenuButtonsLayout);
-        jPanelMenuButtonsLayout.setHorizontalGroup(
-            jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 64, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
-        jPanelMenuButtonsLayout.setVerticalGroup(
-            jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 726, Short.MAX_VALUE)
-        );
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        textUseCases.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(53, 178, 242)));
-        textUseCases.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jScrollPane3.setViewportView(textUseCases);
-
-        labelCasosDeUso.setBackground(new java.awt.Color(53, 178, 242));
-        labelCasosDeUso.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        labelCasosDeUso.setForeground(new java.awt.Color(53, 178, 242));
-        labelCasosDeUso.setText("Use Case Specification");
-
-        buttonSaveDescription.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        buttonSaveDescription.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/save_32x32.png"))); // NOI18N
-        buttonSaveDescription.setText("Save Description");
-        buttonSaveDescription.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSaveDescriptionActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelCasosDeUso)
-                        .addGap(48, 48, 48)
-                        .addComponent(buttonSaveDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelCasosDeUso)
-                    .addComponent(buttonSaveDescription))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3)
-                .addContainerGap())
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
         );
 
         javax.swing.GroupLayout jPanelBackgroundLayout = new javax.swing.GroupLayout(jPanelBackground);
@@ -488,31 +600,95 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         jPanelBackgroundLayout.setHorizontalGroup(
             jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                .addComponent(jPanelMenuButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24))
-                    .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                        .addComponent(jPanelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(jPanelHeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelBackgroundLayout.setVerticalGroup(
             jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jPanelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                .addComponent(jPanelMenuButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+
+        jPanelMenuButtons.setBackground(new java.awt.Color(11, 113, 165));
+
+        jButton1.setText("HOME");
+        jButton1.setBorder(null);
+        jButton1.setOpaque(false);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("i*");
+
+        jButton3.setText("bpmn");
+
+        jButton5.setText("UC");
+
+        jButton6.setText("UC i*");
+
+        jButton7.setText("UC BPMN");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setText("Vertical T");
+
+        jButton9.setText("Horizontal ");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelMenuButtonsLayout = new javax.swing.GroupLayout(jPanelMenuButtons);
+        jPanelMenuButtons.setLayout(jPanelMenuButtonsLayout);
+        jPanelMenuButtonsLayout.setHorizontalGroup(
+            jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMenuButtonsLayout.createSequentialGroup()
+                .addGroup(jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
+        );
+        jPanelMenuButtonsLayout.setVerticalGroup(
+            jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMenuButtonsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(350, Short.MAX_VALUE))
         );
 
         setJMenuBar(menuUseCases);
@@ -521,23 +697,30 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanelMenuButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelBackground, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jPanelBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanelMenuButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonGuidelinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuidelinesActionPerformed
-        buttonDelete.setEnabled(false);
         this.showGuidelinesDialog();
     }//GEN-LAST:event_buttonGuidelinesActionPerformed
 
     private void buttonDiagramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDiagramActionPerformed
-        buttonDelete.setEnabled(false);
         try {
             this.showUseCasesDiagram();
         } catch (HeadlessException ex) {
@@ -547,32 +730,6 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonDiagramActionPerformed
 
-    private void buttonDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDeleteActionPerformed
-        JOptionPane.showMessageDialog(null, "Not implemented yet");
-        /*
-        buttonDiagram.setEnabled(false);
-        int linha = tabelUseCases.getSelectedRow();
-        Actor actor = Controller.getActor("" + tabelUseCases.getValueAt(linha, 1));
-        String casoSelecionado = "" + tabelUseCases.getValueAt(linha, 2);
-        int c = JOptionPane.showConfirmDialog(null, "Confirm the deletion of the Use Case " + casoSelecionado + "?", "Deletion of Use Case", JOptionPane.YES_NO_OPTION);
-        if (c == 0) {
-            int n = actor.getUseCases().size();
-            UseCase caso;
-            System.out.println(" N: " + n);
-            for (int i = 0; i < n; i++) {
-                System.out.println("i = " + i);
-                caso = actor.getUseCases().get(i);
-                if (caso.getName().equals(casoSelecionado)) {
-                    actor.getUseCases().remove(i);
-                    updateTable();
-                    buttonDelete.setEnabled(false);
-                    JOptionPane.showMessageDialog(null, "Use Case deleted!", "Use Case deleted!", JOptionPane.INFORMATION_MESSAGE);
-                    break;
-                }
-            }
-        }*/
-    }//GEN-LAST:event_buttonDeleteActionPerformed
-
     private void buttonSaveUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveUseCasesActionPerformed
         this.showSaveUseCases();
     }//GEN-LAST:event_buttonSaveUseCasesActionPerformed
@@ -581,20 +738,58 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         this.saveDescription();
     }//GEN-LAST:event_buttonSaveDescriptionActionPerformed
 
+    private void buttonExportThisSpecificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExportThisSpecificationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonExportThisSpecificationActionPerformed
+
+    private void jtfFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfFilterActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfFilterActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelUseCasesFromBPMN;
-    private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonDiagram;
+    private javax.swing.JButton buttonExportThisSpecification;
     private javax.swing.JButton buttonGuidelines;
     private javax.swing.JButton buttonSaveDescription;
     private javax.swing.JButton buttonSaveUseCases;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelBackground;
     private javax.swing.JPanel jPanelHeader;
     private javax.swing.JPanel jPanelMenuButtons;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jtfFilter;
     private javax.swing.JLabel labelCasosDeUso;
+    private javax.swing.JLabel labelSearchIcon;
     private javax.swing.JMenuBar menuUseCases;
     public javax.swing.JTable tabelUseCases;
     private javax.swing.JTextPane textUseCases;
@@ -839,7 +1034,6 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         }
 
         textUseCasesSave.setText("");
-        buttonDelete.setEnabled(false);
         String path = Controller.loadProperties();
         JFileChooser fileChooser = new JFileChooser(path);
         fileChooser.setFileFilter(new FiltroDOC());
@@ -914,7 +1108,6 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
     }
 
     private void saveDescription() {
-        buttonDelete.setEnabled(false);
         String path = Controller.loadProperties();
         JFileChooser fileChooser = new JFileChooser(path);
         fileChooser.setFileFilter(new FiltroDOC());
@@ -1192,3 +1385,28 @@ ABOUT
         about.setLocation(x, y);
         about.setVisible(true);
  */
+
+//DELETE a USE FROM TABLE UC
+        /*
+        buttonDiagram.setEnabled(false);
+        int linha = tabelUseCases.getSelectedRow();
+        Actor actor = Controller.getActor("" + tabelUseCases.getValueAt(linha, 1));
+        String casoSelecionado = "" + tabelUseCases.getValueAt(linha, 2);
+        int c = JOptionPane.showConfirmDialog(null, "Confirm the deletion of the Use Case " + casoSelecionado + "?", "Deletion of Use Case", JOptionPane.YES_NO_OPTION);
+        if (c == 0) {
+            int n = actor.getUseCases().size();
+            UseCase caso;
+            System.out.println(" N: " + n);
+            for (int i = 0; i < n; i++) {
+                System.out.println("i = " + i);
+                caso = actor.getUseCases().get(i);
+                if (caso.getName().equals(casoSelecionado)) {
+                    actor.getUseCases().remove(i);
+                    updateTable();
+                    buttonDelete.setEnabled(false);
+                    JOptionPane.showMessageDialog(null, "Use Case deleted!", "Use Case deleted!", JOptionPane.INFORMATION_MESSAGE);
+                    break;
+                }
+            }
+        }*/
+

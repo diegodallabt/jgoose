@@ -799,38 +799,18 @@ public class MainView extends javax.swing.JFrame {
 
     private void buttonBPMNToUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBPMNToUseCasesActionPerformed
         BPMNController.mapUseCases();
-        if (useCasesViewBPMN == null) {
+       if (useCasesViewBPMN == null) {
             useCasesViewBPMN = new UseCasesViewBPMN();
+            useCasesViewBPMN.setIconImage(iconJGOOSE);
+            useCasesViewBPMN.setExtendedState(MAXIMIZED_BOTH);
             useCasesViewBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            EditorWindowListener windowListener = new EditorWindowListener(this, tableArtifacts);
+            this.addWindowListener(windowListener);
+            useCasesViewBPMN.addWindowListener(windowListener);
+            this.addWindowListener(windowListener);
         }
         useCasesViewBPMN.setVisible(true);
-        
-        
-        
-         /*       try{
-            if (tableArtifacts == null) {            
-                tableArtifacts = new TableArtifacts();
-                tableArtifacts.setIconImage(iconJGOOSE);
-                tableArtifacts.setExtendedState(MAXIMIZED_BOTH);
-                tableArtifacts.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                EditorWindowListener windowListener = new EditorWindowListener(this, tableArtifacts);
-                this.addWindowListener(windowListener);
-                tableArtifacts.addWindowListener(windowListener);
-                this.addWindowListener(windowListener);
-
-            }
-            tableArtifacts.setVisible(true); 
-            this.setVisible(false);
-
-        }catch(Exception e){
-            StringBuilder sb = new StringBuilder(e.toString());
-                for (StackTraceElement ste : e.getStackTrace()) {
-                    sb.append("\n\tat ");
-                    sb.append(ste);
-                }
-            String trace = sb.toString();
-            JOptionPane.showMessageDialog(null, trace);
-        }*/
+        this.setVisible(false);      
     }//GEN-LAST:event_buttonBPMNToUseCasesActionPerformed
 
     private void buttunMappingUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesActionPerformed
