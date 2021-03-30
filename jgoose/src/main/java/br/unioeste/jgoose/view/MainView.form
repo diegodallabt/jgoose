@@ -345,7 +345,7 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4b" green="3f" red="34" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="helping software engeneerings"/>
+            <Property name="text" type="java.lang.String" value="helping software engineers"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
@@ -462,7 +462,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e5" green="9d" red="f" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="i*"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;&#xa;i* &lt;br&gt; Editor&#xa;"/>
                     <Property name="toolTipText" type="java.lang.String" value="Open i* Editor"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
@@ -528,7 +528,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e5" green="9d" red="f" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="BPMN"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;&#xa;BPMN &lt;br&gt; Editor"/>
                     <Property name="toolTipText" type="java.lang.String" value="Open BPMN Editor"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
@@ -596,7 +596,7 @@
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e5" green="9d" red="f" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Use Cases"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;&#xa;Use Cases &lt;br&gt; Editor&#xa;"/>
                     <Property name="toolTipText" type="java.lang.String" value="Editor Use Cases"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>

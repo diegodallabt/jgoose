@@ -24,7 +24,9 @@ import com.mxgraph.view.mxGraph;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -32,9 +34,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -82,7 +87,6 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
     private String selectedCase = "";
     private EditorJFrame e4jInstance = null;
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger("console");
-    
     /**
      * Creates new form UseCasesView
      */
@@ -92,7 +96,6 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         UIManager.put("OptionPane.yesButtonText", "Yes");
         UIManager.put("OptionPane.noButtonText", "No");
         updateTable();
-
     }
 
     /*
@@ -195,11 +198,11 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         if (linha != -1) {
             labelCasosDeUso.setText("Use Case Specification");
             textUseCases.setText(""); // limpa o painel de texto
-
+            textUseCases.setFont(new java.awt.Font("Roboto", 0, 14));
             // define o objeto com formatação negrito negrito
             SimpleAttributeSet negrito = new SimpleAttributeSet();
             StyleConstants.setBold(negrito, true);
-
+            
             // insere os dados do caso de uso selecionado
             UCUseCase useCase = BPMNController.getUseCases().get(linha);
 
@@ -297,7 +300,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         buttonGuidelines = new javax.swing.JButton();
         JLabelUseCasesFromBPMN = new javax.swing.JLabel();
         buttonSaveUseCases = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        jButtonAddReq = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         labelSearchIcon = new javax.swing.JLabel();
@@ -341,6 +344,14 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         buttonDiagram.setForeground(new java.awt.Color(250, 250, 250));
         buttonDiagram.setText("Diagram");
         buttonDiagram.setBorder(null);
+        buttonDiagram.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonDiagramMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonDiagramMouseExited(evt);
+            }
+        });
         buttonDiagram.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonDiagramActionPerformed(evt);
@@ -349,6 +360,14 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
 
         buttonGuidelines.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         buttonGuidelines.setText("Guidelines");
+        buttonGuidelines.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonGuidelinesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonGuidelinesMouseExited(evt);
+            }
+        });
         buttonGuidelines.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonGuidelinesActionPerformed(evt);
@@ -361,20 +380,36 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
 
         buttonSaveUseCases.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         buttonSaveUseCases.setText("Export all Requirements");
+        buttonSaveUseCases.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonSaveUseCasesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonSaveUseCasesMouseExited(evt);
+            }
+        });
         buttonSaveUseCases.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonSaveUseCasesActionPerformed(evt);
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(15, 157, 229));
-        jButton4.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(250, 250, 250));
-        jButton4.setText("Add Requirement");
-        jButton4.setBorder(null);
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAddReq.setBackground(new java.awt.Color(15, 157, 229));
+        jButtonAddReq.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jButtonAddReq.setForeground(new java.awt.Color(250, 250, 250));
+        jButtonAddReq.setText("Add Requirement");
+        jButtonAddReq.setBorder(null);
+        jButtonAddReq.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButtonAddReqMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButtonAddReqMouseExited(evt);
+            }
+        });
+        jButtonAddReq.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButtonAddReqActionPerformed(evt);
             }
         });
 
@@ -432,7 +467,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAddReq, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,7 +485,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelHeaderLayout.createSequentialGroup()
                                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonAddReq, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(21, 21, 21))))
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
@@ -481,6 +516,14 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         buttonSaveDescription.setText("Save");
         buttonSaveDescription.setToolTipText("");
         buttonSaveDescription.setBorder(null);
+        buttonSaveDescription.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonSaveDescriptionMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonSaveDescriptionMouseExited(evt);
+            }
+        });
         buttonSaveDescription.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonSaveDescriptionActionPerformed(evt);
@@ -493,6 +536,14 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         buttonExportThisSpecification.setText("Export this Specification");
         buttonExportThisSpecification.setToolTipText("");
         buttonExportThisSpecification.setBorder(null);
+        buttonExportThisSpecification.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonExportThisSpecificationMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonExportThisSpecificationMouseExited(evt);
+            }
+        });
         buttonExportThisSpecification.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonExportThisSpecificationActionPerformed(evt);
@@ -619,33 +670,107 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
 
         jPanelMenuButtons.setBackground(new java.awt.Color(11, 113, 165));
 
-        jButton1.setText("HOME");
-        jButton1.setBorder(null);
-        jButton1.setOpaque(false);
+        jButton1.setBackground(new java.awt.Color(11, 113, 165));
+        jButton1.setForeground(new java.awt.Color(11, 113, 165));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-Home.png"))); // NOI18N
+        jButton1.setBorderPainted(false);
+        jButton1.setFocusPainted(false);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton1MouseExited(evt);
+            }
+        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("i*");
+        jButton2.setBackground(new java.awt.Color(11, 113, 165));
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-istar.png"))); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton2MouseExited(evt);
+            }
+        });
 
-        jButton3.setText("bpmn");
+        jButton3.setBackground(new java.awt.Color(11, 113, 165));
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-BPMN.png"))); // NOI18N
+        jButton3.setBorder(null);
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton3MouseExited(evt);
+            }
+        });
 
-        jButton5.setText("UC");
+        jButton5.setBackground(new java.awt.Color(11, 113, 165));
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UseCase.png"))); // NOI18N
+        jButton5.setBorder(null);
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton5MouseExited(evt);
+            }
+        });
 
-        jButton6.setText("UC i*");
+        jButton6.setBackground(new java.awt.Color(11, 113, 165));
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-iStar.png"))); // NOI18N
+        jButton6.setBorder(null);
+        jButton6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton6MouseExited(evt);
+            }
+        });
 
-        jButton7.setText("UC BPMN");
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-BPMN.png"))); // NOI18N
+        jButton7.setBorder(null);
+        jButton7.setEnabled(false);
+        jButton7.setOpaque(false);
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
             }
         });
 
-        jButton8.setText("Vertical T");
+        jButton8.setBackground(new java.awt.Color(11, 113, 165));
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-VerticalTraceability.png"))); // NOI18N
+        jButton8.setBorder(null);
+        jButton8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton8MouseExited(evt);
+            }
+        });
 
-        jButton9.setText("Horizontal ");
+        jButton9.setBackground(new java.awt.Color(11, 113, 165));
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-HorizontalTraceability.png"))); // NOI18N
+        jButton9.setToolTipText("");
+        jButton9.setBorder(null);
+        jButton9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton9MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton9MouseExited(evt);
+            }
+        });
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
@@ -659,11 +784,10 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             .addGroup(jPanelMenuButtonsLayout.createSequentialGroup()
                 .addGroup(jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -688,7 +812,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(350, Short.MAX_VALUE))
+                .addContainerGap(341, Short.MAX_VALUE))
         );
 
         setJMenuBar(menuUseCases);
@@ -746,9 +870,9 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfFilterActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButtonAddReqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddReqActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jButtonAddReqActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -762,6 +886,128 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
 
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        jButton2.setBackground(new java.awt.Color(59, 141, 183));
+    }//GEN-LAST:event_jButton2MouseEntered
+
+    private void jButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+        jButton2.setBackground(new java.awt.Color(11, 113, 165));
+    }//GEN-LAST:event_jButton2MouseExited
+
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        jButton1.setBackground(new java.awt.Color(59, 141, 183));
+    }//GEN-LAST:event_jButton1MouseEntered
+
+    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+        jButton1.setBackground(new java.awt.Color(11, 113, 165));
+    }//GEN-LAST:event_jButton1MouseExited
+
+    private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        jButton3.setBackground(new java.awt.Color(59, 141, 183));
+    }//GEN-LAST:event_jButton3MouseEntered
+
+    private void jButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+        jButton3.setBackground(new java.awt.Color(11, 113, 165));
+    }//GEN-LAST:event_jButton3MouseExited
+
+    private void jButton5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        jButton5.setBackground(new java.awt.Color(59, 141, 183));
+    }//GEN-LAST:event_jButton5MouseEntered
+
+    private void jButton5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+        jButton5.setBackground(new java.awt.Color(11, 113, 165));
+    }//GEN-LAST:event_jButton5MouseExited
+
+    private void jButton6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        jButton6.setBackground(new java.awt.Color(59, 141, 183));
+    }//GEN-LAST:event_jButton6MouseEntered
+
+    private void jButton6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+        jButton6.setBackground(new java.awt.Color(11, 113, 165));
+    }//GEN-LAST:event_jButton6MouseExited
+
+    private void jButton8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        jButton8.setBackground(new java.awt.Color(59, 141, 183));
+    }//GEN-LAST:event_jButton8MouseEntered
+
+    private void jButton8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton8MouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+        jButton8.setBackground(new java.awt.Color(11, 113, 165));
+    }//GEN-LAST:event_jButton8MouseExited
+
+    private void jButton9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        jButton9.setBackground(new java.awt.Color(59, 141, 183));
+    }//GEN-LAST:event_jButton9MouseEntered
+
+    private void jButton9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton9MouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+        jButton9.setBackground(new java.awt.Color(11, 113, 165));
+    }//GEN-LAST:event_jButton9MouseExited
+
+    private void jButtonAddReqMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddReqMouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        jButtonAddReq.setBackground(new java.awt.Color(69, 185, 243));
+    }//GEN-LAST:event_jButtonAddReqMouseEntered
+
+    private void jButtonAddReqMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddReqMouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+        jButtonAddReq.setBackground(new java.awt.Color(15, 157, 229));
+    }//GEN-LAST:event_jButtonAddReqMouseExited
+
+    private void buttonDiagramMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonDiagramMouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        buttonDiagram.setBackground(new java.awt.Color(69, 185, 243));
+    }//GEN-LAST:event_buttonDiagramMouseEntered
+
+    private void buttonDiagramMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonDiagramMouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+        buttonDiagram.setBackground(new java.awt.Color(15, 157, 229));
+    }//GEN-LAST:event_buttonDiagramMouseExited
+
+    private void buttonSaveUseCasesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSaveUseCasesMouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+    }//GEN-LAST:event_buttonSaveUseCasesMouseEntered
+
+    private void buttonSaveUseCasesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSaveUseCasesMouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+    }//GEN-LAST:event_buttonSaveUseCasesMouseExited
+
+    private void buttonGuidelinesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelinesMouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+    }//GEN-LAST:event_buttonGuidelinesMouseEntered
+
+    private void buttonGuidelinesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelinesMouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+    }//GEN-LAST:event_buttonGuidelinesMouseExited
+
+    private void buttonSaveDescriptionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSaveDescriptionMouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+    }//GEN-LAST:event_buttonSaveDescriptionMouseEntered
+
+    private void buttonSaveDescriptionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSaveDescriptionMouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+    }//GEN-LAST:event_buttonSaveDescriptionMouseExited
+
+    private void buttonExportThisSpecificationMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonExportThisSpecificationMouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+    }//GEN-LAST:event_buttonExportThisSpecificationMouseEntered
+
+    private void buttonExportThisSpecificationMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonExportThisSpecificationMouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+    }//GEN-LAST:event_buttonExportThisSpecificationMouseExited
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelUseCasesFromBPMN;
     private javax.swing.JButton buttonDiagram;
@@ -772,12 +1018,12 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButtonAddReq;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

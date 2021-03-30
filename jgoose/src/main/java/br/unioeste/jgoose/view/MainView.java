@@ -178,7 +178,7 @@ public class MainView extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Roboto", 0, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(52, 63, 75));
-        jLabel2.setText("helping software engeneerings");
+        jLabel2.setText("helping software engineers");
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(7, 69, 101));
@@ -195,7 +195,7 @@ public class MainView extends javax.swing.JFrame {
         buttonOpenE4JiStar.setBackground(new java.awt.Color(255, 255, 255));
         buttonOpenE4JiStar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonOpenE4JiStar.setForeground(new java.awt.Color(15, 157, 229));
-        buttonOpenE4JiStar.setText("i*");
+        buttonOpenE4JiStar.setText("<html><center>\ni* <br> Editor\n");
         buttonOpenE4JiStar.setToolTipText("Open i* Editor");
         buttonOpenE4JiStar.setBorder(null);
         buttonOpenE4JiStar.setBorderPainted(false);
@@ -231,7 +231,7 @@ public class MainView extends javax.swing.JFrame {
         buttonOpenE4JBPMN.setBackground(new java.awt.Color(255, 255, 255));
         buttonOpenE4JBPMN.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonOpenE4JBPMN.setForeground(new java.awt.Color(15, 157, 229));
-        buttonOpenE4JBPMN.setText("BPMN");
+        buttonOpenE4JBPMN.setText("<html><center>\nBPMN <br> Editor");
         buttonOpenE4JBPMN.setToolTipText("Open BPMN Editor");
         buttonOpenE4JBPMN.setBorder(null);
         buttonOpenE4JBPMN.setBorderPainted(false);
@@ -265,7 +265,7 @@ public class MainView extends javax.swing.JFrame {
         buttonOpenE4JUseCases.setBackground(new java.awt.Color(255, 255, 255));
         buttonOpenE4JUseCases.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonOpenE4JUseCases.setForeground(new java.awt.Color(15, 157, 229));
-        buttonOpenE4JUseCases.setText("Use Cases");
+        buttonOpenE4JUseCases.setText("<html><center>\nUse Cases <br> Editor\n");
         buttonOpenE4JUseCases.setToolTipText("Editor Use Cases");
         buttonOpenE4JUseCases.setBorder(null);
         buttonOpenE4JUseCases.setBorderPainted(false);
@@ -1229,7 +1229,6 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelSubTitleImg2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4buttonBPMNToUseCases;
     private javax.swing.JPanel jPanel4buttonHorizontalTraceability;
     private javax.swing.JPanel jPanel4buttonOpenE4JBPMN;
