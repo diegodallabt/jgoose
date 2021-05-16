@@ -203,6 +203,14 @@ public class MainView extends javax.swing.JFrame {
         buttonOpenE4JiStar.setFocusable(false);
         buttonOpenE4JiStar.setIconTextGap(0);
         buttonOpenE4JiStar.setName(""); // NOI18N
+        buttonOpenE4JiStar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonOpenE4JiStarMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonOpenE4JiStarMouseExited(evt);
+            }
+        });
         buttonOpenE4JiStar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonOpenE4JiStarActionPerformed(evt);
@@ -236,6 +244,14 @@ public class MainView extends javax.swing.JFrame {
         buttonOpenE4JBPMN.setBorder(null);
         buttonOpenE4JBPMN.setBorderPainted(false);
         buttonOpenE4JBPMN.setFocusable(false);
+        buttonOpenE4JBPMN.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonOpenE4JBPMNMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonOpenE4JBPMNMouseExited(evt);
+            }
+        });
         buttonOpenE4JBPMN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonOpenE4JBPMNActionPerformed(evt);
@@ -270,6 +286,14 @@ public class MainView extends javax.swing.JFrame {
         buttonOpenE4JUseCases.setBorder(null);
         buttonOpenE4JUseCases.setBorderPainted(false);
         buttonOpenE4JUseCases.setFocusable(false);
+        buttonOpenE4JUseCases.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonOpenE4JUseCasesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonOpenE4JUseCasesMouseExited(evt);
+            }
+        });
         buttonOpenE4JUseCases.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonOpenE4JUseCasesActionPerformed(evt);
@@ -304,6 +328,14 @@ public class MainView extends javax.swing.JFrame {
         buttunMappingUseCases.setBorder(null);
         buttunMappingUseCases.setBorderPainted(false);
         buttunMappingUseCases.setFocusable(false);
+        buttunMappingUseCases.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttunMappingUseCasesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttunMappingUseCasesMouseExited(evt);
+            }
+        });
         buttunMappingUseCases.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttunMappingUseCasesActionPerformed(evt);
@@ -338,6 +370,14 @@ public class MainView extends javax.swing.JFrame {
         buttonBPMNToUseCases.setBorder(null);
         buttonBPMNToUseCases.setBorderPainted(false);
         buttonBPMNToUseCases.setFocusable(false);
+        buttonBPMNToUseCases.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonBPMNToUseCasesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonBPMNToUseCasesMouseExited(evt);
+            }
+        });
         buttonBPMNToUseCases.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonBPMNToUseCasesActionPerformed(evt);
@@ -371,6 +411,14 @@ public class MainView extends javax.swing.JFrame {
         buttonVerticalTraceability.setBorder(null);
         buttonVerticalTraceability.setBorderPainted(false);
         buttonVerticalTraceability.setFocusable(false);
+        buttonVerticalTraceability.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonVerticalTraceabilityMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonVerticalTraceabilityMouseExited(evt);
+            }
+        });
         buttonVerticalTraceability.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonVerticalTraceabilityActionPerformed(evt);
@@ -405,6 +453,14 @@ public class MainView extends javax.swing.JFrame {
         buttonHorizontalTraceability.setBorder(null);
         buttonHorizontalTraceability.setBorderPainted(false);
         buttonHorizontalTraceability.setFocusable(false);
+        buttonHorizontalTraceability.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonHorizontalTraceabilityMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonHorizontalTraceabilityMouseExited(evt);
+            }
+        });
         buttonHorizontalTraceability.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonHorizontalTraceabilityActionPerformed(evt);
@@ -492,17 +548,17 @@ public class MainView extends javax.swing.JFrame {
         );
 
         jLabelImage1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img1-undraw_Mind_map-svg (1).png"))); // NOI18N
+        jLabelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img1-UndrawMind.png"))); // NOI18N
         jLabelImage1.setIconTextGap(0);
         jLabelImage1.setMinimumSize(new java.awt.Dimension(1, 1));
 
         jLabelImage3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelImage3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img3-undraw_software_engineer_lvl5 (1)-svg (2).png"))); // NOI18N
+        jLabelImage3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img3-UndrawSoftwareEngineer.png"))); // NOI18N
         jLabelImage3.setIconTextGap(0);
         jLabelImage3.setMinimumSize(new java.awt.Dimension(1, 1));
 
         jLabelImage2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelImage2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img2-undraw_analyze_17kw-svg (1).png"))); // NOI18N
+        jLabelImage2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img2-UndrawAnalyze.png"))); // NOI18N
         jLabelImage2.setToolTipText("");
         jLabelImage2.setIconTextGap(0);
         jLabelImage2.setMinimumSize(new java.awt.Dimension(1, 1));
@@ -573,7 +629,7 @@ public class MainView extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logo_unioeste_Les.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img4-LogoUnioesteLes.png"))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Roboto", 0, 11)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(71, 82, 94));
@@ -946,6 +1002,62 @@ public class MainView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonOpenE4JiStarActionPerformed
 
+    private void buttonOpenE4JiStarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonOpenE4JiStarMouseExited
+        buttonOpenE4JiStar.setBackground(new java.awt.Color(255,255,255));
+    }//GEN-LAST:event_buttonOpenE4JiStarMouseExited
+
+    private void buttonOpenE4JiStarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonOpenE4JiStarMouseEntered
+        buttonOpenE4JiStar.setBackground(new java.awt.Color(230,230,230));
+    }//GEN-LAST:event_buttonOpenE4JiStarMouseEntered
+
+    private void buttonOpenE4JBPMNMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonOpenE4JBPMNMouseEntered
+        buttonOpenE4JBPMN.setBackground(new java.awt.Color(230,230,230));
+    }//GEN-LAST:event_buttonOpenE4JBPMNMouseEntered
+
+    private void buttonOpenE4JBPMNMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonOpenE4JBPMNMouseExited
+        buttonOpenE4JBPMN.setBackground(new java.awt.Color(255,255,255));
+    }//GEN-LAST:event_buttonOpenE4JBPMNMouseExited
+
+    private void buttonOpenE4JUseCasesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonOpenE4JUseCasesMouseExited
+        buttonOpenE4JUseCases.setBackground(new java.awt.Color(255,255,255));
+    }//GEN-LAST:event_buttonOpenE4JUseCasesMouseExited
+
+    private void buttonOpenE4JUseCasesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonOpenE4JUseCasesMouseEntered
+        buttonOpenE4JUseCases.setBackground(new java.awt.Color(230,230,230));
+    }//GEN-LAST:event_buttonOpenE4JUseCasesMouseEntered
+
+    private void buttunMappingUseCasesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesMouseEntered
+        buttunMappingUseCases.setBackground(new java.awt.Color(230,230,230));
+    }//GEN-LAST:event_buttunMappingUseCasesMouseEntered
+
+    private void buttunMappingUseCasesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesMouseExited
+        buttunMappingUseCases.setBackground(new java.awt.Color(255,255,255));
+    }//GEN-LAST:event_buttunMappingUseCasesMouseExited
+
+    private void buttonBPMNToUseCasesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonBPMNToUseCasesMouseEntered
+        buttonBPMNToUseCases.setBackground(new java.awt.Color(230,230,230));
+    }//GEN-LAST:event_buttonBPMNToUseCasesMouseEntered
+
+    private void buttonBPMNToUseCasesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonBPMNToUseCasesMouseExited
+        buttonBPMNToUseCases.setBackground(new java.awt.Color(255,255,255));
+    }//GEN-LAST:event_buttonBPMNToUseCasesMouseExited
+
+    private void buttonVerticalTraceabilityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonVerticalTraceabilityMouseEntered
+        buttonVerticalTraceability.setBackground(new java.awt.Color(230,230,230));
+    }//GEN-LAST:event_buttonVerticalTraceabilityMouseEntered
+
+    private void buttonVerticalTraceabilityMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonVerticalTraceabilityMouseExited
+        buttonVerticalTraceability.setBackground(new java.awt.Color(255,255,255));
+    }//GEN-LAST:event_buttonVerticalTraceabilityMouseExited
+
+    private void buttonHorizontalTraceabilityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonHorizontalTraceabilityMouseEntered
+        buttonHorizontalTraceability.setBackground(new java.awt.Color(230,230,230));
+    }//GEN-LAST:event_buttonHorizontalTraceabilityMouseEntered
+
+    private void buttonHorizontalTraceabilityMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonHorizontalTraceabilityMouseExited
+        buttonHorizontalTraceability.setBackground(new java.awt.Color(255,255,255));
+    }//GEN-LAST:event_buttonHorizontalTraceabilityMouseExited
+
     /**
      * Abre uma janela GuidelinesDialogView
      */
@@ -1223,7 +1335,6 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelSubTitleImg2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4buttonBPMNToUseCases;
     private javax.swing.JPanel jPanel4buttonHorizontalTraceability;
     private javax.swing.JPanel jPanel4buttonOpenE4JBPMN;
