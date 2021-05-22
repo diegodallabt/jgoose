@@ -14,11 +14,7 @@ import br.unioeste.jgoose.e4j.swing.BasicIStarEditor;
 import br.unioeste.jgoose.e4j.swing.BasicUseCasesEditor;
 import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.e4j.swing.menubar.EditorMenuBar;
-import br.unioeste.jgoose.model.BPMNLink;
-import br.unioeste.jgoose.model.IStarElement;
-import br.unioeste.jgoose.model.IStarLink;
 import com.mxgraph.util.mxResources;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
@@ -30,11 +26,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -46,14 +38,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.basic.BasicMenuBarUI;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
 import org.apache.log4j.Logger;
 
 /**
  *
- * @authors 
- * @Diego Peliser
+ * @authors @Diego Peliser
  * @Alysson Girotto
  * @Victor Augusto Pozzan
  */
@@ -68,38 +58,39 @@ public class MainView extends javax.swing.JFrame {
     private EditorJFrame E4JBPMN = null;
     private JFrame E4JTraceability = null;
     private BasicBPMNEditor editor;
-    
+
     private Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
     Font roboto;
+
     /**
      * Creates new form MainView
      */
     public MainView() {
-        initComponents();                        
+        initComponents();
         setLocationRelativeTo(null);
         setIconImage(iconJGOOSE);
         //Set the theme of swing equals to SO.
-        
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             LOG.error("LookAndFeel Error!", e);
         }
-        
+
         setDefaultLookAndFeelDecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(true);
         //dispose();
         //setVisible(true);
-       
-        try{
-            InputStream myStream = new BufferedInputStream(new FileInputStream("./src/main/resources/fonts/Roboto-Black.ttf"))  ;
+
+        try {
+            InputStream myStream = new BufferedInputStream(new FileInputStream("./src/main/resources/fonts/Roboto-Black.ttf"));
             roboto = Font.createFont(Font.TRUETYPE_FONT, myStream);
             roboto = roboto.deriveFont(30f);
-            
-        }catch(IOException | FontFormatException e){
+
+        } catch (IOException | FontFormatException e) {
             System.out.println(e);
         }
         menuBar.setOpaque(true);
@@ -107,8 +98,8 @@ public class MainView extends javax.swing.JFrame {
             public void paint(Graphics g, JComponent c) {
                 g.setColor(new java.awt.Color(11, 113, 165));
                 g.fillRect(0, 0, c.getWidth(), c.getHeight());
-            }         
-    });
+            }
+        });
 
     }
 
@@ -281,7 +272,7 @@ public class MainView extends javax.swing.JFrame {
         buttonOpenE4JUseCases.setBackground(new java.awt.Color(255, 255, 255));
         buttonOpenE4JUseCases.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonOpenE4JUseCases.setForeground(new java.awt.Color(15, 157, 229));
-        buttonOpenE4JUseCases.setText("<html><center>\nUse Cases <br> Editor\n");
+        buttonOpenE4JUseCases.setText("<html><center> Use Cases <br> Editor ");
         buttonOpenE4JUseCases.setToolTipText("Editor Use Cases");
         buttonOpenE4JUseCases.setBorder(null);
         buttonOpenE4JUseCases.setBorderPainted(false);
@@ -854,19 +845,12 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonHorizontalTraceabilityActionPerformed
 
     private void buttonBPMNToUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBPMNToUseCasesActionPerformed
-        BPMNController.mapUseCases();
-       if (useCasesViewBPMN == null) {
-            useCasesViewBPMN = new UseCasesViewBPMN();
-            useCasesViewBPMN.setIconImage(iconJGOOSE);
-            useCasesViewBPMN.setExtendedState(MAXIMIZED_BOTH);
-            useCasesViewBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-            EditorWindowListener windowListener = new EditorWindowListener(this, tableArtifacts);
-            this.addWindowListener(windowListener);
-            useCasesViewBPMN.addWindowListener(windowListener);
-            this.addWindowListener(windowListener);
+        try {
+            this.bpmnUCView();
+        } catch (HeadlessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+
         }
-        useCasesViewBPMN.setVisible(true);
-        this.setVisible(false);      
     }//GEN-LAST:event_buttonBPMNToUseCasesActionPerformed
 
     private void buttunMappingUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesActionPerformed
@@ -950,48 +934,48 @@ public class MainView extends javax.swing.JFrame {
             this.showArtfactTables();
         } catch (HeadlessException ex) {
             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
+        }
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void menuAboutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseEntered
-        menuAbout.setBackground(new java.awt.Color(59,141,183));
+        menuAbout.setBackground(new java.awt.Color(59, 141, 183));
     }//GEN-LAST:event_menuAboutMouseEntered
 
     private void menuAboutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseExited
-        menuAbout.setBackground(new java.awt.Color(11,113,165));
+        menuAbout.setBackground(new java.awt.Color(11, 113, 165));
     }//GEN-LAST:event_menuAboutMouseExited
 
     private void menuHelpMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuHelpMouseEntered
-        menuHelp.setBackground(new java.awt.Color(59,141,183));
+        menuHelp.setBackground(new java.awt.Color(59, 141, 183));
     }//GEN-LAST:event_menuHelpMouseEntered
 
     private void menuHelpMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuHelpMouseExited
-        menuHelp.setBackground(new java.awt.Color(11,113,165));
+        menuHelp.setBackground(new java.awt.Color(11, 113, 165));
     }//GEN-LAST:event_menuHelpMouseExited
 
     private void menuToolsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuToolsMouseEntered
-        menuTools.setBackground(new java.awt.Color(59,141,183));
+        menuTools.setBackground(new java.awt.Color(59, 141, 183));
     }//GEN-LAST:event_menuToolsMouseEntered
 
     private void menuToolsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuToolsMouseExited
-       menuTools.setBackground(new java.awt.Color(11,113,165));
+        menuTools.setBackground(new java.awt.Color(11, 113, 165));
     }//GEN-LAST:event_menuToolsMouseExited
 
     private void menuFileMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuFileMouseEntered
-        menuFile.setBackground(new java.awt.Color(59,141,183));
+        menuFile.setBackground(new java.awt.Color(59, 141, 183));
     }//GEN-LAST:event_menuFileMouseEntered
 
     private void menuFileMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuFileMouseExited
-        menuFile.setBackground(new java.awt.Color(11,113,165));
+        menuFile.setBackground(new java.awt.Color(11, 113, 165));
     }//GEN-LAST:event_menuFileMouseExited
 
     private void menuLesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLesMouseEntered
-        menuLes.setBackground(new java.awt.Color(59,141,183));
+        menuLes.setBackground(new java.awt.Color(59, 141, 183));
     }//GEN-LAST:event_menuLesMouseEntered
 
     private void menuLesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLesMouseExited
-        menuLes.setBackground(new java.awt.Color(11,113,165));
+        menuLes.setBackground(new java.awt.Color(11, 113, 165));
     }//GEN-LAST:event_menuLesMouseExited
 
     private void buttonVerticalTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVerticalTraceabilityActionPerformed
@@ -1009,59 +993,59 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonOpenE4JiStarActionPerformed
 
     private void buttonOpenE4JiStarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonOpenE4JiStarMouseExited
-        buttonOpenE4JiStar.setBackground(new java.awt.Color(255,255,255));
+        buttonOpenE4JiStar.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_buttonOpenE4JiStarMouseExited
 
     private void buttonOpenE4JiStarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonOpenE4JiStarMouseEntered
-        buttonOpenE4JiStar.setBackground(new java.awt.Color(230,230,230));
+        buttonOpenE4JiStar.setBackground(new java.awt.Color(230, 230, 230));
     }//GEN-LAST:event_buttonOpenE4JiStarMouseEntered
 
     private void buttonOpenE4JBPMNMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonOpenE4JBPMNMouseEntered
-        buttonOpenE4JBPMN.setBackground(new java.awt.Color(230,230,230));
+        buttonOpenE4JBPMN.setBackground(new java.awt.Color(230, 230, 230));
     }//GEN-LAST:event_buttonOpenE4JBPMNMouseEntered
 
     private void buttonOpenE4JBPMNMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonOpenE4JBPMNMouseExited
-        buttonOpenE4JBPMN.setBackground(new java.awt.Color(255,255,255));
+        buttonOpenE4JBPMN.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_buttonOpenE4JBPMNMouseExited
 
     private void buttonOpenE4JUseCasesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonOpenE4JUseCasesMouseExited
-        buttonOpenE4JUseCases.setBackground(new java.awt.Color(255,255,255));
+        buttonOpenE4JUseCases.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_buttonOpenE4JUseCasesMouseExited
 
     private void buttonOpenE4JUseCasesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonOpenE4JUseCasesMouseEntered
-        buttonOpenE4JUseCases.setBackground(new java.awt.Color(230,230,230));
+        buttonOpenE4JUseCases.setBackground(new java.awt.Color(230, 230, 230));
     }//GEN-LAST:event_buttonOpenE4JUseCasesMouseEntered
 
     private void buttunMappingUseCasesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesMouseEntered
-        buttunMappingUseCases.setBackground(new java.awt.Color(230,230,230));
+        buttunMappingUseCases.setBackground(new java.awt.Color(230, 230, 230));
     }//GEN-LAST:event_buttunMappingUseCasesMouseEntered
 
     private void buttunMappingUseCasesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesMouseExited
-        buttunMappingUseCases.setBackground(new java.awt.Color(255,255,255));
+        buttunMappingUseCases.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_buttunMappingUseCasesMouseExited
 
     private void buttonBPMNToUseCasesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonBPMNToUseCasesMouseEntered
-        buttonBPMNToUseCases.setBackground(new java.awt.Color(230,230,230));
+        buttonBPMNToUseCases.setBackground(new java.awt.Color(230, 230, 230));
     }//GEN-LAST:event_buttonBPMNToUseCasesMouseEntered
 
     private void buttonBPMNToUseCasesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonBPMNToUseCasesMouseExited
-        buttonBPMNToUseCases.setBackground(new java.awt.Color(255,255,255));
+        buttonBPMNToUseCases.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_buttonBPMNToUseCasesMouseExited
 
     private void buttonVerticalTraceabilityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonVerticalTraceabilityMouseEntered
-        buttonVerticalTraceability.setBackground(new java.awt.Color(230,230,230));
+        buttonVerticalTraceability.setBackground(new java.awt.Color(230, 230, 230));
     }//GEN-LAST:event_buttonVerticalTraceabilityMouseEntered
 
     private void buttonVerticalTraceabilityMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonVerticalTraceabilityMouseExited
-        buttonVerticalTraceability.setBackground(new java.awt.Color(255,255,255));
+        buttonVerticalTraceability.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_buttonVerticalTraceabilityMouseExited
 
     private void buttonHorizontalTraceabilityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonHorizontalTraceabilityMouseEntered
-        buttonHorizontalTraceability.setBackground(new java.awt.Color(230,230,230));
+        buttonHorizontalTraceability.setBackground(new java.awt.Color(230, 230, 230));
     }//GEN-LAST:event_buttonHorizontalTraceabilityMouseEntered
 
     private void buttonHorizontalTraceabilityMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonHorizontalTraceabilityMouseExited
-        buttonHorizontalTraceability.setBackground(new java.awt.Color(255,255,255));
+        buttonHorizontalTraceability.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_buttonHorizontalTraceabilityMouseExited
 
     /**
@@ -1093,12 +1077,12 @@ public class MainView extends javax.swing.JFrame {
         about.setLocation(x, y);
         about.setVisible(true);
     }
-    
+
     /**
      * Abre o Editor E4J i*
      */
-    private void showE4JiStar() throws HeadlessException, IOException {      
-         if (E4JiStar == null) {
+    private void showE4JiStar() throws HeadlessException, IOException {
+        if (E4JiStar == null) {
             E4JiStar = new EditorJFrame(0);
             E4JiStar.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             E4JiStar.setIconImage(iconJGOOSE);
@@ -1124,13 +1108,11 @@ public class MainView extends javax.swing.JFrame {
             JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(2)));
             fileMenu.add(menuItem2, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
-            
+
             /*String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
             JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new HorizontalIStarTraceController(E4JiStar)));
             fileMenu.add(menuItem2, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);*/
-            
-
             //diagramMenu.addSeparator();
             //label = mxResources.get("iStarMLMaker", null, "Gerar iarML");
             // menu.add(editor.bind(label, new GenerateIStarMLAction()));
@@ -1170,9 +1152,9 @@ public class MainView extends javax.swing.JFrame {
      * Abre o Editor E4J BPMN
      */
     private void showE4JBPMN() throws HeadlessException, IOException {
-        try{
-            
-            if (E4JBPMN == null) {            
+        try {
+
+            if (E4JBPMN == null) {
                 E4JBPMN = new EditorJFrame(2);
                 E4JBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 EditorWindowListener windowListener = new EditorWindowListener(this, E4JBPMN);
@@ -1199,11 +1181,11 @@ public class MainView extends javax.swing.JFrame {
                 fileMenu.add(menuItem, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);
 
-            }               
+            }
             BPMNController.setMainView(this);
             E4JBPMN.setVisible(true);
             this.setVisible(false);
-        } catch(Exception e){
+        } catch (Exception e) {
             StringBuilder sb = new StringBuilder(e.toString());
             for (StackTraceElement ste : e.getStackTrace()) {
                 sb.append("\n\tat ");
@@ -1213,13 +1195,13 @@ public class MainView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, trace);
         }
     }
-    
+
     /**
      * Abre a janela de Rastreabilidade
      */
     private void showTraceability() {
-        try{
-            if (E4JTraceability == null) {            
+        try {
+            if (E4JTraceability == null) {
                 E4JTraceability = new EditorJFrame(3);
                 E4JTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
                 EditorWindowListener windowListener = new EditorWindowListener(this, E4JTraceability);
@@ -1238,24 +1220,24 @@ public class MainView extends javax.swing.JFrame {
                 JMenuItem menuItem = new JMenuItem(editor.bind(label, new ImportBPMNGraph(E4JBPMN)));
                 fileMenu.add(menuItem, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);*/
-            } 
-          //  HorizontalBPMNTraceController.setMainView(this);
+            }
+            //  HorizontalBPMNTraceController.setMainView(this);
             E4JTraceability.setVisible(true);
             this.setVisible(false);
-           // TraceabilityView obj = new TraceabilityView();
-           // obj.setVisible(true);   
-        }catch(Exception e){
-            
+            // TraceabilityView obj = new TraceabilityView();
+            // obj.setVisible(true);   
+        } catch (Exception e) {
+
         }
-        
+
     }
-    
+
     /**
      * Abre a janela de tabelas
-    */
-    private void showArtfactTables (){
-        try{
-            if (tableArtifacts == null) {            
+     */
+    private void showArtfactTables() {
+        try {
+            if (tableArtifacts == null) {
                 tableArtifacts = new TableArtifacts();
                 tableArtifacts.setIconImage(iconJGOOSE);
                 tableArtifacts.setExtendedState(MAXIMIZED_BOTH);
@@ -1266,21 +1248,47 @@ public class MainView extends javax.swing.JFrame {
                 this.addWindowListener(windowListener);
 
             }
-            tableArtifacts.setVisible(true); 
+            tableArtifacts.setVisible(true);
             this.setVisible(false);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             StringBuilder sb = new StringBuilder(e.toString());
-                for (StackTraceElement ste : e.getStackTrace()) {
-                    sb.append("\n\tat ");
-                    sb.append(ste);
-                }
+            for (StackTraceElement ste : e.getStackTrace()) {
+                sb.append("\n\tat ");
+                sb.append(ste);
+            }
             String trace = sb.toString();
             JOptionPane.showMessageDialog(null, trace);
         }
     }
-    
-    
+
+    private void bpmnUCView() {
+        try {
+            BPMNController.mapUseCases();
+            if (useCasesViewBPMN == null) {
+                System.out.println("Aqui");
+                useCasesViewBPMN = new UseCasesViewBPMN(E4JiStar, E4JBPMN, E4JUseCases, useCasesView);
+                useCasesViewBPMN.setIconImage(iconJGOOSE);
+                useCasesViewBPMN.setExtendedState(MAXIMIZED_BOTH);
+                useCasesViewBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                EditorWindowListener windowListener = new EditorWindowListener(this, useCasesViewBPMN);
+                this.addWindowListener(windowListener);
+                useCasesViewBPMN.addWindowListener(windowListener);
+                this.addWindowListener(windowListener);
+            }
+            useCasesViewBPMN.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception e) {
+            StringBuilder sb = new StringBuilder(e.toString());
+            for (StackTraceElement ste : e.getStackTrace()) {
+                sb.append("\n\tat ");
+                sb.append(ste);
+            }
+            String trace = sb.toString();
+            JOptionPane.showMessageDialog(null, trace);
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -1361,7 +1369,5 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JMenuItem toolsOpenE4JEditor;
     private javax.swing.JMenuItem toolsOpenE4JUCEditor;
     // End of variables declaration//GEN-END:variables
-
-
 
 }
