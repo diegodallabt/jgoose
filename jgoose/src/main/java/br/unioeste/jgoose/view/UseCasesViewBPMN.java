@@ -45,6 +45,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -95,14 +96,14 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
     private EditorJFrame E4JiStar = null;
     private EditorJFrame E4JUseCases = null;
     private EditorJFrame E4JBPMN = null;
-    private UseCasesView useCasesView = null;
+    private UseCasesViewIStar useCasesView = null;
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger("console");
     private Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
     Font roboto;
     /**
      * Creates new form UseCasesView
      */
-    public UseCasesViewBPMN(EditorJFrame E4JiStar,EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesView useCasesView) {
+    public UseCasesViewBPMN(EditorJFrame E4JiStar,EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewIStar useCasesView) {
         this.E4JBPMN = E4JBPMN;
         this.E4JiStar = E4JiStar;
         this.E4JUseCases = E4JUseCases;
@@ -295,7 +296,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
     /**
      * Abre uma janela GuidelinesDialogView
      */
-    private void showGuidelinesDialog() {
+    private void showGuidelinesDialog() throws URISyntaxException {
         GuidelinesDialogView diretrizes;
         try {
             System.out.println("A");
@@ -862,7 +863,11 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonGuidelinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuidelinesActionPerformed
-        this.showGuidelinesDialog();
+        try {
+            this.showGuidelinesDialog();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(UseCasesViewBPMN.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_buttonGuidelinesActionPerformed
 
     private void buttonDiagramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDiagramActionPerformed

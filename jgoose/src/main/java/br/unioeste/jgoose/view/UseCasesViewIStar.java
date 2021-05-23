@@ -28,6 +28,7 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -52,7 +53,7 @@ import org.w3c.dom.Element;
  *
  * @author Diego Peliser
  */
-public class UseCasesView extends javax.swing.JFrame {
+public class UseCasesViewIStar extends javax.swing.JFrame {
 
     private Actor selectedActor = null;
     private String selectedCase = "";
@@ -62,7 +63,7 @@ public class UseCasesView extends javax.swing.JFrame {
     /**
      * Creates new form UseCasesView
      */
-    public UseCasesView() {
+    public UseCasesViewIStar() {
         initComponents();
         setLocationRelativeTo(null);
         buttonDelete.setEnabled(false);
@@ -111,7 +112,7 @@ public class UseCasesView extends javax.swing.JFrame {
         try {
             doc.insertString(doc.getLength(), text, style);
         } catch (BadLocationException ex) {
-            Logger.getLogger(UseCasesView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -204,7 +205,7 @@ public class UseCasesView extends javax.swing.JFrame {
     /**
      * Abre uma janela GuidelinesDialogView
      */
-    private void showGuidelinesDialog() {
+    private void showGuidelinesDialog() throws URISyntaxException {
         GuidelinesDialogView diretrizes;
         try {
             diretrizes = new GuidelinesDialogView(this);
@@ -489,7 +490,11 @@ public class UseCasesView extends javax.swing.JFrame {
 
     private void helpGuidelinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpGuidelinesActionPerformed
         buttonDelete.setEnabled(false);
-        this.showGuidelinesDialog();
+        try {
+            this.showGuidelinesDialog();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_helpGuidelinesActionPerformed
 
     private void helpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpAboutActionPerformed
@@ -509,7 +514,11 @@ public class UseCasesView extends javax.swing.JFrame {
 
     private void buttonGuidelinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuidelinesActionPerformed
         buttonDelete.setEnabled(false);
-        this.showGuidelinesDialog();
+        try {
+            this.showGuidelinesDialog();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_buttonGuidelinesActionPerformed
 
     private void fileSaveUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileSaveUseCasesActionPerformed
@@ -521,9 +530,9 @@ public class UseCasesView extends javax.swing.JFrame {
         try {
             this.showUseCasesDiagram();
         } catch (HeadlessException ex) {
-            Logger.getLogger(UseCasesView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(UseCasesView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonDiagramActionPerformed
 
@@ -909,7 +918,7 @@ public class UseCasesView extends javax.swing.JFrame {
                     }
                 }
             } catch (IOException ex) {
-                Logger.getLogger(UseCasesView.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -930,7 +939,7 @@ public class UseCasesView extends javax.swing.JFrame {
                     writer.write(textUseCases.getText());
                 }
             } catch (IOException ex) {
-                Logger.getLogger(UseCasesView.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

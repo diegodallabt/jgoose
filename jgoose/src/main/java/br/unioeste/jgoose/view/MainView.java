@@ -26,6 +26,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.logging.Level;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -49,7 +50,7 @@ import org.apache.log4j.Logger;
  */
 public class MainView extends javax.swing.JFrame {
 
-    private UseCasesView useCasesView = null;
+    private UseCasesViewIStar useCasesView = null;
     private TableArtifacts tableArtifacts = null;
     private UseCasesViewBPMN useCasesViewBPMN = null;
     private static final Logger LOG = Logger.getLogger("console");
@@ -856,7 +857,7 @@ public class MainView extends javax.swing.JFrame {
     private void buttunMappingUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesActionPerformed
         Controller.mapUseCases();
         if (useCasesView == null) {
-            useCasesView = new UseCasesView();
+            useCasesView = new UseCasesViewIStar();
             useCasesView.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         }
         useCasesView.updateTabel();
@@ -892,7 +893,11 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_helpAboutActionPerformed
 
     private void helpGuidelinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpGuidelinesActionPerformed
-        this.showGuidelinesDialog();
+        try {
+            this.showGuidelinesDialog();
+        } catch (URISyntaxException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_helpGuidelinesActionPerformed
 
     private void toolsOpenE4JUCEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolsOpenE4JUCEditorActionPerformed
@@ -1051,7 +1056,7 @@ public class MainView extends javax.swing.JFrame {
     /**
      * Abre uma janela GuidelinesDialogView
      */
-    private void showGuidelinesDialog() {
+    private void showGuidelinesDialog() throws URISyntaxException {
         GuidelinesDialogView diretrizes;
         try {
             diretrizes = new GuidelinesDialogView(this);
