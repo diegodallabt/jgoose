@@ -2,14 +2,16 @@ package br.unioeste.jgoose.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Frame;
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,6 +23,7 @@ import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Document;
@@ -31,7 +34,7 @@ import javax.swing.text.Document;
  */
 public class GuidelinesDialogView extends JDialog {
 
-    public GuidelinesDialogView(Frame frame) throws BadLocationException {
+    public GuidelinesDialogView(Frame frame) throws BadLocationException, URISyntaxException  {
         super(frame);
         //@TODO: internationalize the title of guidelines dialog.
         setTitle("JOOSE - Guidelines");
@@ -115,7 +118,7 @@ public class GuidelinesDialogView extends JDialog {
         this.setSize(840, 620);
     }
 
-    public GuidelinesDialogView(Frame frame, boolean bpmn) throws BadLocationException {
+    public GuidelinesDialogView(Frame frame, boolean bpmn) throws BadLocationException, URISyntaxException  {
         super(frame);
         //@TODO: internationalize the title of guidelines dialog.
         setTitle("BP2UC - Guidelines");
@@ -134,19 +137,13 @@ public class GuidelinesDialogView extends JDialog {
         panel.add(titleLabel, BorderLayout.NORTH);
         // Adds optional subtitle
         // @TODO: address to be defined or removed.
-        //JLabel subtitleLabel = new JLabel(
-        //"For more information visit http://www.unioeste.br/jgoose");
-        //subtitleLabel.setBorder(BorderFactory.createEmptyBorder(4, 18, 0, 0));
-        //subtitleLabel.setOpaque(false);
-        //panel.add(subtitleLabel, BorderLayout.CENTER);
-
         getContentPane().add(panel, BorderLayout.NORTH);
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
         content.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
-        content.add(new JLabel("JGOOSE - Guidelines"));
+        content.add(new JLabel("JGOOSE - Guidelines BPMN to Use Cases"));
         //@TODO: organize the software version. Version Management?
-        content.add(new JLabel("Version: 0.4.1-2013"));
+        content.add(new JLabel("Version: 5.7-2021"));
         content.add(new JLabel(" "));
         JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
@@ -154,9 +151,8 @@ public class GuidelinesDialogView extends JDialog {
         textArea.setWrapStyleWord(true);
         JScrollPane jScrollPane = new JScrollPane(textArea);
         Document document = new DefaultStyledDocument();
-        int offset;
-        offset = document.getEndPosition().getOffset();
-        document.insertString(offset, "STEP 1 - DISCOVERING ACTORS\n\n"
+        System.out.println("document.getEndPosition().getOffset();"+document.getEndPosition().getOffset());
+        String guidelinesText = "STEP 1 - DISCOVERING ACTORS\n\n"
                 + " - DRD1: every pool of the BPMN model is mapped to a Use Case actor.\n"
                 + " - DRD2: every lane is mapped to a Use Case actor. The actor will be a specialization of the actor obtained from the pool.\n"                
                 + "\nSTEP 2 - DISCOVERING USE CASES\n\n"
@@ -172,31 +168,48 @@ public class GuidelinesDialogView extends JDialog {
                 + "\nSTEP 3 - ASSOCIATING ACTORS AND USE CASES\n\n"                
                 + " - DRD12: a Use Case will be associated with the actor representing the Lane or Pool in which the activity that originated it is inserted.\n"
                 + " - DRD13: if an activity (A1) has message flow for an activity of another participant (P1), the Use Case representing A1 will be associated with the actor originated from P1.\n"
-                + " - DRD14: each Use Case originated from an instance (I1) that has the SP marker, will be included in the Use Case obtained by the activity that originated I1.", null);
+                + " - DRD14: each Use Case originated from an instance (I1) that has the SP marker, will be included in the Use Case obtained by the activity that originated I1.";
+        document.insertString(document.getLength(), guidelinesText, null);
 
         textArea.setDocument(document);
         //getContentPane().add(textArea, BorderLayout.CENTER);
         getContentPane().add(jScrollPane, BorderLayout.CENTER);
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory
+        
+        JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        footerPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory
                 .createMatteBorder(1, 0, 0, 0, Color.GRAY), BorderFactory
                 .createEmptyBorder(16, 8, 8, 8)));
-        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        getContentPane().add(footerPanel, BorderLayout.SOUTH);
         // Adds OK button to close window
         // @TODO: internationalize close button name.
-        JButton closeButton = new JButton("Close");
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
+        URI lesURI = new URI("https://www.inf.unioeste.br/les/index.php/listamembros");
+        class OpenUrlAction implements ActionListener {
+            @Override public void actionPerformed(ActionEvent e) {
+                open(lesURI);
             }
-        });
-        buttonPanel.add(closeButton);
-        // Sets default button for enter key
-        getRootPane().setDefaultButton(closeButton);
+        }
+        JButton button = new JButton();
+        button.setText("<HTML> Click Here <FONT color=\"#000099\"><U>Les</U></FONT>"+ " for more information.</HTML>");
+        button.setHorizontalAlignment(SwingConstants.LEFT);
+        button.setBorderPainted(false);
+        button.setOpaque(false);
+        button.setBackground(Color.WHITE);
+        button.setToolTipText(lesURI.toString());
+        button.addActionListener(new OpenUrlAction());
+        footerPanel.add(button, BorderLayout.WEST);
+                
         this.setResizable(false);
         this.setSize(840, 620);
     }
+    
+    private static void open(URI uri) {
+        if (Desktop.isDesktopSupported()) {
+        try {
+            Desktop.getDesktop().browse(uri);
+        } catch (IOException e) { /* TODO: error handling */ }
+        } else { /* TODO: error handling */ }
+    }
+    
     /**
      * Overrides {@link JDialog#createRootPane()} to return a root pane that
      * hides the window when the user presses the ESCAPE key.O
