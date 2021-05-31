@@ -4,8 +4,6 @@ import br.unioeste.jgoose.UseCases.Actor;
 import br.unioeste.jgoose.controller.BPMNController;
 import br.unioeste.jgoose.controller.Controller;
 import br.unioeste.jgoose.controller.EditorWindowListener;
-import br.unioeste.jgoose.controller.HorizontalBPMNTraceController;
-import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.controller.HorizontalIStarTraceController;
 import br.unioeste.jgoose.controller.HorizontalUseCaseTraceController;
 import br.unioeste.jgoose.controller.ImportIStarGraph;
@@ -25,7 +23,6 @@ import com.mxgraph.shape.mxStencilShape;
 import com.mxgraph.util.mxResources;
 import com.mxgraph.util.mxUtils;
 import com.mxgraph.view.mxGraph;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -56,14 +53,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
@@ -333,7 +327,17 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         buttonGuidelines = new javax.swing.JButton();
         JLabelUseCasesFromBPMN = new javax.swing.JLabel();
         buttonSaveUseCases = new javax.swing.JButton();
-        jButtonAddReq = new javax.swing.JButton();
+        jButtonAddUseCase = new javax.swing.JButton();
+        jButtonAddUseCase.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AddUseCasefromBPMN dialogAddUseCase = new AddUseCasefromBPMN();
+                int option = dialogAddUseCase.createDialogAdd();
+                if(option == AddUseCasefromBPMN.YES) {
+                    updateTable();
+                }
+            }
+        });
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         labelSearchIcon = new javax.swing.JLabel();
@@ -432,22 +436,17 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             }
         });
 
-        jButtonAddReq.setBackground(new java.awt.Color(15, 157, 229));
-        jButtonAddReq.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jButtonAddReq.setForeground(new java.awt.Color(250, 250, 250));
-        jButtonAddReq.setText("Add Requirement");
-        jButtonAddReq.setBorder(null);
-        jButtonAddReq.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonAddUseCase.setBackground(new java.awt.Color(15, 157, 229));
+        jButtonAddUseCase.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jButtonAddUseCase.setForeground(new java.awt.Color(250, 250, 250));
+        jButtonAddUseCase.setText("Add Use Cases");
+        jButtonAddUseCase.setBorder(null);
+        jButtonAddUseCase.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButtonAddReqMouseEntered(evt);
+                jButtonAddUseCaseMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButtonAddReqMouseExited(evt);
-            }
-        });
-        jButtonAddReq.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddReqActionPerformed(evt);
+                jButtonAddUseCaseMouseExited(evt);
             }
         });
 
@@ -505,7 +504,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonAddReq, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAddUseCase, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -523,7 +522,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelHeaderLayout.createSequentialGroup()
                                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButtonAddReq, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonAddUseCase, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(21, 21, 21))))
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
@@ -539,7 +538,6 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        textUseCases.setBackground(new java.awt.Color(255, 255, 255));
         textUseCases.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(53, 178, 242)));
         textUseCases.setFont(new java.awt.Font("Roboto", 1, 14));
         textUseCases.setEnabled(false);
@@ -619,7 +617,6 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelUseCases.setColumnSelectionAllowed(false);
         tabelUseCases.setGridColor(new java.awt.Color(252, 252, 252));
         tabelUseCases.setPreferredSize(null);
         tabelUseCases.setRowHeight(30);
@@ -909,10 +906,6 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfFilterActionPerformed
 
-    private void jButtonAddReqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddReqActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAddReqActionPerformed
-
     private void menuBtnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBtnHomeActionPerformed
         dispose();
     }//GEN-LAST:event_menuBtnHomeActionPerformed
@@ -995,15 +988,15 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         jButton9.setBackground(new java.awt.Color(11, 113, 165));
     }//GEN-LAST:event_jButton9MouseExited
 
-    private void jButtonAddReqMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddReqMouseEntered
+    private void jButtonAddUseCaseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddUseCaseMouseEntered
         setCursor(Cursor.HAND_CURSOR);
-        jButtonAddReq.setBackground(new java.awt.Color(69, 185, 243));
-    }//GEN-LAST:event_jButtonAddReqMouseEntered
+        jButtonAddUseCase.setBackground(new java.awt.Color(69, 185, 243));
+    }//GEN-LAST:event_jButtonAddUseCaseMouseEntered
 
-    private void jButtonAddReqMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddReqMouseExited
+    private void jButtonAddUseCaseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddUseCaseMouseExited
         setCursor(Cursor.DEFAULT_CURSOR);
-        jButtonAddReq.setBackground(new java.awt.Color(15, 157, 229));
-    }//GEN-LAST:event_jButtonAddReqMouseExited
+        jButtonAddUseCase.setBackground(new java.awt.Color(15, 157, 229));
+    }//GEN-LAST:event_jButtonAddUseCaseMouseExited
 
     private void buttonDiagramMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonDiagramMouseEntered
         setCursor(Cursor.HAND_CURSOR);
@@ -1059,7 +1052,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
-    private javax.swing.JButton jButtonAddReq;
+    private javax.swing.JButton jButtonAddUseCase;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1392,12 +1385,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             }
         }
     }
-
-    private void saveDescription() {
-
-       
-    }
-
+    
     private void showE4JiStar() throws HeadlessException, IOException {
         if (E4JiStar == null) {
             E4JiStar = new EditorJFrame(0);

@@ -231,7 +231,7 @@ public class MainView extends javax.swing.JFrame {
         buttonOpenE4JBPMN.setBackground(new java.awt.Color(255, 255, 255));
         buttonOpenE4JBPMN.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonOpenE4JBPMN.setForeground(new java.awt.Color(15, 157, 229));
-        buttonOpenE4JBPMN.setText("<html><center>\nBPMN <br> Editor");
+        buttonOpenE4JBPMN.setText("<html><center> BPMN <br> Editor");
         buttonOpenE4JBPMN.setToolTipText("Open BPMN Editor");
         buttonOpenE4JBPMN.setBorder(null);
         buttonOpenE4JBPMN.setBorderPainted(false);
