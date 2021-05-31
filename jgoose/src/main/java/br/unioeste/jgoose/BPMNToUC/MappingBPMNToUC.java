@@ -858,4 +858,8 @@ public class MappingBPMNToUC {
     public List<UCUseCase> getUseCases() {
         return useCases;
     }
+    
+    public void deleteUC(UCUseCase usecase){
+        useCases.remove(usecase);
+    }
 }

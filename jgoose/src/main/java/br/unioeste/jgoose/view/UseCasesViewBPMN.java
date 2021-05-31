@@ -7,6 +7,7 @@ import br.unioeste.jgoose.controller.EditorWindowListener;
 import br.unioeste.jgoose.controller.HorizontalIStarTraceController;
 import br.unioeste.jgoose.controller.HorizontalUseCaseTraceController;
 import br.unioeste.jgoose.controller.ImportIStarGraph;
+import br.unioeste.jgoose.controller.UCController;
 import br.unioeste.jgoose.controller.VerticalTraceController;
 import br.unioeste.jgoose.e4j.filters.ShapeFilenameFilter;
 import br.unioeste.jgoose.e4j.swing.BasicIStarEditor;
@@ -91,6 +92,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
     private EditorJFrame E4JUseCases = null;
     private EditorJFrame E4JBPMN = null;
     private UseCasesViewIStar useCasesView = null;
+    private DefaultTableModel tabCasosDeUso = new DefaultTableModel();
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger("console");
     private Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
     Font roboto;
@@ -124,7 +126,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
      * Método que atualiza a Tabela de Casos de Uso
      */
     public void updateTable() {
-        DefaultTableModel tabCasosDeUso = new DefaultTableModel();
+        tabCasosDeUso = new DefaultTableModel();
         tabCasosDeUso.addColumn("ID"); // 0
         tabCasosDeUso.addColumn("Use Case");
         tabCasosDeUso.addColumn("Info"); // 2
@@ -212,6 +214,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         }
     }
 
+    @SuppressWarnings("empty-statement")
     private void tabelUseCasesValueChanged(ListSelectionEvent evt) {
 
         buttonDiagram.setEnabled(true);
@@ -276,13 +279,13 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             textUseCases.setText("");
         }
 
-        System.out.println("col:" + colunm + " row: " + linha);
         if (colunm == 3) {
-            System.out.println("asa");
             int dialogButton = JOptionPane.YES_NO_OPTION;
-            int dialogResult = JOptionPane.showConfirmDialog(null, "would you like to delete a " + linha + "?", "Warning", dialogButton);
+            UCUseCase useCase = BPMNController.getUseCases().get(linha);
+            int dialogResult = JOptionPane.showConfirmDialog(null, "Would you like to delete a " + useCase.getName() + "?", "Warning", dialogButton);
             if (dialogResult == JOptionPane.YES_OPTION) {
-                System.out.println("YESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+                BPMNController.deleteUC(useCase);
+                tabCasosDeUso.removeRow(linha);
             };
         }
     }
