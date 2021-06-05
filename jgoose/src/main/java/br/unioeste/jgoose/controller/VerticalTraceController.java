@@ -211,12 +211,16 @@ public class VerticalTraceController extends AbstractAction {
         }
     }
 
-    private TraceabilityView viewTraceability = null;
+    private static TraceabilityView viewTraceability = null;
 
-    Integer type;
+    public static Integer type;
 
     public VerticalTraceController(int i) {
-        this.type = i;
+        VerticalTraceController.type = i;
+    }
+
+    public static Integer getType() {
+        return type;
     }
 
     public static void setTokensVertical(TokensTraceability tokens) {
@@ -229,39 +233,47 @@ public class VerticalTraceController extends AbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (type) {
-            case 1://rastreabilidade vertical BPMN to UC
-                if (BPMNController.getFlagMapUseCases()) {
-                    traceBPMNVertical = new TraceBPMNVertical();
-                    traceBPMNVertical.TraceElementsBPMNVertical();
+        openVerticalTraceabilityView();
+    }
 
-                    if (viewTraceability == null) {
-                        viewTraceability = new TraceabilityView(4);
-                        viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    public static void openVerticalTraceabilityView() {
+        if (type != null) {
+            switch (type) {
+                case 1://rastreabilidade vertical BPMN to UC
+                    if (BPMNController.getFlagMapUseCases()) {
+                        traceBPMNVertical = new TraceBPMNVertical();
+                        traceBPMNVertical.TraceElementsBPMNVertical();
+
+                        if (viewTraceability == null) {
+                            viewTraceability = new TraceabilityView(4);
+                            viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                        }
+                        viewTraceability.updateTableVerticalBPMNtoUCTraceability();
+                        viewTraceability.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "YOU NEED FIRST MAPPING BPMN to Use Cases");
                     }
-                    viewTraceability.updateTableVerticalBPMNtoUCTraceability();
-                    viewTraceability.setVisible(true);
-                }else{
-                    JOptionPane.showMessageDialog(null,  "YOU NEED FIRST MAPPING BPMN to Use Cases");
-                }
 
-                break;
-            case 2://rastreabilidade vertical i* to UC 
-                if (Controller.getFlagMapUseCases()) {
-                    traceIStarVertical = new TraceIStarVertical();
-                    traceIStarVertical.TraceElementsIStarVertical();
+                    break;
+                case 2://rastreabilidade vertical i* to UC 
+                    if (Controller.getFlagMapUseCases()) {
+                        traceIStarVertical = new TraceIStarVertical();
+                        traceIStarVertical.TraceElementsIStarVertical();
 
-                    if (viewTraceability == null) {
-                        viewTraceability = new TraceabilityView(5);
-                        viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                        if (viewTraceability == null) {
+                            viewTraceability = new TraceabilityView(5);
+                            viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                        }
+                        viewTraceability.updateTableVerticalIStartoUCTraceability();
+                        viewTraceability.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "YOU NEED FIRST MAPPING i* to Use Cases");
                     }
-                    viewTraceability.updateTableVerticalIStartoUCTraceability();
-                    viewTraceability.setVisible(true);
-                }else{
-                    JOptionPane.showMessageDialog(null, "YOU NEED FIRST MAPPING i* to Use Cases");
-                }
 
-                break;
+                    break;
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "You need traceability vertical fisrt");
         }
     }
 

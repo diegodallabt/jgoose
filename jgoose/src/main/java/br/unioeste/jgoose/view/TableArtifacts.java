@@ -23,7 +23,6 @@ public final class TableArtifacts extends javax.swing.JFrame {
      * Creates new form TableArtifacts
      */
     public TableArtifacts() {
-        System.out.println("AAAAAAAAA");
         setLocationRelativeTo(null);
         initComponents();
         try{
