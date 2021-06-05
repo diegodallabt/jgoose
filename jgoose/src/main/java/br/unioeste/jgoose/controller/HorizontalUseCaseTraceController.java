@@ -19,10 +19,8 @@ import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
-import static com.sun.codemodel.JExpr.component;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -341,7 +339,6 @@ public class HorizontalUseCaseTraceController extends AbstractAction {
         mxCell source = (mxCell) cell.getSource();
         mxCell target = (mxCell) cell.getTarget();
 
-        System.out.println("source id " + source.getId() + " target id: " + target.getId());
         // 2) get mapped elements to create a link between then
         Object mappedSource = mapped.get(source);
         if (mappedSource == null) {

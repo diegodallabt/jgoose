@@ -11,6 +11,7 @@ import java.util.List;
 /**
  *
  * @author Alysson Girotto
+ * @Victor Augusto Pozzan
  */
 public class UCUseCase extends UCElement{
 
@@ -23,7 +24,8 @@ public class UCUseCase extends UCElement{
     private UCUseCaseDescription description;
     private UCActor primaryActor;
     private List<UCActor> secondaryActors;
-    
+    private static long idCounter = 0;
+   
     public UCUseCase() {
         includedUseCases = new ArrayList<>();
         description = new UCUseCaseDescription();
@@ -121,5 +123,9 @@ public class UCUseCase extends UCElement{
     public String printAllInfo(){
         return "\n\tCode=" + code + " Name=" + name + " guidelineUsed=" + guidelineUsed + " instanceCod=" + instanceCod + " bpmnElementCode=" + bpmnElementCode + " includedUseCases=" + includedUseCases + "description= " + description + '}';
     }
-   
+
+    public static synchronized String createID()
+    {
+        return String.valueOf(idCounter++);
+    }  
 }

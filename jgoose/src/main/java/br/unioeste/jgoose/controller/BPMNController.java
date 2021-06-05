@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Alysson Girotto
+ * @author Victor Augusto Pozzan
  */
 public class BPMNController {
     
@@ -68,5 +69,9 @@ public class BPMNController {
     
     public static boolean getFlagMapUseCases(){
         return flagMapUseCases;
+    }
+        
+    public static void deleteUC(UCUseCase usecase){        
+        mappingBPMNToUC.deleteUC(usecase);
     }
 }

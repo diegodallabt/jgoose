@@ -24,7 +24,7 @@ import br.unioeste.jgoose.model.TracedRequisitos;
 import br.unioeste.jgoose.model.TracedStakeholders;
 import br.unioeste.jgoose.model.UCActor;
 import br.unioeste.jgoose.model.UCUseCase;
-import br.unioeste.jgoose.view.UseCasesView;
+import br.unioeste.jgoose.view.UseCasesViewIStar;
 import com.mxgraph.view.mxGraph;
 import java.io.IOException;
 

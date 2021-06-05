@@ -6,6 +6,7 @@ import br.unioeste.jgoose.controller.EditorWindowListener;
 import br.unioeste.jgoose.controller.ImportBPMNGraph;
 import br.unioeste.jgoose.controller.ImportIStarGraph;
 import br.unioeste.jgoose.controller.HorizontalBPMNTraceController;
+import br.unioeste.jgoose.controller.HorizontalControler;
 import br.unioeste.jgoose.controller.HorizontalIStarTraceController;
 import br.unioeste.jgoose.controller.HorizontalUseCaseTraceController;
 import br.unioeste.jgoose.controller.VerticalTraceController;
@@ -26,7 +27,9 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.logging.Level;
+import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -49,7 +52,7 @@ import org.apache.log4j.Logger;
  */
 public class MainView extends javax.swing.JFrame {
 
-    private UseCasesView useCasesView = null;
+    private UseCasesViewIStar useCasesView = null;
     private TableArtifacts tableArtifacts = null;
     private UseCasesViewBPMN useCasesViewBPMN = null;
     private static final Logger LOG = Logger.getLogger("console");
@@ -57,7 +60,7 @@ public class MainView extends javax.swing.JFrame {
     private EditorJFrame E4JUseCases = null;
     private EditorJFrame E4JBPMN = null;
     private JFrame E4JTraceability = null;
-    private BasicBPMNEditor editor;
+    private BasicBPMNEditor bpmnEditor;
 
     private Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
     Font roboto;
@@ -230,7 +233,7 @@ public class MainView extends javax.swing.JFrame {
         buttonOpenE4JBPMN.setBackground(new java.awt.Color(255, 255, 255));
         buttonOpenE4JBPMN.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonOpenE4JBPMN.setForeground(new java.awt.Color(15, 157, 229));
-        buttonOpenE4JBPMN.setText("<html><center>\nBPMN <br> Editor");
+        buttonOpenE4JBPMN.setText("<html><center> BPMN <br> Editor");
         buttonOpenE4JBPMN.setToolTipText("Open BPMN Editor");
         buttonOpenE4JBPMN.setBorder(null);
         buttonOpenE4JBPMN.setBorderPainted(false);
@@ -837,11 +840,12 @@ public class MainView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonHorizontalTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHorizontalTraceabilityActionPerformed
-        try {
+        HorizontalControler.openViewTraceabilityHorizontal();
+       /* try {
             this.showTraceability();
         } catch (HeadlessException ex) {
             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } */
     }//GEN-LAST:event_buttonHorizontalTraceabilityActionPerformed
 
     private void buttonBPMNToUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBPMNToUseCasesActionPerformed
@@ -856,7 +860,7 @@ public class MainView extends javax.swing.JFrame {
     private void buttunMappingUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesActionPerformed
         Controller.mapUseCases();
         if (useCasesView == null) {
-            useCasesView = new UseCasesView();
+            useCasesView = new UseCasesViewIStar();
             useCasesView.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         }
         useCasesView.updateTabel();
@@ -892,7 +896,11 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_helpAboutActionPerformed
 
     private void helpGuidelinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpGuidelinesActionPerformed
-        this.showGuidelinesDialog();
+        try {
+            this.showGuidelinesDialog();
+        } catch (URISyntaxException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_helpGuidelinesActionPerformed
 
     private void toolsOpenE4JUCEditorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toolsOpenE4JUCEditorActionPerformed
@@ -979,7 +987,7 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_menuLesMouseExited
 
     private void buttonVerticalTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVerticalTraceabilityActionPerformed
-        // TODO add your handling code here:
+        VerticalTraceController.openVerticalTraceabilityView();
     }//GEN-LAST:event_buttonVerticalTraceabilityActionPerformed
 
     private void buttonOpenE4JiStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JiStarActionPerformed
@@ -1051,7 +1059,7 @@ public class MainView extends javax.swing.JFrame {
     /**
      * Abre uma janela GuidelinesDialogView
      */
-    private void showGuidelinesDialog() {
+    private void showGuidelinesDialog() throws URISyntaxException {
         GuidelinesDialogView diretrizes;
         try {
             diretrizes = new GuidelinesDialogView(this);
@@ -1101,7 +1109,8 @@ public class MainView extends javax.swing.JFrame {
             fileMenu.add(menuItem, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalIStarTraceController(E4JiStar)));
+            //JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalIStarTraceController(E4JiStar)));
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalControler(E4JiStar, 1)));
             fileMenu.add(menuItem1, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
@@ -1140,7 +1149,7 @@ public class MainView extends javax.swing.JFrame {
             JMenuBar menubar = E4JUseCases.getJMenuBar();
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalUseCaseTraceController(E4JUseCases)));
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JUseCases, 3)));
             fileMenu.add(menuItem1, 3);
         }
         Controller.setMainView(this);
@@ -1163,21 +1172,21 @@ public class MainView extends javax.swing.JFrame {
                 this.addWindowListener(windowListener);
                 E4JBPMN.addWindowListener(windowListener);
                 this.addWindowListener(windowListener);
-                editor = (BasicBPMNEditor) E4JBPMN.getEditor();
+                bpmnEditor = (BasicBPMNEditor) E4JBPMN.getEditor();
 
                 // get diagram menu bar and shows option to derive Use Cases
                 JMenuBar menubar = E4JBPMN.getJMenuBar();
                 JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
                 String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-                JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalBPMNTraceController(E4JBPMN)));
+                JMenuItem menuItem1 = new JMenuItem(bpmnEditor.bind(label1, new HorizontalControler(E4JBPMN, 2)));
                 fileMenu.add(menuItem1, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);
                 String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-                JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(1)));
+                JMenuItem menuItem2 = new JMenuItem(bpmnEditor.bind(label2, new VerticalTraceController(1)));
                 fileMenu.add(menuItem2, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);
                 String label = mxResources.get("useCaseMaker", null, "Generate Use Cases");
-                JMenuItem menuItem = new JMenuItem(editor.bind(label, new ImportBPMNGraph(E4JBPMN)));
+                JMenuItem menuItem = new JMenuItem(bpmnEditor.bind(label, new ImportBPMNGraph(E4JBPMN)));
                 fileMenu.add(menuItem, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);
 

@@ -322,17 +322,6 @@ public class HorizontalBPMNTraceController extends AbstractAction {
             //System.out.println("ModelBPMN:\n + " + modelBPMN.toString());
             // close editor and call view to select the main actor (system).
         }
-
-        traceBPMNHorizontal = new TraceBPMNHorizontal();
-        traceBPMNHorizontal.TraceElementsBPMNHorizontal();
-
-        if (viewTraceability == null) {
-            viewTraceability = new TraceabilityView(1);
-            viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        }
-        viewTraceability.updateTableBPMNHorizontalTraceability();
-        viewTraceability.setVisible(true);
-
     }
 
     /**

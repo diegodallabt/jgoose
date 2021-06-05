@@ -75,4 +75,8 @@ public class TokensUseCase {
     public void addUseCase(UCUseCase useCase) {
         this.useCase.add(useCase);
     }
+    
+    public void deleteUseCase(UCUseCase useCase){
+        this.useCase.remove(useCase);
+    }
 }

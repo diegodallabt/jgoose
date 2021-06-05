@@ -6,6 +6,7 @@
 package br.unioeste.jgoose.controller;
 
 import br.unioeste.jgoose.model.TokensUseCase;
+import br.unioeste.jgoose.model.UCUseCase;
 
 
 /**
@@ -23,4 +24,5 @@ public class UCController {
     public static void setTokensUC(TokensUseCase tokensUC){
         UCController.tokensUC = tokensUC;
     }
+    
 }
