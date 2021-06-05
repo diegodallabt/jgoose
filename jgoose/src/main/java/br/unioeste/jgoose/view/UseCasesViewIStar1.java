@@ -87,7 +87,7 @@ import org.w3c.dom.Element;
  * @author Alysson Girotto
  * @author Victor Augusto Pozzan
  */
-public final class UseCasesViewBPMN extends javax.swing.JFrame {
+public final class UseCasesViewIStar1 extends javax.swing.JFrame {
 
     private Actor selectedActor = null;
     private String selectedCase = "";
@@ -108,7 +108,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
      * @param E4JUseCases
      * @param useCasesView
      */
-    public UseCasesViewBPMN(EditorJFrame E4JiStar,EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewIStar useCasesView) {
+    public UseCasesViewIStar1(EditorJFrame E4JiStar,EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewIStar useCasesView) {
         this.E4JBPMN = E4JBPMN;
         this.E4JiStar = E4JiStar;
         this.E4JUseCases = E4JUseCases;
@@ -210,7 +210,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         try {
             doc.insertString(doc.getLength(), text, style);
         } catch (BadLocationException ex) {
-            Logger.getLogger(UseCasesViewBPMN.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -219,7 +219,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         try {
             doc.insertString(doc.getLength(), text, style);
         } catch (BadLocationException ex) {
-            Logger.getLogger(UseCasesViewBPMN.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -354,6 +354,8 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         labelSearchIcon = new javax.swing.JLabel();
         jtfFilter = new javax.swing.JTextField();
+        buttonGuidelines1 = new javax.swing.JButton();
+        buttonGuidelines2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         textUseCases = new javax.swing.JTextPane();
@@ -386,7 +388,6 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Use Cases");
         setLocationByPlatform(true);
-        setMaximumSize(null);
         setMinimumSize(null);
 
         jPanelBackground.setBackground(new java.awt.Color(244, 244, 244));
@@ -432,7 +433,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
 
         JLabelUseCasesFromBPMN.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         JLabelUseCasesFromBPMN.setForeground(new java.awt.Color(37, 172, 241));
-        JLabelUseCasesFromBPMN.setText("Use Cases Mapped from BPMN");
+        JLabelUseCasesFromBPMN.setText("Use Cases Mapped from i*");
 
         buttonSaveUseCases.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         buttonSaveUseCases.setText("Export all Requirements");
@@ -504,6 +505,38 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
             .addComponent(labelSearchIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        buttonGuidelines1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        buttonGuidelines1.setText("Show NFRs");
+        buttonGuidelines1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonGuidelines1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonGuidelines1MouseExited(evt);
+            }
+        });
+        buttonGuidelines1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGuidelines1ActionPerformed(evt);
+            }
+        });
+
+        buttonGuidelines2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        buttonGuidelines2.setText("Show Isa's");
+        buttonGuidelines2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonGuidelines2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonGuidelines2MouseExited(evt);
+            }
+        });
+        buttonGuidelines2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGuidelines2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
         jPanelHeader.setLayout(jPanelHeaderLayout);
         jPanelHeaderLayout.setHorizontalGroup(
@@ -516,14 +549,21 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JLabelUseCasesFromBPMN))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonAddUseCase, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonGuidelines, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonAddUseCase, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(23, 23, 23)
+                        .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(buttonGuidelines1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonGuidelines2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonGuidelines, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelHeaderLayout.setVerticalGroup(
@@ -544,9 +584,12 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
                         .addComponent(JLabelUseCasesFromBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10)
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonGuidelines, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(buttonGuidelines, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonGuidelines1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonGuidelines2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -666,7 +709,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 550, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -773,6 +816,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         btnUCIStarView.setBackground(new java.awt.Color(11, 113, 165));
         btnUCIStarView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-iStar.png"))); // NOI18N
         btnUCIStarView.setBorder(null);
+        btnUCIStarView.setEnabled(false);
         btnUCIStarView.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnUCIStarViewMouseEntered(evt);
@@ -789,7 +833,6 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
 
         btnUCViewBpmnBlock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-BPMN.png"))); // NOI18N
         btnUCViewBpmnBlock.setBorder(null);
-        btnUCViewBpmnBlock.setEnabled(false);
         btnUCViewBpmnBlock.setOpaque(false);
         btnUCViewBpmnBlock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -893,7 +936,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         try {
             this.showGuidelinesDialog();
         } catch (URISyntaxException ex) {
-            Logger.getLogger(UseCasesViewBPMN.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonGuidelinesActionPerformed
 
@@ -901,9 +944,9 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         try {
             this.showUseCasesDiagram();
         } catch (HeadlessException ex) {
-            Logger.getLogger(UseCasesViewBPMN.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(UseCasesViewBPMN.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonDiagramActionPerformed
 
@@ -927,7 +970,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
                 }
                 JOptionPane.showMessageDialog(null, "File generated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ex) {
-                Logger.getLogger(UseCasesViewBPMN.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_buttonExportThisSpecificationActionPerformed
@@ -1086,7 +1129,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         } catch (HeadlessException ex) {
             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(UseCasesViewBPMN.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnMenuUCActionPerformed
 
@@ -1104,6 +1147,30 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         VerticalTraceController.openVerticalTraceabilityView();
     }//GEN-LAST:event_bntMenuTraceVerticalActionPerformed
 
+    private void buttonGuidelines1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonGuidelines1MouseEntered
+
+    private void buttonGuidelines1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonGuidelines1MouseExited
+
+    private void buttonGuidelines1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuidelines1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonGuidelines1ActionPerformed
+
+    private void buttonGuidelines2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonGuidelines2MouseEntered
+
+    private void buttonGuidelines2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines2MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonGuidelines2MouseExited
+
+    private void buttonGuidelines2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuidelines2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonGuidelines2ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelUseCasesFromBPMN;
     private javax.swing.JButton bntMenuTraceVertical;
@@ -1117,6 +1184,8 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
     private javax.swing.JButton buttonDiagram;
     private javax.swing.JButton buttonExportThisSpecification;
     private javax.swing.JButton buttonGuidelines;
+    private javax.swing.JButton buttonGuidelines1;
+    private javax.swing.JButton buttonGuidelines2;
     private javax.swing.JButton buttonSaveUseCases;
     private javax.swing.JButton jButtonAddUseCase;
     private javax.swing.JLabel jLabel1;
@@ -1442,7 +1511,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "File generated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (IOException ex) {
-                Logger.getLogger(UseCasesViewBPMN.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
