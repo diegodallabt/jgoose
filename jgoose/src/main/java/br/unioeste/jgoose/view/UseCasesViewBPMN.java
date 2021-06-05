@@ -1,15 +1,19 @@
 package br.unioeste.jgoose.view;
 
+import br.unioeste.jgoose.view.MainView;
 import br.unioeste.jgoose.UseCases.Actor;
 import br.unioeste.jgoose.controller.BPMNController;
 import br.unioeste.jgoose.controller.Controller;
 import br.unioeste.jgoose.controller.EditorWindowListener;
+import br.unioeste.jgoose.controller.HorizontalBPMNTraceController;
 import br.unioeste.jgoose.controller.HorizontalIStarTraceController;
 import br.unioeste.jgoose.controller.HorizontalUseCaseTraceController;
+import br.unioeste.jgoose.controller.ImportBPMNGraph;
 import br.unioeste.jgoose.controller.ImportIStarGraph;
 import br.unioeste.jgoose.controller.UCController;
 import br.unioeste.jgoose.controller.VerticalTraceController;
 import br.unioeste.jgoose.e4j.filters.ShapeFilenameFilter;
+import br.unioeste.jgoose.e4j.swing.BasicBPMNEditor;
 import br.unioeste.jgoose.e4j.swing.BasicIStarEditor;
 import br.unioeste.jgoose.e4j.swing.BasicUseCasesEditor;
 import br.unioeste.jgoose.e4j.swing.EditorJFrame;
@@ -83,7 +87,7 @@ import org.w3c.dom.Element;
  * @author Alysson Girotto
  * @author Victor Augusto Pozzan
  */
-public class UseCasesViewBPMN extends javax.swing.JFrame {
+public final class UseCasesViewBPMN extends javax.swing.JFrame {
 
     private Actor selectedActor = null;
     private String selectedCase = "";
@@ -95,9 +99,14 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
     private DefaultTableModel tabCasosDeUso = new DefaultTableModel();
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger("console");
     private Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
+    private BasicBPMNEditor bpmnEditor;
     Font roboto;
     /**
      * Creates new form UseCasesView
+     * @param E4JiStar
+     * @param E4JBPMN
+     * @param E4JUseCases
+     * @param useCasesView
      */
     public UseCasesViewBPMN(EditorJFrame E4JiStar,EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewIStar useCasesView) {
         this.E4JBPMN = E4JBPMN;
@@ -127,6 +136,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
      */
     public void updateTable() {
         tabCasosDeUso = new DefaultTableModel();
+        tabelUseCases.setAutoResizeMode(MAXIMIZED_HORIZ);
         tabCasosDeUso.addColumn("ID"); // 0
         tabCasosDeUso.addColumn("Use Case");
         tabCasosDeUso.addColumn("Info"); // 2
@@ -144,7 +154,6 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             tabCasosDeUso.addRow(vetCasosDeUso);
 
         }
-        tabelUseCases.setAutoResizeMode(MAXIMIZED_HORIZ);
         tabelUseCases.setModel(tabCasosDeUso);
         // seta a largura das colunas da tabela
         tabelUseCases.getColumnModel().getColumn(0).setMaxWidth(40);
@@ -377,6 +386,9 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Use Cases");
+        setLocationByPlatform(true);
+        setMaximumSize(null);
+        setMinimumSize(null);
 
         jPanelBackground.setBackground(new java.awt.Color(244, 244, 244));
         jPanelBackground.setMaximumSize(new java.awt.Dimension(3276799, 32767999));
@@ -505,7 +517,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JLabelUseCasesFromBPMN))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonAddUseCase, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -583,7 +595,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
                         .addGap(88, 88, 88)
                         .addComponent(buttonExportThisSpecification, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -656,7 +668,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -668,21 +680,23 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
         jPanelBackgroundLayout.setHorizontalGroup(
             jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBackgroundLayout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(10, 10, 10)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelBackgroundLayout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(jPanelHeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelBackgroundLayout.setVerticalGroup(
             jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBackgroundLayout.createSequentialGroup()
                 .addComponent(jPanelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGap(20, 20, 20)
+                .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(715, Short.MAX_VALUE))
         );
 
         jPanelMenuButtons.setBackground(new java.awt.Color(11, 113, 165));
@@ -734,6 +748,11 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
                 menuBtnBPMNMouseExited(evt);
             }
         });
+        menuBtnBPMN.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBtnBPMNActionPerformed(evt);
+            }
+        });
 
         menuBtnUC.setBackground(new java.awt.Color(11, 113, 165));
         menuBtnUC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UseCase.png"))); // NOI18N
@@ -746,6 +765,11 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
                 menuBtnUCMouseExited(evt);
             }
         });
+        menuBtnUC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBtnUCActionPerformed(evt);
+            }
+        });
 
         jButton6.setBackground(new java.awt.Color(11, 113, 165));
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-iStar.png"))); // NOI18N
@@ -756,6 +780,11 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jButton6MouseExited(evt);
+            }
+        });
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
             }
         });
 
@@ -778,6 +807,11 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jButton8MouseExited(evt);
+            }
+        });
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
             }
         });
 
@@ -846,12 +880,13 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanelMenuButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanelBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addGap(1, 1, 1)
                 .addComponent(jPanelBackground, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -1044,6 +1079,38 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_menuBtniStarActionPerformed
+
+    private void menuBtnBPMNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBtnBPMNActionPerformed
+        try {
+            this.showE4JBPMN();
+        } catch (HeadlessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuBtnBPMNActionPerformed
+
+    private void menuBtnUCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBtnUCActionPerformed
+        try {
+            this.showE4JUseCases();
+        } catch (HeadlessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(UseCasesViewBPMN.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuBtnUCActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        Controller.mapUseCases();
+        if (useCasesView == null) {
+            useCasesView = new UseCasesViewIStar();
+            useCasesView.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        }
+        useCasesView.updateTabel();
+        useCasesView.setVisible(true);
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        VerticalTraceController.openVerticalTraceabilityView();
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelUseCasesFromBPMN;
@@ -1401,9 +1468,7 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             this.addWindowListener(windowListener);
             BasicIStarEditor editor = (BasicIStarEditor) E4JiStar.getEditor();
             JMenuBar menubar = E4JiStar.getJMenuBar();
-            // get diagram menu ba
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
-            // alias label = l
             String label = mxResources.get("useCaseMaker", null, "Generate Use Cases");
             JMenuItem menuItem = new JMenuItem(editor.bind(label, new ImportIStarGraph(E4JiStar)));
             fileMenu.add(menuItem, 3);
@@ -1416,20 +1481,72 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(2)));
             fileMenu.add(menuItem2, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
-            
-            /*String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new HorizontalIStarTraceController(E4JiStar)));
-            fileMenu.add(menuItem2, 3);
-            fileMenu.add(new JPopupMenu.Separator(), 4);*/
-            
-
-            //diagramMenu.addSeparator();
-            //label = mxResources.get("iStarMLMaker", null, "Gerar iarML");
-            // menu.add(editor.bind(label, new GenerateIStarMLAction()));
-            //menubar.add(diagramMenu);
         }
-        //Controller.setMainView(this);
         E4JiStar.setVisible(true);
+        this.setVisible(false);
+    }
+
+    private void showE4JBPMN() {
+        try {
+            if (E4JBPMN == null) {
+                E4JBPMN = new EditorJFrame(2);
+                E4JBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                EditorWindowListener windowListener = new EditorWindowListener(this, E4JBPMN);
+                E4JBPMN.setIconImage(iconJGOOSE);
+                E4JBPMN.setExtendedState(MAXIMIZED_BOTH);
+                this.addWindowListener(windowListener);
+                E4JBPMN.addWindowListener(windowListener);
+                this.addWindowListener(windowListener);
+                bpmnEditor = (BasicBPMNEditor) E4JBPMN.getEditor();
+
+                // get diagram menu bar and shows option to derive Use Cases
+                JMenuBar menubar = E4JBPMN.getJMenuBar();
+                JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
+                String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
+                JMenuItem menuItem1 = new JMenuItem(bpmnEditor.bind(label1, new HorizontalBPMNTraceController(E4JBPMN)));
+                fileMenu.add(menuItem1, 3);
+                fileMenu.add(new JPopupMenu.Separator(), 4);
+                String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
+                JMenuItem menuItem2 = new JMenuItem(bpmnEditor.bind(label2, new VerticalTraceController(1)));
+                fileMenu.add(menuItem2, 3);
+                fileMenu.add(new JPopupMenu.Separator(), 4);
+                String label = mxResources.get("useCaseMaker", null, "Generate Use Cases");
+                JMenuItem menuItem = new JMenuItem(bpmnEditor.bind(label, new ImportBPMNGraph(E4JBPMN)));
+                fileMenu.add(menuItem, 3);
+                fileMenu.add(new JPopupMenu.Separator(), 4);
+
+            }
+            E4JBPMN.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception e) {
+            StringBuilder sb = new StringBuilder(e.toString());
+            for (StackTraceElement ste : e.getStackTrace()) {
+                sb.append("\n\tat ");
+                sb.append(ste);
+            }
+            String trace = sb.toString();
+            JOptionPane.showMessageDialog(null, trace);
+        }
+    }
+
+    private void showE4JUseCases() throws HeadlessException, IOException {
+        if (E4JUseCases == null) {
+            E4JUseCases = new EditorJFrame(1);
+            E4JUseCases.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            E4JUseCases.setIconImage(iconJGOOSE);
+            E4JUseCases.setExtendedState(MAXIMIZED_BOTH);
+            EditorWindowListener windowListener = new EditorWindowListener(this, E4JUseCases);
+            this.addWindowListener(windowListener);
+            E4JUseCases.addWindowListener(windowListener);
+            this.addWindowListener(windowListener);
+            BasicUseCasesEditor editor = (BasicUseCasesEditor) E4JUseCases.getEditor();
+            JMenuBar menubar = E4JUseCases.getJMenuBar();
+            JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
+            String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalUseCaseTraceController(E4JUseCases)));
+            fileMenu.add(menuItem1, 3);
+        }
+        E4JUseCases.setVisible(true);
         this.setVisible(false);
     }
 
@@ -1541,8 +1658,10 @@ public class UseCasesViewBPMN extends javax.swing.JFrame {
             if (clicked) {
                 //SHOW US SOME MESSAGE
                 String vetCasosDeUso[] = findElementAndInfos(row);
-
-                MoreInfoUC info = new MoreInfoUC(new javax.swing.JFrame(), true, vetCasosDeUso);
+                MoreInfoUCFromBPMN info = new MoreInfoUCFromBPMN(new javax.swing.JFrame(), true, vetCasosDeUso);        
+                info.setModal(true);
+                info.setLocationRelativeTo(null);       
+                info.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width  - getSize().width) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - getSize().height) / 2);
                 info.setVisible(true);
                 //JOptionPane.showMessageDialog(btn, lbl + " Clicked");
             }
@@ -1675,11 +1794,7 @@ class ButtonDelete extends DefaultCellEditor {
     }
 }
 
-/*GUIDELINES
-        buttonDelete.setEnabled(false);
-        this.showGuidelinesDialog()
-
-
+/*
 ABOUT
         buttonDelete.setEnabled(false);
         AboutDialogView about;

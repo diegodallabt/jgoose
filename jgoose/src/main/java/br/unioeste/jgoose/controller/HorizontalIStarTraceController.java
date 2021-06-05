@@ -261,114 +261,12 @@ public class HorizontalIStarTraceController extends AbstractAction{
                 break;
         }    
      }
-@Override
+
+    @Override
     public void actionPerformed(ActionEvent e) {
-        LOG.debug("Generate Use Case init.");
-
-        // clear all previous action performed
-        vertex.clear();
-        edges.clear();
-
-        jgoose = new TokensOpenOME();
-        Controller.setOme(jgoose);
-
-        Object source = e.getSource();
-
-        if (source instanceof mxGraphComponent) {
-            this.component = (mxGraphComponent) source;
-            this.graph = component.getGraph();
-            this.model = graph.getModel();
-
-            Object[] cells = this.selectAll();
-
-            // filter cells and put them in the map structure (elements and links)
-            // 1) compute all vertex
-            for (Object c : cells) {
-                mxCell cell = (mxCell) c;
-
-                if (!cell.isVertex()) {
-                    continue;
-                } else {
-                    this.convertVertex(cell);
-                }
-            }
-
-            //2) compute edges
-            for (Object c : cells) {
-                mxCell cell = (mxCell) c;
-
-                if (!cell.isEdge()) {
-                    // compute children
-                    //actor, agent, role, position,
-                    int children = cell.getChildCount();
-                    if (children > 0) {
-                        for (int i = children - 1; i >= 0; i--) {
-                            mxCell child = (mxCell) cell.getChildAt(i);
-                            String t = child.getAttribute("type");
-                            if (t == null) {
-                                LOG.debug("children removed.");
-                                deleteds.put(cell, child);
-                                cell.remove(child);
-                            } else {
-                                if (child.isEdge()) {
-                                    Object result = convertEdge(child);
-                                    if (result != null) {
-                                        Object parent = mapped.get(cell);
-                                        if (parent instanceof IStarActorElement) {
-                                            IStarActorElement parentActor = (IStarActorElement) parent;
-                                            parentActor.getChildrens().add((String) result);
-                                        } else {
-                                            LOG.error("parent instance not found.");
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    continue;
-                } else {
-                    this.convertEdge(cell);
-                }
-            }
-
-            LOG.debug("total elements interpreted: " + vertex.size());
-            LOG.debug("total links interpreted: " + edges.size());
-
-            // close editor and call view to select the main actor (system).
-            //WindowEvent wev = new WindowEvent(this.e4jinstance, WindowEvent.WINDOW_CLOSING);
-           // Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
-
-            // Abre a janela para selecionar o Ator Sistema
-           
-        }
-
-        LOG.debug("Generate Use Case finished.");
-
-        //adicionar os elementos deletados
-        for(mxCell c : deleteds.keySet()){
-            model.add(c, deleteds.get(c), 0);
-        }
-        
-        if(Controller.getSystemActor()==null){
-            SelectActorView atorsistema = new SelectActorView();   
-        }
-        
-        traceIStarHorizontal  = new TraceIStarHorizontal();  
-        traceIStarHorizontal.TraceElementsIStarHorizontal();
-        
-        if (viewTraceability == null) {
-            viewTraceability = new TraceabilityView(3);
-            viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        }
-        viewTraceability.updateTableIStarHorizontalTraceability();
-        viewTraceability.setVisible(true);    
+        mapHorizontalIstar(e);    
     }
 
-    /**
-     * Root? selection.
-     *
-     * @return user selection or forced 'selectAll'.
-     */
     private Object[] selectAll() {
         // first, get user selected cells
         graph.clearSelection();
@@ -379,11 +277,6 @@ public class HorizontalIStarTraceController extends AbstractAction{
         return cells;
     }
 
-    /**
-     *
-     * @param cell
-     * @return element mapped or null with any error.
-     */
     private Object convertVertex(mxCell cell) {
         Object result = null;
 
@@ -774,4 +667,95 @@ public class HorizontalIStarTraceController extends AbstractAction{
         return null;
     }
     
+    private void mapHorizontalIstar(ActionEvent e){
+        LOG.debug("Generate Use Case init.");
+
+        // clear all previous action performed
+        vertex.clear();
+        edges.clear();
+
+        jgoose = new TokensOpenOME();
+        Controller.setOme(jgoose);
+
+        Object source = e.getSource();
+
+        if (source instanceof mxGraphComponent) {
+            this.component = (mxGraphComponent) source;
+            this.graph = component.getGraph();
+            this.model = graph.getModel();
+
+            Object[] cells = this.selectAll();
+
+            // filter cells and put them in the map structure (elements and links)
+            // 1) compute all vertex
+            for (Object c : cells) {
+                mxCell cell = (mxCell) c;
+
+                if (!cell.isVertex()) {
+                    continue;
+                } else {
+                    this.convertVertex(cell);
+                }
+            }
+
+            //2) compute edges
+            for (Object c : cells) {
+                mxCell cell = (mxCell) c;
+
+                if (!cell.isEdge()) {
+                    // compute children
+                    //actor, agent, role, position,
+                    int children = cell.getChildCount();
+                    if (children > 0) {
+                        for (int i = children - 1; i >= 0; i--) {
+                            mxCell child = (mxCell) cell.getChildAt(i);
+                            String t = child.getAttribute("type");
+                            if (t == null) {
+                                LOG.debug("children removed.");
+                                deleteds.put(cell, child);
+                                cell.remove(child);
+                            } else {
+                                if (child.isEdge()) {
+                                    Object result = convertEdge(child);
+                                    if (result != null) {
+                                        Object parent = mapped.get(cell);
+                                        if (parent instanceof IStarActorElement) {
+                                            IStarActorElement parentActor = (IStarActorElement) parent;
+                                            parentActor.getChildrens().add((String) result);
+                                        } else {
+                                            LOG.error("parent instance not found.");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    continue;
+                } else {
+                    this.convertEdge(cell);
+                }
+            }
+
+            LOG.debug("total elements interpreted: " + vertex.size());
+            LOG.debug("total links interpreted: " + edges.size());
+
+            // close editor and call view to select the main actor (system).
+            //WindowEvent wev = new WindowEvent(this.e4jinstance, WindowEvent.WINDOW_CLOSING);
+           // Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
+
+            // Abre a janela para selecionar o Ator Sistema
+           
+        }
+
+        LOG.debug("Generate Use Case finished.");
+
+        //adicionar os elementos deletados
+        for(mxCell c : deleteds.keySet()){
+            model.add(c, deleteds.get(c), 0);
+        }
+        
+        if(Controller.getSystemActor()==null){
+            SelectActorView atorsistema = new SelectActorView();   
+        }
+    }
 }

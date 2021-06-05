@@ -87,15 +87,7 @@ import javax.swing.event.UndoableEditListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Element;
-import javax.swing.text.Position;
-import javax.swing.text.Segment;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 import static javax.swing.text.StyleConstants.ALIGN_CENTER;
-import org.apache.log4j.Logger;
 
 /**
  *
@@ -1026,7 +1018,7 @@ public class TraceabilityView extends javax.swing.JFrame {
         /*
          * Atualiza Informações Arquivo
          */
-        //DefaultTableModel traceabilityInfo = new DefaultTableModel();
+        DefaultTableModel traceabilityInfo = new DefaultTableModel();
         traceabilityInfo.addColumn("Abreviation");
         traceabilityInfo.addColumn("Name");
         traceabilityInfo.addColumn("Model");
@@ -1093,7 +1085,7 @@ public class TraceabilityView extends javax.swing.JFrame {
     }
 
     public void updateTableUCHorizontalTraceability() {
-        //    DefaultTableModel traceabilityInfo = new DefaultTableModel();
+        DefaultTableModel traceabilityInfo = new DefaultTableModel();
         traceabilityInfo.addColumn("Abreviation");
         traceabilityInfo.addColumn("Name");
         traceabilityInfo.addColumn("Model");//2
@@ -1155,7 +1147,7 @@ public class TraceabilityView extends javax.swing.JFrame {
     }
 
     public void updateTableIStarHorizontalTraceability() {
-        //   DefaultTableModel traceabilityInfo = new DefaultTableModel();
+        DefaultTableModel traceabilityInfo = new DefaultTableModel();
         traceabilityInfo.addColumn("Abreviation");//0
         traceabilityInfo.addColumn("Name");//1
         traceabilityInfo.addColumn("Model");//2
@@ -1226,7 +1218,7 @@ public class TraceabilityView extends javax.swing.JFrame {
     }
 
     public void updateTableVerticalBPMNtoUCTraceability() {
-        //   DefaultTableModel traceabilityInfo = new DefaultTableModel();
+        DefaultTableModel traceabilityInfo = new DefaultTableModel();
         traceabilityInfo.addColumn("Abreviation");//0
         traceabilityInfo.addColumn("Name");//1
         traceabilityInfo.addColumn("Model");//2
@@ -1297,7 +1289,7 @@ public class TraceabilityView extends javax.swing.JFrame {
     }
 
     public void updateTableVerticalIStartoUCTraceability() {
-        //   DefaultTableModel traceabilityInfo = new DefaultTableModel();
+        DefaultTableModel traceabilityInfo = new DefaultTableModel();
         traceabilityInfo.addColumn("Abreviation");//0
         traceabilityInfo.addColumn("Name");//1
         traceabilityInfo.addColumn("Model");//2
