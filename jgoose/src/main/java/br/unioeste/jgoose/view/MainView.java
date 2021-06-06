@@ -55,6 +55,7 @@ public class MainView extends javax.swing.JFrame {
     private UseCasesViewIStar useCasesView = null;
     private TableArtifacts tableArtifacts = null;
     private UseCasesViewBPMN useCasesViewBPMN = null;
+    private UseCasesViewIStar1 useCasesViewIStar = null;
     private static final Logger LOG = Logger.getLogger("console");
     private EditorJFrame E4JiStar = null;
     private EditorJFrame E4JUseCases = null;
@@ -853,18 +854,16 @@ public class MainView extends javax.swing.JFrame {
             this.bpmnUCView();
         } catch (HeadlessException ex) {
             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-
         }
     }//GEN-LAST:event_buttonBPMNToUseCasesActionPerformed
 
     private void buttunMappingUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesActionPerformed
         Controller.mapUseCases();
-        if (useCasesView == null) {
-            useCasesView = new UseCasesViewIStar();
-            useCasesView.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        try{
+            this.iStarUCView();
+        } catch (HeadlessException ex){
+             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        useCasesView.updateTabel();
-        useCasesView.setVisible(true);
     }//GEN-LAST:event_buttunMappingUseCasesActionPerformed
 
     private void buttonOpenE4JUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JUseCasesActionPerformed
@@ -1297,7 +1296,41 @@ public class MainView extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, trace);
         }
     }
-
+    
+    private void iStarUCView() {
+        try {
+            Controller.mapUseCases();
+            if (useCasesViewIStar == null) {
+                System.out.println("Aqui");
+                useCasesViewIStar = new UseCasesViewIStar1(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewBPMN);
+                useCasesViewIStar.setIconImage(iconJGOOSE);
+                useCasesViewIStar.setExtendedState(MAXIMIZED_BOTH);
+                useCasesViewIStar.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                EditorWindowListener windowListener = new EditorWindowListener(this, useCasesViewIStar);
+                this.addWindowListener(windowListener);
+                useCasesViewIStar.addWindowListener(windowListener);
+                this.addWindowListener(windowListener);
+            }
+            useCasesViewIStar.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception e) {
+            StringBuilder sb = new StringBuilder(e.toString());
+            for (StackTraceElement ste : e.getStackTrace()) {
+                sb.append("\n\tat ");
+                sb.append(ste);
+            }
+            String trace = sb.toString();
+            JOptionPane.showMessageDialog(null, trace);
+        }
+        /*
+        if (useCasesView == null) {
+            useCasesView = new UseCasesViewIStar();
+            useCasesView.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        }
+        useCasesView.updateTabel();
+        useCasesView.setVisible(true);*/
+    }
+    
     /**
      * @param args the command line arguments
      */

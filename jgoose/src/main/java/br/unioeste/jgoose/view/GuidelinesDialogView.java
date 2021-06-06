@@ -37,7 +37,7 @@ public class GuidelinesDialogView extends JDialog {
     public GuidelinesDialogView(Frame frame) throws BadLocationException, URISyntaxException  {
         super(frame);
         //@TODO: internationalize the title of guidelines dialog.
-        setTitle("JOOSE - Guidelines");
+        setTitle("JGOOSE - Guidelines");
         setLayout(new BorderLayout());
         // Creates the gradient panel
         JPanel panel = new JPanel(new BorderLayout());
@@ -58,7 +58,6 @@ public class GuidelinesDialogView extends JDialog {
         //subtitleLabel.setBorder(BorderFactory.createEmptyBorder(4, 18, 0, 0));
         //subtitleLabel.setOpaque(false);
         //panel.add(subtitleLabel, BorderLayout.CENTER);
-
         getContentPane().add(panel, BorderLayout.NORTH);
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
@@ -73,9 +72,7 @@ public class GuidelinesDialogView extends JDialog {
         textArea.setWrapStyleWord(true);
         JScrollPane jScrollPane = new JScrollPane(textArea);
         Document document = new DefaultStyledDocument();
-        int offset;
-        offset = document.getEndPosition().getOffset();
-        document.insertString(offset, "STEP 1 - DISCOVERING SYSTEM ACTORS\n\n"
+        String guidelinesText = "STEP 1 - DISCOVERING SYSTEM ACTORS\n\n"
                 + " - Guideline 1: every i* actor is a candidate to be mapped to a use case actor.\n"
                 + " - Guideline 2: the candidate i* actor should be external to the intended software system, otherwise, it cannot be mapped to a use case actor.\n"
                 + " - Guideline 3: the candidate i* actor should have least one dependency with the intended software system actor, otherwise, it cannot be mapped to a use case actor:\n"
@@ -92,28 +89,36 @@ public class GuidelinesDialogView extends JDialog {
                 + "   - Guideline 8.1: analyze the sub-components in a task decomposition link in a possible mapping for the steps in the description of the primary scenario (main stream) of Use Case.\n"
                 + "   - Guideline 8.2: analyze the means-end links in a possible mapping for alternative steps in the description of Use Cases.\n"
                 + "   - Guideline 8.3: analyze the relationships of sub-system actors dependencies. These dependencies can cause pre-conditions and post-conditions for use cases discovered.\n"
-                + " - Guideline 10: create the use case diagram using the discovered use cases and actors, as well as the three UML structuring mechanisms: <<include>>, <<extend>> and <<generalization>>.\n", null);
+                + " - Guideline 10: create the use case diagram using the discovered use cases and actors, as well as the three UML structuring mechanisms: <<include>>, <<extend>> and <<generalization>>.\n";
+        document.insertString(document.getLength(), guidelinesText, null);
 
         textArea.setDocument(document);
         //getContentPane().add(textArea, BorderLayout.CENTER);
         getContentPane().add(jScrollPane, BorderLayout.CENTER);
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        buttonPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory
+        
+        JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        footerPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory
                 .createMatteBorder(1, 0, 0, 0, Color.GRAY), BorderFactory
                 .createEmptyBorder(16, 8, 8, 8)));
-        getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        getContentPane().add(footerPanel, BorderLayout.SOUTH);
         // Adds OK button to close window
         // @TODO: internationalize close button name.
-        JButton closeButton = new JButton("Close");
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
+        URI lesURI = new URI("https://www.inf.unioeste.br/les/index.php/listamembros");
+        class OpenUrlAction implements ActionListener {
+            @Override public void actionPerformed(ActionEvent e) {
+                open(lesURI);
             }
-        });
-        buttonPanel.add(closeButton);
-        // Sets default button for enter key
-        getRootPane().setDefaultButton(closeButton);
+        }
+        JButton button = new JButton();
+        button.setText("<HTML> Click Here <FONT color=\"#000099\"><U>Les</U></FONT>"+ " for more information.</HTML>");
+        button.setHorizontalAlignment(SwingConstants.LEFT);
+        button.setBorderPainted(false);
+        button.setOpaque(false);
+        button.setBackground(Color.WHITE);
+        button.setToolTipText(lesURI.toString());
+        button.addActionListener(new OpenUrlAction());
+        footerPanel.add(button, BorderLayout.WEST);
+                
         this.setResizable(false);
         this.setSize(840, 620);
     }
@@ -151,7 +156,6 @@ public class GuidelinesDialogView extends JDialog {
         textArea.setWrapStyleWord(true);
         JScrollPane jScrollPane = new JScrollPane(textArea);
         Document document = new DefaultStyledDocument();
-        System.out.println("document.getEndPosition().getOffset();"+document.getEndPosition().getOffset());
         String guidelinesText = "STEP 1 - DISCOVERING ACTORS\n\n"
                 + " - DRD1: every pool of the BPMN model is mapped to a Use Case actor.\n"
                 + " - DRD2: every lane is mapped to a Use Case actor. The actor will be a specialization of the actor obtained from the pool.\n"                

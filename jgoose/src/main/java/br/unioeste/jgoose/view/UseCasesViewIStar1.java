@@ -2,6 +2,7 @@ package br.unioeste.jgoose.view;
 
 import br.unioeste.jgoose.view.MainView;
 import br.unioeste.jgoose.UseCases.Actor;
+import br.unioeste.jgoose.UseCases.UseCase;
 import br.unioeste.jgoose.controller.BPMNController;
 import br.unioeste.jgoose.controller.Controller;
 import br.unioeste.jgoose.controller.EditorWindowListener;
@@ -95,7 +96,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
     private EditorJFrame E4JiStar = null;
     private EditorJFrame E4JUseCases = null;
     private EditorJFrame E4JBPMN = null;
-    private UseCasesViewIStar useCasesView = null;
+    private UseCasesViewBPMN useCasesViewBPMN = null;
     private DefaultTableModel tabCasosDeUso = new DefaultTableModel();
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger("console");
     private Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
@@ -106,13 +107,13 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
      * @param E4JiStar
      * @param E4JBPMN
      * @param E4JUseCases
-     * @param useCasesView
+     * @param useCasesViewBPMN
      */
-    public UseCasesViewIStar1(EditorJFrame E4JiStar,EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewIStar useCasesView) {
+    public UseCasesViewIStar1(EditorJFrame E4JiStar,EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewBPMN useCasesViewBPMN) {
         this.E4JBPMN = E4JBPMN;
         this.E4JiStar = E4JiStar;
         this.E4JUseCases = E4JUseCases;
-        this.useCasesView = useCasesView;
+        this.useCasesViewBPMN = useCasesViewBPMN;
         
         setLocationRelativeTo(null);
         initComponents();
@@ -146,13 +147,15 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         String vetCasosDeUso[] = new String[4];
         int cont = 1;
         // adiciona os dados dos casos de uso no modelo da tabela
-        for (UCUseCase useCase : BPMNController.getUseCases()) {
-            vetCasosDeUso[0] = "" + cont++;
-            vetCasosDeUso[1] = useCase.getName();
-            vetCasosDeUso[2] = "";
-            vetCasosDeUso[3] = "";
-            tabCasosDeUso.addRow(vetCasosDeUso);
-
+        for (Actor actor : Controller.getUseCases()) {
+            for (Object useCase : actor.getUseCases()) {
+                UseCase caso = (UseCase) useCase;
+                vetCasosDeUso[0] = "" + cont++;
+                vetCasosDeUso[1] = actor.getName();
+                vetCasosDeUso[2] = caso.getName();
+                vetCasosDeUso[3] = caso.getType();
+                tabCasosDeUso.addRow(vetCasosDeUso);
+            }
         }
         tabelUseCases.setModel(tabCasosDeUso);
         // seta a largura das colunas da tabela
@@ -164,8 +167,8 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         tabelUseCases.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
         tabelUseCases.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(new JTextField()));
 
-        tabelUseCases.getColumnModel().getColumn(3).setCellRenderer(new ButtonRendererDelete());
-        tabelUseCases.getColumnModel().getColumn(3).setCellEditor(new ButtonDelete(new JTextField(), 0));
+        tabelUseCases.getColumnModel().getColumn(3).setCellRenderer(new ButtonRendererDelete1());
+        tabelUseCases.getColumnModel().getColumn(3).setCellEditor(new ButtonDelete1(new JTextField(), 0));
         
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabelUseCases.getModel());
         tabelUseCases.setRowSorter(rowSorter);
@@ -305,16 +308,10 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
     private void showGuidelinesDialog() throws URISyntaxException {
         GuidelinesDialogView diretrizes;
         try {
-            System.out.println("A");
-            diretrizes = new GuidelinesDialogView(this, true);
-                        System.out.println("A");
+            diretrizes = new GuidelinesDialogView(this);
             diretrizes.setModal(true);
-            System.out.println("A");
             int x = this.getX() + (this.getWidth() - diretrizes.getWidth()) / 2;
-                        System.out.println("A");
             int y = this.getY() + (this.getHeight() - diretrizes.getHeight()) / 2;
-                        System.out.println("A");
-            System.out.println("x:"+x+" y:"+y);
             diretrizes.setLocation(x, y);
 
             diretrizes.setVisible(true);
@@ -556,7 +553,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addComponent(buttonGuidelines1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonGuidelines2)
@@ -1134,13 +1131,13 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuUCActionPerformed
 
     private void btnUCIStarViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCIStarViewActionPerformed
-        Controller.mapUseCases();
-        if (useCasesView == null) {
-            useCasesView = new UseCasesViewIStar();
-            useCasesView.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        /*Controller.mapUseCases();
+        if (useCasesViewBPMN == null) {
+            useCasesViewBPMN = new UseCasesViewBPMN();
+            useCasesViewBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         }
-        useCasesView.updateTabel();
-        useCasesView.setVisible(true);
+        useCasesViewBPMN.updateTabel();
+        useCasesViewBPMN.setVisible(true);*/
     }//GEN-LAST:event_btnUCIStarViewActionPerformed
 
     private void bntMenuTraceVerticalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntMenuTraceVerticalActionPerformed
@@ -1748,10 +1745,10 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
 }
 
 //BUTTON RENDERER CLASS
-class ButtonRendererDelete extends JButton implements TableCellRenderer {
+class ButtonRendererDelete1 extends JButton implements TableCellRenderer {
 
     //CONSTRUCTOR
-    public ButtonRendererDelete() {
+    public ButtonRendererDelete1() {
         //SET BUTTON PROPERTIES
         setOpaque(true);
         setOpaque(true);
@@ -1777,14 +1774,14 @@ class ButtonRendererDelete extends JButton implements TableCellRenderer {
 }
 
 //BUTTON EDITOR CLASS
-class ButtonDelete extends DefaultCellEditor {
+class ButtonDelete1 extends DefaultCellEditor {
 
     protected JButton btn;
     private String lbl;
     private Boolean clicked;
     private int row;
 
-    public ButtonDelete(JTextField txt, int row) {
+    public ButtonDelete1(JTextField txt, int row) {
         super(txt);
 
         btn = new JButton();

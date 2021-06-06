@@ -117,7 +117,7 @@
                               <Component id="buttonDiagram" min="-2" pref="175" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                              <EmptySpace pref="31" max="32767" attributes="0"/>
                               <Component id="buttonGuidelines1" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="buttonGuidelines2" min="-2" max="-2" attributes="0"/>
