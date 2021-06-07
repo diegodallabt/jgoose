@@ -14,11 +14,13 @@ import com.mxgraph.view.mxGraph;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 
@@ -133,10 +135,15 @@ public class ImportIStarGraph extends AbstractAction {
         LOG.debug("Generate Use Case finished.");
 
         //adicionar os elementos deletados
-        for(mxCell c : deleteds.keySet()){
+        for (mxCell c : deleteds.keySet()) {
             model.add(c, deleteds.get(c), 0);
         }
         
+        if (Controller.getSystemActor() != null) {
+            Controller.mapUseCases();
+        } else {
+            JOptionPane.showMessageDialog(null, "For Map Use Cases you need select an Actor as a System", "ERROR!", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**

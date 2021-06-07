@@ -858,7 +858,6 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonBPMNToUseCasesActionPerformed
 
     private void buttunMappingUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesActionPerformed
-        Controller.mapUseCases();
         try{
             this.iStarUCView();
         } catch (HeadlessException ex){
@@ -1108,7 +1107,6 @@ public class MainView extends javax.swing.JFrame {
             fileMenu.add(menuItem, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            //JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalIStarTraceController(E4JiStar)));
             JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalControler(E4JiStar, 1)));
             fileMenu.add(menuItem1, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
@@ -1272,7 +1270,6 @@ public class MainView extends javax.swing.JFrame {
 
     private void bpmnUCView() {
         try {
-            BPMNController.mapUseCases();
             if (useCasesViewBPMN == null) {
                 System.out.println("Aqui");
                 useCasesViewBPMN = new UseCasesViewBPMN(E4JiStar, E4JBPMN, E4JUseCases, useCasesView);
@@ -1299,7 +1296,6 @@ public class MainView extends javax.swing.JFrame {
     
     private void iStarUCView() {
         try {
-            Controller.mapUseCases();
             if (useCasesViewIStar == null) {
                 System.out.println("Aqui");
                 useCasesViewIStar = new UseCasesViewIStar1(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewBPMN);

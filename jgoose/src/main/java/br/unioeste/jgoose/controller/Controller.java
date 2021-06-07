@@ -8,7 +8,7 @@ import br.unioeste.jgoose.model.TokensOpenOME;
 import br.unioeste.jgoose.model.TokensUseCase;
 import br.unioeste.jgoose.model.UCActor;
 import br.unioeste.jgoose.view.MainView;
-import br.unioeste.jgoose.view.SelectActorView;
+import br.unioeste.jgoose.view.SelectActorSystem;
 import br.unioeste.jgoose.view.TableArtifacts;
 import br.unioeste.jgoose.view.UseCasesDiagramView;
 import java.io.File;
@@ -29,7 +29,7 @@ public class Controller {
     private static TokensUseCase tokensUC;
     private static MainView mainView = new MainView();
     private static TokensOpenOME ome;
-    private static String systemActor;
+    private static String systemActor = null;
     private static Mapping mapping;
     private static boolean flagMapUseCases;
 
@@ -47,6 +47,7 @@ public class Controller {
                 mapping.mappingStep3();
             }
             flagMapUseCases = true;
+            JOptionPane.showMessageDialog(null, "Use Cases Mapped with success!", "SUCCESS!", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error in Mapping of Use Cases!", "ERROR!", JOptionPane.ERROR_MESSAGE);
@@ -65,9 +66,8 @@ public class Controller {
             ome.searchFile();
             mainView.setEnabled(false);
             // Abre a janela para selecionar o Ator Sistema
-            SelectActorView atorsistema = new SelectActorView(mainView);
-            atorsistema.setVisible(true);
-            atorsistema.setAlwaysOnTop(true);
+            SelectActorSystem atorsistemaView = new SelectActorSystem(mainView, true);
+            atorsistemaView.setVisible(true);
         } else if (!ome.getDirIn().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Select a Telos File (.tel)", "ERROR!", JOptionPane.ERROR_MESSAGE);
         }
@@ -83,7 +83,7 @@ public class Controller {
         prop.setProperty("file.chooser", properties);
 
         try {
-            try (FileOutputStream fos = new FileOutputStream(new File("./caminho.properties"))) {
+            try ( FileOutputStream fos = new FileOutputStream(new File("./caminho.properties"))) {
                 prop.store(fos, "");
             }
         } catch (IOException e) {
@@ -177,9 +177,8 @@ public class Controller {
     }
 
     public static void showActorSystemSelectionView() {
-        SelectActorView atorsistema = new SelectActorView(mainView);
-        atorsistema.setVisible(true);
-        atorsistema.setAlwaysOnTop(true);
+        SelectActorSystem atorsistemaView = new SelectActorSystem(mainView, true);
+        atorsistemaView.setVisible(true);
     }
 
     public static boolean getFlagMapUseCases() {

@@ -122,8 +122,8 @@ public class ImportBPMNGraph extends AbstractAction {
             // close editor and call view to select the main actor (system).
             WindowEvent wev = new WindowEvent(this.e4jinstance, WindowEvent.WINDOW_CLOSING);
             Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
-
-            // Abre a janela para selecionar o Ator Sistema
+            
+            BPMNController.mapUseCases();
             BPMNController.updateTables();
         }
         
