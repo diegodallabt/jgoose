@@ -118,7 +118,7 @@
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace pref="31" max="32767" attributes="0"/>
-                              <Component id="buttonGuidelines1" min="-2" max="-2" attributes="0"/>
+                              <Component id="buttonNFRs" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="buttonGuidelines2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -159,7 +159,7 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="buttonGuidelines" alignment="3" max="32767" attributes="0"/>
                               <Component id="buttonSaveUseCases" alignment="3" max="32767" attributes="0"/>
-                              <Component id="buttonGuidelines1" alignment="3" max="32767" attributes="0"/>
+                              <Component id="buttonNFRs" alignment="3" max="32767" attributes="0"/>
                               <Component id="buttonGuidelines2" alignment="3" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -336,7 +336,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="buttonGuidelines1">
+            <Component class="javax.swing.JButton" name="buttonNFRs">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="14" style="0"/>
@@ -344,9 +344,9 @@
                 <Property name="text" type="java.lang.String" value="Show NFRs"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonGuidelines1MouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonGuidelines1MouseExited"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonGuidelines1ActionPerformed"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonNFRsMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonNFRsMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonNFRsActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="UseCasesViewBPMN_buttonGuidelines"/>

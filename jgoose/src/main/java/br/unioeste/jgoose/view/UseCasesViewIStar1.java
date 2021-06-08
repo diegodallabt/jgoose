@@ -393,7 +393,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         labelSearchIcon = new javax.swing.JLabel();
         jtfFilter = new javax.swing.JTextField();
-        buttonGuidelines1 = new javax.swing.JButton();
+        buttonNFRs = new javax.swing.JButton();
         buttonGuidelines2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -544,19 +544,19 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             .addComponent(labelSearchIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        buttonGuidelines1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        buttonGuidelines1.setText("Show NFRs");
-        buttonGuidelines1.addMouseListener(new java.awt.event.MouseAdapter() {
+        buttonNFRs.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        buttonNFRs.setText("Show NFRs");
+        buttonNFRs.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonGuidelines1MouseEntered(evt);
+                buttonNFRsMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonGuidelines1MouseExited(evt);
+                buttonNFRsMouseExited(evt);
             }
         });
-        buttonGuidelines1.addActionListener(new java.awt.event.ActionListener() {
+        buttonNFRs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonGuidelines1ActionPerformed(evt);
+                buttonNFRsActionPerformed(evt);
             }
         });
 
@@ -596,7 +596,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                         .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addComponent(buttonGuidelines1)
+                        .addComponent(buttonNFRs)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonGuidelines2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -627,7 +627,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                     .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(buttonGuidelines, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonGuidelines1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonNFRs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonGuidelines2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1169,17 +1169,19 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         VerticalTraceController.openVerticalTraceabilityView();
     }//GEN-LAST:event_bntMenuTraceVerticalActionPerformed
 
-    private void buttonGuidelines1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines1MouseEntered
+    private void buttonNFRsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNFRsMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonGuidelines1MouseEntered
+    }//GEN-LAST:event_buttonNFRsMouseEntered
 
-    private void buttonGuidelines1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines1MouseExited
+    private void buttonNFRsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNFRsMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonGuidelines1MouseExited
+    }//GEN-LAST:event_buttonNFRsMouseExited
 
-    private void buttonGuidelines1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuidelines1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buttonGuidelines1ActionPerformed
+    private void buttonNFRsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNFRsActionPerformed
+        MainView mainView = new MainView();
+        ShowNRFs info = new ShowNRFs(mainView, true);
+        info.setVisible(true);
+    }//GEN-LAST:event_buttonNFRsActionPerformed
 
     private void buttonGuidelines2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines2MouseEntered
         // TODO add your handling code here:
@@ -1206,8 +1208,8 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
     private javax.swing.JButton buttonDiagram;
     private javax.swing.JButton buttonExportThisSpecification;
     private javax.swing.JButton buttonGuidelines;
-    private javax.swing.JButton buttonGuidelines1;
     private javax.swing.JButton buttonGuidelines2;
+    private javax.swing.JButton buttonNFRs;
     private javax.swing.JButton buttonSaveUseCases;
     private javax.swing.JButton jButtonAddUseCase;
     private javax.swing.JLabel jLabel1;
@@ -1758,7 +1760,6 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                 MainView mainView = new MainView();
                 MoreInfoUCFromIStar info = new MoreInfoUCFromIStar(mainView, true, vetCasosDeUso);
                 info.setVisible(true);
-                //JOptionPane.showMessageDialog(btn, lbl + " Clicked");
             }
             //SET IT TO FALSE NOW THAT ITS CLICKED
             clicked = false;
