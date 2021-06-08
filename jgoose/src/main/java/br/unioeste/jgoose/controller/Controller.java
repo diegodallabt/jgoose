@@ -3,6 +3,7 @@ package br.unioeste.jgoose.controller;
 import br.unioeste.jgoose.UseCases.Actor;
 import br.unioeste.jgoose.UseCases.ActorISA;
 import br.unioeste.jgoose.UseCases.Mapping;
+import br.unioeste.jgoose.UseCases.UseCase;
 import br.unioeste.jgoose.model.IStarActorElement;
 import br.unioeste.jgoose.model.TokensOpenOME;
 import br.unioeste.jgoose.model.TokensUseCase;
@@ -22,7 +23,8 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Diego Peliser
+ * @author Diego Peliser]
+ * @author Victor Augusto Pozzan
  */
 public class Controller {
 
@@ -151,12 +153,19 @@ public class Controller {
     }
 
     /*
-     * @returns the UseCases
+     * @returns the UseCases by actor
      */
     public static ArrayList<Actor> getUseCases() {
         return mapping.useCases;
     }
 
+    /*
+     *@returns all UseCases 
+     */
+    public static List<UseCase> getallUseCases(){
+       return Mapping.getAllUseCases();   
+    }
+    
     /*
      * @returns the ISAs
      */
@@ -183,5 +192,9 @@ public class Controller {
 
     public static boolean getFlagMapUseCases() {
         return flagMapUseCases;
+    }
+
+    public static void deleteUC(UseCase usecase) {
+        mapping.deleteUC(usecase);
     }
 }

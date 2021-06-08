@@ -344,7 +344,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AddUseCasefromBPMN dialogAddUseCase = new AddUseCasefromBPMN();
-                int option = dialogAddUseCase.createDialogAdd();
+                int option = dialogAddUseCase.createDialogAdd("bpmn");
                 if(option == AddUseCasefromBPMN.YES) {
                     updateTable();
                 }

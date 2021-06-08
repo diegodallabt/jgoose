@@ -252,7 +252,7 @@
                 <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonAddUseCaseMouseExited"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="        jButtonAddUseCase.addActionListener(new ActionListener() {&#xa;            @Override&#xa;            public void actionPerformed(ActionEvent e) {&#xa;                AddUseCasefromBPMN dialogAddUseCase = new AddUseCasefromBPMN();&#xa;                int option = dialogAddUseCase.createDialogAdd();&#xa;                if(option == AddUseCasefromBPMN.YES) {&#xa;                    updateTable();&#xa;                }&#xa;            }&#xa;        });"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="        jButtonAddUseCase.addActionListener(new ActionListener() {&#xa;            @Override&#xa;            public void actionPerformed(ActionEvent e) {&#xa;                AddUseCasefromBPMN dialogAddUseCase = new AddUseCasefromBPMN();&#xa;                int option = dialogAddUseCase.createDialogAdd(&quot;i*&quot;);&#xa;                if(option == AddUseCasefromBPMN.YES) {&#xa;                    updateTable();&#xa;                }&#xa;            }&#xa;        });"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
