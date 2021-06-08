@@ -1715,26 +1715,13 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
 
         public String[] findElementAndInfos(int row) {
             int cont = 0;
-            for (UCUseCase useCase : BPMNController.getUseCases()) {
+            for (UseCase useCase : Controller.getallUseCases()) {
                 if (row == cont) {
                     String vetCasosDeUso[] = new String[6];
-                    vetCasosDeUso[0] = "" + cont++;
+                    vetCasosDeUso[0] = String.valueOf(useCase.getId());
                     vetCasosDeUso[1] = useCase.getName();
                     vetCasosDeUso[2] = useCase.getPrimaryActor().getName();
-
-                    String actors = "";
-                    // Percorre os atores, identificando atores associados ao atual
-                    for (UCActor actor : useCase.getSecondaryActors()) {
-                        actors += actor.getName() + "; ";
-                    }
-                    vetCasosDeUso[3] = actors;
-                    String includedUseCases = "";
-                    //Percorre os casos de usos incluídos
-                    for (UCUseCase useCaseIncluded : useCase.getIncludedUseCases()) {
-                        includedUseCases += (Integer.parseInt(useCaseIncluded.getCode()) + 1) + " - " + useCaseIncluded.getName() + "; ";
-                    }
-                    vetCasosDeUso[4] = includedUseCases;
-                    vetCasosDeUso[5] = useCase.getGuidelineUsed();
+                    vetCasosDeUso[3] = useCase.getType();
                     return vetCasosDeUso;
                 }
                 cont++;
@@ -1768,10 +1755,8 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             if (clicked) {
                 //SHOW US SOME MESSAGE
                 String vetCasosDeUso[] = findElementAndInfos(row);
-                MoreInfoUCFromBPMN info = new MoreInfoUCFromBPMN(new javax.swing.JFrame(), true, vetCasosDeUso);
-                info.setModal(true);
-                info.setLocationRelativeTo(null);
-                info.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width - getSize().width) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - getSize().height) / 2);
+                MainView mainView = new MainView();
+                MoreInfoUCFromIStar info = new MoreInfoUCFromIStar(mainView, true, vetCasosDeUso);
                 info.setVisible(true);
                 //JOptionPane.showMessageDialog(btn, lbl + " Clicked");
             }

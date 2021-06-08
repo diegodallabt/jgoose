@@ -15,10 +15,10 @@ import java.awt.Toolkit;
  */
 public class SelectActorSystem extends javax.swing.JDialog {
 
-    private MainView main = new MainView();
-
     /**
-     * Creates new form NewJDialog
+     * Creates new form NewJDialog to select Actor System
+     * @param parent
+     * @param modal
      */
     public SelectActorSystem (java.awt.Frame parent, boolean modal) {
         super(parent, modal);
