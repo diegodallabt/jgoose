@@ -394,7 +394,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         labelSearchIcon = new javax.swing.JLabel();
         jtfFilter = new javax.swing.JTextField();
         buttonNFRs = new javax.swing.JButton();
-        buttonGuidelines2 = new javax.swing.JButton();
+        buttonShowIsas = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         textUseCases = new javax.swing.JTextPane();
@@ -560,19 +560,19 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             }
         });
 
-        buttonGuidelines2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        buttonGuidelines2.setText("Show Isa's");
-        buttonGuidelines2.addMouseListener(new java.awt.event.MouseAdapter() {
+        buttonShowIsas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        buttonShowIsas.setText("Show Isa's");
+        buttonShowIsas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonGuidelines2MouseEntered(evt);
+                buttonShowIsasMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonGuidelines2MouseExited(evt);
+                buttonShowIsasMouseExited(evt);
             }
         });
-        buttonGuidelines2.addActionListener(new java.awt.event.ActionListener() {
+        buttonShowIsas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonGuidelines2ActionPerformed(evt);
+                buttonShowIsasActionPerformed(evt);
             }
         });
 
@@ -598,7 +598,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addComponent(buttonNFRs)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonGuidelines2)
+                        .addComponent(buttonShowIsas)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -628,7 +628,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                         .addComponent(buttonGuidelines, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonNFRs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonGuidelines2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(buttonShowIsas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1183,17 +1183,19 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         info.setVisible(true);
     }//GEN-LAST:event_buttonNFRsActionPerformed
 
-    private void buttonGuidelines2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines2MouseEntered
+    private void buttonShowIsasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonShowIsasMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonGuidelines2MouseEntered
+    }//GEN-LAST:event_buttonShowIsasMouseEntered
 
-    private void buttonGuidelines2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines2MouseExited
+    private void buttonShowIsasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonShowIsasMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonGuidelines2MouseExited
+    }//GEN-LAST:event_buttonShowIsasMouseExited
 
-    private void buttonGuidelines2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuidelines2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buttonGuidelines2ActionPerformed
+    private void buttonShowIsasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonShowIsasActionPerformed
+        MainView mainView = new MainView();
+        ShowISAs info = new ShowISAs(mainView, true);
+        info.setVisible(true);
+    }//GEN-LAST:event_buttonShowIsasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelUseCasesFromBPMN;
@@ -1208,9 +1210,9 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
     private javax.swing.JButton buttonDiagram;
     private javax.swing.JButton buttonExportThisSpecification;
     private javax.swing.JButton buttonGuidelines;
-    private javax.swing.JButton buttonGuidelines2;
     private javax.swing.JButton buttonNFRs;
     private javax.swing.JButton buttonSaveUseCases;
+    private javax.swing.JButton buttonShowIsas;
     private javax.swing.JButton jButtonAddUseCase;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

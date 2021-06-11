@@ -120,7 +120,7 @@
                               <EmptySpace pref="31" max="32767" attributes="0"/>
                               <Component id="buttonNFRs" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="buttonGuidelines2" min="-2" max="-2" attributes="0"/>
+                              <Component id="buttonShowIsas" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="buttonSaveUseCases" min="-2" pref="191" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -160,7 +160,7 @@
                               <Component id="buttonGuidelines" alignment="3" max="32767" attributes="0"/>
                               <Component id="buttonSaveUseCases" alignment="3" max="32767" attributes="0"/>
                               <Component id="buttonNFRs" alignment="3" max="32767" attributes="0"/>
-                              <Component id="buttonGuidelines2" alignment="3" max="32767" attributes="0"/>
+                              <Component id="buttonShowIsas" alignment="3" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -352,7 +352,7 @@
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="UseCasesViewBPMN_buttonGuidelines"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="buttonGuidelines2">
+            <Component class="javax.swing.JButton" name="buttonShowIsas">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="14" style="0"/>
@@ -360,9 +360,9 @@
                 <Property name="text" type="java.lang.String" value="Show Isa&apos;s"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonGuidelines2MouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonGuidelines2MouseExited"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonGuidelines2ActionPerformed"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonShowIsasMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonShowIsasMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonShowIsasActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="UseCasesViewBPMN_buttonGuidelines"/>
