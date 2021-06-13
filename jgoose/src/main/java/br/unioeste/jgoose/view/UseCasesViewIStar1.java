@@ -239,7 +239,6 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
     @SuppressWarnings("empty-statement")
     private void tabelUseCasesValueChanged(ListSelectionEvent evt) {
 
-        buttonDiagram.setEnabled(true);
         int colunm = tabelUseCases.getSelectedColumn();
         int linha = tabelUseCases.getSelectedRow();
         if (linha != -1) {
@@ -273,12 +272,14 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             insertStyle("\nMAIN SUCCESS SCENARIO\n", negrito);
 
             if (useCase.getSteps().isEmpty()) {
+                System.out.println("VAZIO");
                 insertStyle("\nEXTENSIONS\n", negrito);
             } else {
                 int cont = 1;
                 int n = useCase.getSteps().size();
                 Step step;
                 for (int i = n - 1; i >= 0; i--) {
+                    System.out.println("HETETETETETE");
                     step = useCase.getSteps().get(i);
                     String name = step.getName().replaceAll("\"", "");
                     if (step.getExtends().isEmpty()) {
@@ -1892,37 +1893,3 @@ class ButtonDelete1 extends DefaultCellEditor {
     }
 }
 
-/*
-ABOUT
-        buttonDelete.setEnabled(false);
-        AboutDialogView about;
-        about = new AboutDialogView(this);
-        about.setModal(true);
-        int x = this.getX() + (this.getWidth() - about.getWidth()) / 2;
-        int y = this.getY() + (this.getHeight() - about.getHeight()) / 2;
-        about.setLocation(x, y);
-        about.setVisible(true);
- */
-//DELETE a USE FROM TABLE UC
-/*
-        buttonDiagram.setEnabled(false);
-        int linha = tabelUseCases.getSelectedRow();
-        Actor actor = Controller.getActor("" + tabelUseCases.getValueAt(linha, 1));
-        String casoSelecionado = "" + tabelUseCases.getValueAt(linha, 2);
-        int c = JOptionPane.showConfirmDialog(null, "Confirm the deletion of the Use Case " + casoSelecionado + "?", "Deletion of Use Case", JOptionPane.YES_NO_OPTION);
-        if (c == 0) {
-            int n = actor.getUseCases().size();
-            UseCase caso;
-            System.out.println(" N: " + n);
-            for (int i = 0; i < n; i++) {
-                System.out.println("i = " + i);
-                caso = actor.getUseCases().get(i);
-                if (caso.getName().equals(casoSelecionado)) {
-                    actor.getUseCases().remove(i);
-                    updateTable();
-                    buttonDelete.setEnabled(false);
-                    JOptionPane.showMessageDialog(null, "Use Case deleted!", "Use Case deleted!", JOptionPane.INFORMATION_MESSAGE);
-                    break;
-                }
-            }
-        }*/

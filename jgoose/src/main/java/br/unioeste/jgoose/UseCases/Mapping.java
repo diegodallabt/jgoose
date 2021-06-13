@@ -227,6 +227,21 @@ public class Mapping {
             }
         }
 
+        
+        //this part is for allUseCase
+        for (UseCase usecase : allUseCases) {
+            if(usecase.getCodDecomposedElement() != null){
+                usecase.setSteps(getSteps(usecase.getCodDecomposedElement()));
+            }
+        }
+        
+        for(UseCase usecase : allUseCases){
+            for(Step step : usecase.getSteps()){
+                if(isUseCase2(step.getCod())){
+                    step.setInclude(true);
+                }
+            }
+        }
     }
 
     private boolean isUseCase(String cod) {
@@ -242,6 +257,17 @@ public class Mapping {
         return false;
     }
 
+     private boolean isUseCase2(String cod) {
+        for(UseCase usecase : allUseCases){
+            if(usecase.getCodDecomposedElement() != null){
+                if(usecase.getCodDecomposedElement().equals(cod)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     /**
      * @param cod cod of the element to return
      * @return return a list of steps
