@@ -19,13 +19,18 @@ public class MoreInfoUCFromIStar extends javax.swing.JDialog {
      */
     public MoreInfoUCFromIStar(java.awt.Frame parent, boolean modal, String[] vetorInfo) {
         super(parent, modal);
-        System.out.println("info:"+vetorInfo[0]);//id
-        System.out.println("info:"+vetorInfo[1]);//name
-        System.out.println("info:"+vetorInfo[2]);//primary actor
-        System.out.println("info:"+vetorInfo[3]);//type
+
 
         initComponents();
         setLocationRelativeTo(null);
+        
+        int i = 0;
+        for(String info : vetorInfo){
+            if(info == null){
+                vetorInfo[i] = "";
+            }
+            i++;
+        }      
         
         if(!vetorInfo[1].isEmpty()){
             nameUC.setText(vetorInfo[1]);
@@ -101,20 +106,17 @@ public class MoreInfoUCFromIStar extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(primaryActor))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(nameUC))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(secondaryActors)))
-                        .addGap(0, 241, Short.MAX_VALUE)))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(nameUC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(secondaryActors, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(primaryActor, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(

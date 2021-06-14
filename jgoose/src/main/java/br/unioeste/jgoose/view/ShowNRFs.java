@@ -30,6 +30,7 @@ public class ShowNRFs extends javax.swing.JDialog {
     public ShowNRFs(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         jTextPane1.setText("");
         jTextPane1.setFont(new java.awt.Font("Roboto", 0, 14));
         SimpleAttributeSet negrito = new SimpleAttributeSet();

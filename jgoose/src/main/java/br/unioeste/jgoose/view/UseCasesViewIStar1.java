@@ -2,6 +2,7 @@ package br.unioeste.jgoose.view;
 
 import br.unioeste.jgoose.view.MainView;
 import br.unioeste.jgoose.UseCases.Actor;
+import br.unioeste.jgoose.UseCases.ActorISA;
 import br.unioeste.jgoose.UseCases.Extend;
 import br.unioeste.jgoose.UseCases.Step;
 import br.unioeste.jgoose.UseCases.UseCase;
@@ -51,6 +52,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -272,14 +274,12 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             insertStyle("\nMAIN SUCCESS SCENARIO\n", negrito);
 
             if (useCase.getSteps().isEmpty()) {
-                System.out.println("VAZIO");
                 insertStyle("\nEXTENSIONS\n", negrito);
             } else {
                 int cont = 1;
                 int n = useCase.getSteps().size();
                 Step step;
                 for (int i = n - 1; i >= 0; i--) {
-                    System.out.println("HETETETETETE");
                     step = useCase.getSteps().get(i);
                     String name = step.getName().replaceAll("\"", "");
                     if (step.getExtends().isEmpty()) {
@@ -383,8 +383,9 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         jButtonAddUseCase.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddUseCasefromBPMN dialogAddUseCase = new AddUseCasefromBPMN();
-                int option = dialogAddUseCase.createDialogAdd("i*");
+                MainView mainView = new MainView();
+                AddUseCasefromBPMN addUseCase = new AddUseCasefromBPMN(mainView, true, "i*");
+                int option = addUseCase.createDialogAdd();
                 if(option == AddUseCasefromBPMN.YES) {
                     updateTable();
                 }
@@ -598,9 +599,9 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addComponent(buttonNFRs)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)
                         .addComponent(buttonShowIsas)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(10, 10, 10)
                         .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(buttonGuidelines, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1259,11 +1260,10 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
 
     // Gera e exibe o diagrama de Casos de Uso UML com base nas informações obtidas
     private mxGraph generateDiagram() throws IOException {
-
-        List<UCActor> actorsList = BPMNController.getActors();
-        List<UCUseCase> useCasesList = BPMNController.getUseCases();
-
-        mxGraph graph = ((BasicUseCasesEditor) e4jInstance.getEditor()).getGraphComponent().getGraph();
+        ArrayList<Actor> useCases = Controller.getUseCases();
+        ArrayList<ActorISA> isas = Controller.getIsas();
+        // comeca a atualizar o grafo
+        mxGraph graph = ((BasicUseCasesEditor)e4jInstance.getEditor()).getGraphComponent().getGraph();
         graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
         graph.removeCells(graph.getChildEdges(graph.getDefaultParent()));
         graph.getModel().beginUpdate();
@@ -1277,41 +1277,34 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         newShape = new mxStencilShape(nodeXml);
         String styleCase = "shape=" + newShape.getName() + ";";
         mxGeometry geo;
-
         // HashMaps para quardar as celular dos atores e casos de uso
         HashMap<String, mxCell> actors = new HashMap<>();
         HashMap<String, mxCell> cases = new HashMap<>();
         mxCell aresta;
         mxCell ext;
-
         // variaveis para controlar as posicoes X e Y dos elementos no diagrama
         int yActor = 110;
-        int xActor = 80;
         int yCase = 30;
         int xCase = 400;
         String cod;
-
-        // Seta atores e seus respectivos casos de uso
-        for (UCActor actor : actorsList) {
+        /*
+         * Adicionar ao diagrama todos os atores com seus respectivos
+         * casos de uso e arestas.
+         */
+        for (Actor actor : useCases) {
             // cria ator e sua geometria e estilo
             value = IStarUtils.createActorUseCase();
             value.setAttribute("label", actor.getName());
             geo = new mxGeometry(50, yActor, 80, 80);
-
-            if (actor.getChildren().isEmpty()) {
-                geo.setX(xActor - 50);
-            } else {
-                geo.setX(xActor);
-            }
-
+            geo.setX(50);
             geo.setY(yActor);
             mxCell cell = new mxCell(value, geo, styleActor);
             cell.setVertex(true);
-            actors.put(actor.getCode(), cell);
+            System.out.println("" + cell.getStyle());
+            actors.put(actor.getCod(), cell);
             graph.addCell(cell);
-
             // cria os casos de uso e arestas
-            for (UCUseCase caso : actor.getUseCases()) {
+            for (UseCase caso : actor.getUseCases()) {
                 // cria caso de uso, sua geometria e estilo
                 value = IStarUtils.createUseCase();
                 value.setAttribute("label", caso.getName().replace("\"", ""));
@@ -1320,129 +1313,109 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                 geo.setX(xCase);
                 geo.setY(yCase);
                 yCase += 100;
-                cod = String.valueOf(caso.getCode());
-
+                cod = caso.getCod();
+                // se o caso de uso possui elemento decomposto guarda o codigo dele
+                // pois é o elemento decomposto que é incluso por outros casos de uso
+                if (caso.getCodDecomposedElement() != null) {
+                    cod = caso.getCodDecomposedElement();
+                }
                 // verifica se o caso de uso ainda não foi adicionado no grafo
                 if (cases.get(cod) == null) {
                     cases.put(cod, new mxCell(value, geo, styleCase));
                     cases.get(cod).setVertex(true);
                     graph.addCell(cases.get(cod));
                 }
-
                 // cria uma aresta entre o ator e seu caso de uso
                 value = IStarUtils.createAssociation();
-                aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, actors.get(actor.getCode()), cases.get(cod), "straight;endArrow=none;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, actors.get(actor.getCod()), cases.get(cod), "straight;endArrow=none;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
                 aresta.setEdge(true);
                 aresta.setStyle("straight;endArrow=none;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
-                aresta.setSource(actors.get(actor.getCode()));
+                aresta.setSource(actors.get(actor.getCod()));
                 aresta.setTarget(cases.get(cod));
                 graph.addCell(aresta);
             }
             yActor = yCase + 100;
         }
-
-        // adiciona as ligações do tipo generalização entre atores
-        for (UCActor actor : actorsList) {
-            String codFather = actor.getCode();
-            String nameFather = actor.getName();
-            for (int i = 0; i < actor.getChildren().size(); i++) {
+        // Adiciona as ligacoes do tipo << include >> e << extend >>
+        for (Actor actor : useCases) {
+            for (UseCase caso : actor.getUseCases()) {
+                // cria as ligações do tipo << include >>
+                for (Step step : caso.getSteps()) {
+                    if (step.isInclude()) {
+                        cod = caso.getCod();
+                        // se o ator possui elemento decomposto, pega o código dele
+                        if (caso.getCodDecomposedElement() != null) {
+                            cod = caso.getCodDecomposedElement();
+                        }
+                        // cria a ligação include entre os casos de uso
+                        value = IStarUtils.createInclude();
+                        aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, cases.get(cod), cases.get(step.getCod()), "straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                        aresta.setSource(cases.get(cod));
+                        aresta.setTarget(cases.get(step.getCod()));
+                        aresta.setEdge(true);
+                        aresta.setValue(value);
+                        aresta.setStyle("straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                        graph.addCell(aresta);
+                        // cria as ligações do tipo << extend >>
+                        for (Extend extend : step.getExtends()) {
+                            // verifica se existe um caso de uso que é a extensão
+                            if (cases.get(extend.getCod()) != null) {
+                                value = IStarUtils.createExtend();
+                                ext = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, cases.get(extend.getCod()), cases.get(cod), "straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                                ext.setEdge(true);
+                                ext.setSource(cases.get(extend.getCod()));
+                                ext.setTarget(cases.get(cod));
+                                ext.setValue(value);
+                                ext.setStyle("straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                                graph.addCell(ext);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // adiciona as ligações do tipo ISA (generalização de atores)
+        for (ActorISA isa : isas) {
+            for (int i = 0; i < isa.getCodFathers().size(); i++) {
+                String codFather = isa.getCodFathers().get(i);
+                String nameFather = isa.getNameFathers().get(i);
                 // cria a ligação generalization entre os atores
                 value = IStarUtils.createGeneralization();
-                aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, actors.get(codFather), actors.get(actor.getChildren().get(i).getCode()), "straight;noLabel=1;endArrow=diamond;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, actors.get(codFather), actors.get(isa.getCod()), "straight;noLabel=1;endArrow=diamond;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
                 aresta.setEdge(true);
-
                 // verifica se o ator está no diagrama
                 if (actors.get(codFather) == null) {
                     // cria ator e sua geometria e estilo
                     value = IStarUtils.createActorUseCase();
                     value.setAttribute("label", nameFather);
                     geo = new mxGeometry(50, yActor, 80, 80);
-                    geo.setX(xActor);
+                    geo.setX(50);
                     geo.setY(yActor);
                     actors.put(codFather, new mxCell(value, geo, styleActor));
                     actors.get(codFather).setVertex(true);
                     graph.addCell(actors.get(codFather));
                     yActor += 100;
                 }
-
                 aresta.setSource(actors.get(codFather));
-
-                // verifica se o ator filho está no diagrama
-                if (actor.getChildren().get(i) == null) {
+                // verifica se o ator está no diagrama
+                if (actors.get(isa.getCod()) == null) {
                     // cria ator e sua geometria e estilo
                     value = IStarUtils.createActorUseCase();
-                    value.setAttribute("label", actor.getChildren().get(i).getName());
+                    value.setAttribute("label", isa.getName());
                     geo = new mxGeometry(50, yActor, 80, 80);
                     geo.setX(50);
                     geo.setY(yActor);
-                    actors.put(actor.getChildren().get(i).getCode(), new mxCell(value, geo, styleActor));
-                    actors.get(actor.getChildren().get(i).getCode()).setVertex(true);
-                    graph.addCell(actors.get(actor.getChildren().get(i).getCode()));
+                    actors.put(isa.getCod(), new mxCell(value, geo, styleActor));
+                    actors.get(isa.getCod()).setVertex(true);
+                    graph.addCell(actors.get(isa.getCod()));
                     yActor += 100;
                 }
-                aresta.setTarget(actors.get(actor.getChildren().get(i).getCode()));
+                aresta.setTarget(actors.get(isa.getCod()));
                 aresta.setValue(value);
                 aresta.setStyle("straight;noLabel=1;endArrow=block;endFill=0;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
                 graph.addCell(aresta);
             }
         }
-
-        // Adiciona as ligacoes do tipo << include >>        
-        for (UCUseCase useCase : useCasesList) {
-            // verifica se o caso de uso ainda não foi adicionado no grafo
-            if (cases.get(String.valueOf(useCase.getCode())) == null) {
-
-                // Caso de uso ainda não inserido
-                // cria caso de uso, sua geometria e estilo
-                value = IStarUtils.createUseCase();
-                value.setAttribute("label", useCase.getName().replace("\"", ""));
-                geo = new mxGeometry(xCase, yCase, 120, 60);
-                xCase = xCase == 400 ? 700 : 400;
-                geo.setX(xCase);
-                geo.setY(yCase);
-                yCase += 100;
-                cod = String.valueOf(useCase.getCode());
-
-                cases.put(cod, new mxCell(value, geo, styleCase));
-                cases.get(cod).setVertex(true);
-                graph.addCell(cases.get(cod));
-            }
-
-            // cria as ligações do tipo << include >>
-            for (int i = 0; i < useCase.getIncludedUseCases().size(); i++) {
-                // Verifica se o caso de uso já foi inserido
-                // verifica se o caso de uso ainda não foi adicionado no grafo
-                if (cases.get(String.valueOf(useCase.getIncludedUseCases().get(i).getCode())) == null) {
-
-                    // Caso de uso ainda não inserido
-                    // cria caso de uso, sua geometria e estilo
-                    value = IStarUtils.createUseCase();
-                    value.setAttribute("label", useCase.getIncludedUseCases().get(i).getName().replace("\"", ""));
-                    geo = new mxGeometry(xCase, yCase, 120, 60);
-                    xCase = xCase == 400 ? 700 : 400;
-                    geo.setX(xCase);
-                    geo.setY(yCase);
-                    yCase += 100;
-                    cod = String.valueOf(useCase.getIncludedUseCases().get(i).getCode());
-
-                    cases.put(cod, new mxCell(value, geo, styleCase));
-                    cases.get(cod).setVertex(true);
-                    graph.addCell(cases.get(cod));
-                }
-
-                // cria a ligação include entre os casos de uso
-                value = IStarUtils.createInclude();
-                aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, cases.get(String.valueOf(useCase.getCode())), cases.get(String.valueOf(useCase.getIncludedUseCases().get(i).getCode())), "straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
-                aresta.setSource(cases.get(String.valueOf(useCase.getCode())));
-                aresta.setTarget(cases.get(String.valueOf(useCase.getIncludedUseCases().get(i).getCode())));
-                aresta.setEdge(true);
-                aresta.setValue(value);
-                aresta.setStyle("straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
-                graph.addCell(aresta);
-
-            }
-        }
-
         graph.getModel().endUpdate();
         return graph;
 
@@ -1725,7 +1698,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                     String vetCasosDeUso[] = new String[6];
                     vetCasosDeUso[0] = String.valueOf(useCase.getId());
                     vetCasosDeUso[1] = useCase.getName();
-                    vetCasosDeUso[2] = useCase.getPrimaryActor().getName();
+                    vetCasosDeUso[2] = useCase.getPrimaryActor() == null ?  "" : useCase.getPrimaryActor().getName();
                     vetCasosDeUso[3] = useCase.getType();
                     return vetCasosDeUso;
                 }

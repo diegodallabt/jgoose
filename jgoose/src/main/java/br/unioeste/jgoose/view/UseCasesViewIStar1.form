@@ -119,9 +119,9 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace pref="31" max="32767" attributes="0"/>
                               <Component id="buttonNFRs" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Component id="buttonShowIsas" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Component id="buttonSaveUseCases" min="-2" pref="191" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="buttonGuidelines" min="-2" pref="148" max="-2" attributes="0"/>
@@ -252,7 +252,7 @@
                 <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonAddUseCaseMouseExited"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="        jButtonAddUseCase.addActionListener(new ActionListener() {&#xa;            @Override&#xa;            public void actionPerformed(ActionEvent e) {&#xa;                AddUseCasefromBPMN dialogAddUseCase = new AddUseCasefromBPMN();&#xa;                int option = dialogAddUseCase.createDialogAdd(&quot;i*&quot;);&#xa;                if(option == AddUseCasefromBPMN.YES) {&#xa;                    updateTable();&#xa;                }&#xa;            }&#xa;        });"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="        jButtonAddUseCase.addActionListener(new ActionListener() {&#xa;            @Override&#xa;            public void actionPerformed(ActionEvent e) {&#xa;                MainView mainView = new MainView();&#xa;                AddUseCasefromBPMN addUseCase = new AddUseCasefromBPMN(mainView, true, &quot;i*&quot;);&#xa;                int option = addUseCase.createDialogAdd();&#xa;                if(option == AddUseCasefromBPMN.YES) {&#xa;                    updateTable();&#xa;                }&#xa;            }&#xa;        });"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">

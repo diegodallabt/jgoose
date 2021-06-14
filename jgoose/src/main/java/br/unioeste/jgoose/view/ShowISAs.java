@@ -31,11 +31,12 @@ public class ShowISAs extends javax.swing.JDialog {
     public ShowISAs(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
         jTextPane1.setText("");
         jTextPane1.setFont(new java.awt.Font("Roboto", 0, 14));
         SimpleAttributeSet negrito = new SimpleAttributeSet();
         StyleConstants.setBold(negrito, true);
-  
+
         // insere os dados dos ISAs
         Controller.getIsas().forEach(actor -> {
             actor.getNameFathers().stream().map(names -> (String) names).map(name -> {
@@ -49,11 +50,9 @@ public class ShowISAs extends javax.swing.JDialog {
                 insertStyle(actor.getName() + "\n", null);
             });
         });
-    
+
     }
 
-    
-    
     private void insertStyle(String text, SimpleAttributeSet style) {
         Document doc = jTextPane1.getStyledDocument();
         try {

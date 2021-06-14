@@ -343,8 +343,9 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         jButtonAddUseCase.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddUseCasefromBPMN dialogAddUseCase = new AddUseCasefromBPMN();
-                int option = dialogAddUseCase.createDialogAdd("bpmn");
+                MainView mainView = new MainView();
+                AddUseCasefromBPMN addUseCase = new AddUseCasefromBPMN(mainView, true, "bpmn");
+                int option = addUseCase.createDialogAdd();
                 if(option == AddUseCasefromBPMN.YES) {
                     updateTable();
                 }
@@ -1649,10 +1650,8 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
             if (clicked) {
                 //SHOW US SOME MESSAGE
                 String vetCasosDeUso[] = findElementAndInfos(row);
-                MoreInfoUCFromBPMN info = new MoreInfoUCFromBPMN(new javax.swing.JFrame(), true, vetCasosDeUso);        
-                info.setModal(true);
-                info.setLocationRelativeTo(null);       
-                info.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width  - getSize().width) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - getSize().height) / 2);
+                MainView mainView = new MainView();
+                MoreInfoUCFromBPMN info = new MoreInfoUCFromBPMN(mainView, true, vetCasosDeUso);        
                 info.setVisible(true);
                 //JOptionPane.showMessageDialog(btn, lbl + " Clicked");
             }

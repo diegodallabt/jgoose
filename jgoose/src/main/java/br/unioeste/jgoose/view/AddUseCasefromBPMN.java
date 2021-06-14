@@ -9,6 +9,8 @@ import br.unioeste.jgoose.UseCases.UseCase;
 import br.unioeste.jgoose.controller.BPMNController;
 import br.unioeste.jgoose.controller.Controller;
 import br.unioeste.jgoose.model.UCUseCase;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -20,7 +22,7 @@ import javax.swing.SwingUtilities;
  *
  * @author Victor Augusto Pozzan
  */
-public class AddUseCasefromBPMN extends JDialog {
+public final class AddUseCasefromBPMN extends JDialog {
 
     public static final int YES = 0;
     public static final int NO = -1;
@@ -30,15 +32,23 @@ public class AddUseCasefromBPMN extends JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel title;
+    private final String flag;
+    private final Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
 
+
+
+    public AddUseCasefromBPMN(java.awt.Frame parent, boolean modal, String flag) {
+        super(parent, modal);
+        this.flag = flag;
+    }
+
+    
     /**
      * Creates new form MoreInfoUC
-     *
      * @return 0 to YES
      */
 
-    public int createDialogAdd(String flag) {
-
+    public int createDialogAdd() {
         jPanel1 = new javax.swing.JPanel();
         title = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -47,7 +57,7 @@ public class AddUseCasefromBPMN extends JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(252, 252, 252));
-
+        
         title.setFont(new java.awt.Font("Roboto", 0, 16));
         title.setText("New Use Case");
 
@@ -132,7 +142,7 @@ public class AddUseCasefromBPMN extends JDialog {
         dialog.pack();
         dialog.setLocationRelativeTo(null);
 
-        dialog.setIconImage(null);
+        dialog.setIconImage(iconJGOOSE);
         dialog.setVisible(true);
 
         return choice;
@@ -143,6 +153,7 @@ public class AddUseCasefromBPMN extends JDialog {
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconImage(iconJGOOSE);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
