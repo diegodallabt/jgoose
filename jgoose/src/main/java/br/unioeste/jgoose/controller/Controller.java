@@ -34,6 +34,7 @@ public class Controller {
     private static String systemActor = null;
     private static Mapping mapping;
     private static boolean flagMapUseCases;
+    private static boolean flagPreferenceSeeUC = false;
 
 
     /*
@@ -49,7 +50,15 @@ public class Controller {
                 mapping.mappingStep3();
             }
             flagMapUseCases = true;
+            flagPreferenceSeeUC = false;
             JOptionPane.showMessageDialog(null, "Use Cases Mapped with success!", "SUCCESS!", JOptionPane.INFORMATION_MESSAGE);
+            
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            String message = "Would like to see the Use Cases?";
+            int dialogResult = JOptionPane.showConfirmDialog(null, message, "Warning", dialogButton);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                flagPreferenceSeeUC = true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error in Mapping of Use Cases!", "ERROR!", JOptionPane.ERROR_MESSAGE);
@@ -196,5 +205,9 @@ public class Controller {
 
     public static void deleteUC(UseCase usecase) {
         mapping.deleteUC(usecase);
+    }
+
+    public static boolean getFlagPreferences() {
+        return flagPreferenceSeeUC;
     }
 }

@@ -23,6 +23,7 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -47,8 +48,8 @@ import org.apache.log4j.Logger;
 /**
  *
  * @authors @Diego Peliser
- * @Alysson Girotto
- * @Victor Augusto Pozzan
+ * @Alysson @Girotto
+ * @Victor @Augusto Pozzan
  */
 public class MainView extends javax.swing.JFrame {
 
@@ -103,8 +104,7 @@ public class MainView extends javax.swing.JFrame {
                 g.setColor(new java.awt.Color(11, 113, 165));
                 g.fillRect(0, 0, c.getWidth(), c.getHeight());
             }
-        });
-
+        });  
     }
 
     /**
@@ -1087,7 +1087,7 @@ public class MainView extends javax.swing.JFrame {
     /**
      * Abre o Editor E4J i*
      */
-    private void showE4JiStar() throws HeadlessException, IOException {
+    public void showE4JiStar() throws HeadlessException, IOException {
         if (E4JiStar == null) {
             E4JiStar = new EditorJFrame(0);
             E4JiStar.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -1294,7 +1294,7 @@ public class MainView extends javax.swing.JFrame {
         }
     }
     
-    private void iStarUCView() {
+    public void iStarUCView() {
         try {
             if (useCasesViewIStar == null) {
                 System.out.println("Aqui");

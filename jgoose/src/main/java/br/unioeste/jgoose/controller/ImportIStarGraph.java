@@ -5,12 +5,14 @@ import br.unioeste.jgoose.model.IStarActorElement;
 import br.unioeste.jgoose.model.IStarElement;
 import br.unioeste.jgoose.model.IStarLink;
 import br.unioeste.jgoose.model.TokensOpenOME;
+import br.unioeste.jgoose.view.MainView;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
+import java.awt.HeadlessException;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
@@ -18,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -33,6 +36,7 @@ public class ImportIStarGraph extends AbstractAction {
 
     private static Logger LOG = Logger.getLogger("console");
     //
+    private static MainView mainView = new MainView();;
     private JFrame e4jinstance;
     private mxGraphComponent component;
     private mxGraph graph;
@@ -124,10 +128,6 @@ public class ImportIStarGraph extends AbstractAction {
             LOG.debug("total elements interpreted: " + vertex.size());
             LOG.debug("total links interpreted: " + edges.size());
 
-            // close editor and call view to select the main actor (system).
-            WindowEvent wev = new WindowEvent(this.e4jinstance, WindowEvent.WINDOW_CLOSING);
-            Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);
-
             // Abre a janela para selecionar o Ator Sistema
             Controller.showActorSystemSelectionView();
         }
@@ -141,6 +141,10 @@ public class ImportIStarGraph extends AbstractAction {
         
         if (Controller.getSystemActor() != null) {
             Controller.mapUseCases();
+            if(Controller.getFlagPreferences()){
+                mainView.iStarUCView();
+                this.e4jinstance.setVisible(false);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "For Map Use Cases you need select an Actor as a System", "ERROR!", JOptionPane.ERROR_MESSAGE);
         }
