@@ -52,10 +52,9 @@ import org.apache.log4j.Logger;
  */
 public class MainView extends javax.swing.JFrame {
 
-    private UseCasesViewIStar useCasesView = null;
     private TableArtifacts tableArtifacts = null;
     private UseCasesViewBPMN useCasesViewBPMN = null;
-    private UseCasesViewIStar1 useCasesViewIStar = null;
+    private UseCasesViewIStar useCasesViewIStar = null;
     private static final Logger LOG = Logger.getLogger("console");
     private EditorJFrame E4JiStar = null;
     private EditorJFrame E4JUseCases = null;
@@ -1296,7 +1295,7 @@ public class MainView extends javax.swing.JFrame {
     public void iStarUCView() {
         try {
             if (useCasesViewIStar == null) {
-                useCasesViewIStar = new UseCasesViewIStar1(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewBPMN);
+                useCasesViewIStar = new UseCasesViewIStar(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewBPMN);
                 useCasesViewIStar.setIconImage(iconJGOOSE);
                 useCasesViewIStar.setExtendedState(MAXIMIZED_BOTH);
                 useCasesViewIStar.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);

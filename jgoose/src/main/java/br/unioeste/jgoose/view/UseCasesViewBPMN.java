@@ -95,7 +95,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
     private EditorJFrame E4JiStar = null;
     private EditorJFrame E4JUseCases = null;
     private EditorJFrame E4JBPMN = null;
-    private UseCasesViewIStar1 useCasesViewIStar = null;
+    private UseCasesViewIStar useCasesViewIStar = null;
     private DefaultTableModel tabCasosDeUso = new DefaultTableModel();
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger("console");
     private Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
@@ -108,7 +108,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
      * @param E4JUseCases
      * @param useCasesView
      */
-    public UseCasesViewBPMN(EditorJFrame E4JiStar,EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewIStar1 useCasesViewIStar) {
+    public UseCasesViewBPMN(EditorJFrame E4JiStar,EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewIStar useCasesViewIStar) {
         this.E4JBPMN = E4JBPMN;
         this.E4JiStar = E4JiStar;
         this.E4JUseCases = E4JUseCases;
@@ -1085,7 +1085,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
     private void btnUCIStarViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCIStarViewActionPerformed
         try {
             if (useCasesViewIStar == null) {
-                useCasesViewIStar = new UseCasesViewIStar1(E4JiStar, E4JBPMN, E4JUseCases, this);
+                useCasesViewIStar = new UseCasesViewIStar(E4JiStar, E4JBPMN, E4JUseCases, this);
                 useCasesViewIStar.setIconImage(iconJGOOSE);
                 useCasesViewIStar.setExtendedState(MAXIMIZED_BOTH);
                 useCasesViewIStar.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
