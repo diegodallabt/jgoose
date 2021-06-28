@@ -23,7 +23,6 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -1272,7 +1271,7 @@ public class MainView extends javax.swing.JFrame {
         try {
             if (useCasesViewBPMN == null) {
                 System.out.println("Aqui");
-                useCasesViewBPMN = new UseCasesViewBPMN(E4JiStar, E4JBPMN, E4JUseCases, useCasesView);
+                useCasesViewBPMN = new UseCasesViewBPMN(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar);
                 useCasesViewBPMN.setIconImage(iconJGOOSE);
                 useCasesViewBPMN.setExtendedState(MAXIMIZED_BOTH);
                 useCasesViewBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -1297,7 +1296,6 @@ public class MainView extends javax.swing.JFrame {
     public void iStarUCView() {
         try {
             if (useCasesViewIStar == null) {
-                System.out.println("Aqui");
                 useCasesViewIStar = new UseCasesViewIStar1(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewBPMN);
                 useCasesViewIStar.setIconImage(iconJGOOSE);
                 useCasesViewIStar.setExtendedState(MAXIMIZED_BOTH);

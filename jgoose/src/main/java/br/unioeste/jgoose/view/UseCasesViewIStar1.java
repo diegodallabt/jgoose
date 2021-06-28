@@ -421,8 +421,8 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         btnMenuiStar = new javax.swing.JButton();
         btnMenuBPMN = new javax.swing.JButton();
         btnMenuUC = new javax.swing.JButton();
-        btnUCIStarView = new javax.swing.JButton();
-        btnUCViewBpmnBlock = new javax.swing.JButton();
+        btnUCIStarViewBlock = new javax.swing.JButton();
+        btnUCViewBpmn = new javax.swing.JButton();
         bntMenuTraceVertical = new javax.swing.JButton();
         btnMenuTraceHorizontal = new javax.swing.JButton();
 
@@ -590,14 +590,13 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JLabelUseCasesFromBPMN))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonAddUseCase, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23)
                         .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addComponent(buttonNFRs)
                         .addGap(10, 10, 10)
                         .addComponent(buttonShowIsas)
@@ -840,6 +839,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         btnMenuUC.setBackground(new java.awt.Color(11, 113, 165));
         btnMenuUC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UseCase.png"))); // NOI18N
         btnMenuUC.setBorder(null);
+        btnMenuUC.setFocusable(false);
         btnMenuUC.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnMenuUCMouseEntered(evt);
@@ -854,30 +854,28 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             }
         });
 
-        btnUCIStarView.setBackground(new java.awt.Color(11, 113, 165));
-        btnUCIStarView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-iStar.png"))); // NOI18N
-        btnUCIStarView.setBorder(null);
-        btnUCIStarView.setEnabled(false);
-        btnUCIStarView.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnUCIStarViewBlock.setBackground(new java.awt.Color(11, 113, 165));
+        btnUCIStarViewBlock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-iStar.png"))); // NOI18N
+        btnUCIStarViewBlock.setBorder(null);
+        btnUCIStarViewBlock.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnUCIStarViewBlock.setEnabled(false);
+
+        btnUCViewBpmn.setBackground(new java.awt.Color(11, 113, 165));
+        btnUCViewBpmn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-BPMN.png"))); // NOI18N
+        btnUCViewBpmn.setBorder(null);
+        btnUCViewBpmn.setFocusable(false);
+        btnUCViewBpmn.setOpaque(false);
+        btnUCViewBpmn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnUCIStarViewMouseEntered(evt);
+                btnUCViewBpmnMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnUCIStarViewMouseExited(evt);
+                btnUCViewBpmnMouseExited(evt);
             }
         });
-        btnUCIStarView.addActionListener(new java.awt.event.ActionListener() {
+        btnUCViewBpmn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUCIStarViewActionPerformed(evt);
-            }
-        });
-
-        btnUCViewBpmnBlock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-BPMN.png"))); // NOI18N
-        btnUCViewBpmnBlock.setBorder(null);
-        btnUCViewBpmnBlock.setOpaque(false);
-        btnUCViewBpmnBlock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUCViewBpmnBlockActionPerformed(evt);
+                btnUCViewBpmnActionPerformed(evt);
             }
         });
 
@@ -924,8 +922,8 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                 .addGroup(jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnMenuBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenuUC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUCIStarView, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUCViewBpmnBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUCIStarViewBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUCViewBpmn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bntMenuTraceVertical, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenuiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenuHome, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -944,9 +942,9 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(btnMenuUC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(btnUCIStarView, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUCIStarViewBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(btnUCViewBpmnBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUCViewBpmn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(bntMenuTraceVertical, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
@@ -1011,9 +1009,13 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMenuTraceHorizontalActionPerformed
 
-    private void btnUCViewBpmnBlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCViewBpmnBlockActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUCViewBpmnBlockActionPerformed
+    private void btnUCViewBpmnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCViewBpmnActionPerformed
+        try {
+            this.bpmnUCView();
+        } catch (HeadlessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnUCViewBpmnActionPerformed
 
     private void btnMenuiStarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuiStarMouseEntered
         setCursor(Cursor.HAND_CURSOR);
@@ -1054,16 +1056,6 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         setCursor(Cursor.DEFAULT_CURSOR);
         btnMenuUC.setBackground(new java.awt.Color(11, 113, 165));
     }//GEN-LAST:event_btnMenuUCMouseExited
-
-    private void btnUCIStarViewMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUCIStarViewMouseEntered
-        setCursor(Cursor.HAND_CURSOR);
-        btnUCIStarView.setBackground(new java.awt.Color(59, 141, 183));
-    }//GEN-LAST:event_btnUCIStarViewMouseEntered
-
-    private void btnUCIStarViewMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUCIStarViewMouseExited
-        setCursor(Cursor.DEFAULT_CURSOR);
-        btnUCIStarView.setBackground(new java.awt.Color(11, 113, 165));
-    }//GEN-LAST:event_btnUCIStarViewMouseExited
 
     private void bntMenuTraceVerticalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntMenuTraceVerticalMouseEntered
         setCursor(Cursor.HAND_CURSOR);
@@ -1157,16 +1149,6 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnMenuUCActionPerformed
 
-    private void btnUCIStarViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCIStarViewActionPerformed
-        /*Controller.mapUseCases();
-        if (useCasesViewBPMN == null) {
-            useCasesViewBPMN = new UseCasesViewBPMN();
-            useCasesViewBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        }
-        useCasesViewBPMN.updateTabel();
-        useCasesViewBPMN.setVisible(true);*/
-    }//GEN-LAST:event_btnUCIStarViewActionPerformed
-
     private void bntMenuTraceVerticalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntMenuTraceVerticalActionPerformed
         VerticalTraceController.openVerticalTraceabilityView();
     }//GEN-LAST:event_bntMenuTraceVerticalActionPerformed
@@ -1199,6 +1181,16 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         info.setVisible(true);
     }//GEN-LAST:event_buttonShowIsasActionPerformed
 
+    private void btnUCViewBpmnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUCViewBpmnMouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        btnUCViewBpmn.setBackground(new java.awt.Color(59, 141, 183));
+    }//GEN-LAST:event_btnUCViewBpmnMouseEntered
+
+    private void btnUCViewBpmnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUCViewBpmnMouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+        btnUCViewBpmn.setBackground(new java.awt.Color(11, 113, 165));
+    }//GEN-LAST:event_btnUCViewBpmnMouseExited
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelUseCasesFromBPMN;
     private javax.swing.JButton bntMenuTraceVertical;
@@ -1207,8 +1199,8 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
     private javax.swing.JButton btnMenuTraceHorizontal;
     private javax.swing.JButton btnMenuUC;
     private javax.swing.JButton btnMenuiStar;
-    private javax.swing.JButton btnUCIStarView;
-    private javax.swing.JButton btnUCViewBpmnBlock;
+    private javax.swing.JButton btnUCIStarViewBlock;
+    private javax.swing.JButton btnUCViewBpmn;
     private javax.swing.JButton buttonDiagram;
     private javax.swing.JButton buttonExportThisSpecification;
     private javax.swing.JButton buttonGuidelines;
@@ -1635,6 +1627,31 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+
+    private void bpmnUCView() {
+        try {
+            if (useCasesViewBPMN == null) {
+                useCasesViewBPMN = new UseCasesViewBPMN(E4JiStar, E4JBPMN, E4JUseCases, this);
+                useCasesViewBPMN.setIconImage(iconJGOOSE);
+                useCasesViewBPMN.setExtendedState(MAXIMIZED_BOTH);
+                useCasesViewBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                EditorWindowListener windowListener = new EditorWindowListener(this, useCasesViewBPMN);
+                this.addWindowListener(windowListener);
+                useCasesViewBPMN.addWindowListener(windowListener);
+                this.addWindowListener(windowListener);
+            }
+            useCasesViewBPMN.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception e) {
+            StringBuilder sb = new StringBuilder(e.toString());
+            for (StackTraceElement ste : e.getStackTrace()) {
+                sb.append("\n\tat ");
+                sb.append(ste);
+            }
+            String trace = sb.toString();
+            JOptionPane.showMessageDialog(null, trace);
         }
     }
 

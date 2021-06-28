@@ -95,7 +95,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
     private EditorJFrame E4JiStar = null;
     private EditorJFrame E4JUseCases = null;
     private EditorJFrame E4JBPMN = null;
-    private UseCasesViewIStar useCasesView = null;
+    private UseCasesViewIStar1 useCasesViewIStar = null;
     private DefaultTableModel tabCasosDeUso = new DefaultTableModel();
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger("console");
     private Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
@@ -108,11 +108,11 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
      * @param E4JUseCases
      * @param useCasesView
      */
-    public UseCasesViewBPMN(EditorJFrame E4JiStar,EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewIStar useCasesView) {
+    public UseCasesViewBPMN(EditorJFrame E4JiStar,EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewIStar1 useCasesViewIStar) {
         this.E4JBPMN = E4JBPMN;
         this.E4JiStar = E4JiStar;
         this.E4JUseCases = E4JUseCases;
-        this.useCasesView = useCasesView;
+        this.useCasesViewIStar = useCasesViewIStar;
         
         setLocationRelativeTo(null);
         initComponents();
@@ -792,11 +792,6 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         btnUCViewBpmnBlock.setBorder(null);
         btnUCViewBpmnBlock.setEnabled(false);
         btnUCViewBpmnBlock.setOpaque(false);
-        btnUCViewBpmnBlock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUCViewBpmnBlockActionPerformed(evt);
-            }
-        });
 
         bntMenuTraceVertical.setBackground(new java.awt.Color(11, 113, 165));
         bntMenuTraceVertical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-VerticalTraceability.png"))); // NOI18N
@@ -945,10 +940,6 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMenuTraceHorizontalActionPerformed
 
-    private void btnUCViewBpmnBlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCViewBpmnBlockActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUCViewBpmnBlockActionPerformed
-
     private void btnMenuiStarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuiStarMouseEntered
         setCursor(Cursor.HAND_CURSOR);
         btnMenuiStar.setBackground(new java.awt.Color(59, 141, 183));
@@ -1092,13 +1083,28 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuUCActionPerformed
 
     private void btnUCIStarViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCIStarViewActionPerformed
-        Controller.mapUseCases();
-        if (useCasesView == null) {
-            useCasesView = new UseCasesViewIStar();
-            useCasesView.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        try {
+            if (useCasesViewIStar == null) {
+                useCasesViewIStar = new UseCasesViewIStar1(E4JiStar, E4JBPMN, E4JUseCases, this);
+                useCasesViewIStar.setIconImage(iconJGOOSE);
+                useCasesViewIStar.setExtendedState(MAXIMIZED_BOTH);
+                useCasesViewIStar.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                EditorWindowListener windowListener = new EditorWindowListener(this, useCasesViewIStar);
+                this.addWindowListener(windowListener);
+                useCasesViewIStar.addWindowListener(windowListener);
+                this.addWindowListener(windowListener);
+            }
+            useCasesViewIStar.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception e) {
+            StringBuilder sb = new StringBuilder(e.toString());
+            for (StackTraceElement ste : e.getStackTrace()) {
+                sb.append("\n\tat ");
+                sb.append(ste);
+            }
+            String trace = sb.toString();
+            JOptionPane.showMessageDialog(null, trace);
         }
-        useCasesView.updateTabel();
-        useCasesView.setVisible(true);
     }//GEN-LAST:event_btnUCIStarViewActionPerformed
 
     private void bntMenuTraceVerticalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntMenuTraceVerticalActionPerformed
