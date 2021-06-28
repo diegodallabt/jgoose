@@ -10,6 +10,7 @@ import br.unioeste.jgoose.TraceabilityHorizontal.TraceIStarHorizontal;
 import br.unioeste.jgoose.TraceabilityHorizontal.TraceUCHorizontal;
 import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.view.TraceabilityView;
+import br.unioeste.jgoose.view.TraceabilityView1;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -31,6 +32,7 @@ public class HorizontalControler extends AbstractAction {
     private static TraceUCHorizontal traceUCHorizontal;
 
     private static TraceabilityView viewTraceability = null;
+    private static TraceabilityView1 viewTraceability1 = null;
 
     public static int type;
     public static EditorJFrame E4J;
@@ -84,24 +86,24 @@ public class HorizontalControler extends AbstractAction {
 
     public static void openViewTraceabilityHorizontal() {
         if (index != -1) {
-            if (viewTraceability == null) {
-                viewTraceability = new TraceabilityView(index);
-                viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            if (viewTraceability1 == null) {
+                viewTraceability1 = new TraceabilityView1(index);
+                viewTraceability1.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             }
             switch (type) {
                 case 1: //update i* trace Horizontal
-                    viewTraceability.updateTableIStarHorizontalTraceability();
+                    viewTraceability1.updateTableIStarHorizontalTraceability();
                     break;
 
                 case 2: //update BPMN trace Horizontal
-                    viewTraceability.updateTableBPMNHorizontalTraceability();
+                    viewTraceability1.updateTableBPMNHorizontalTraceability();
                     break;
 
                 case 3: //update UC trace Horizontale
-                    viewTraceability.updateTableUCHorizontalTraceability();
+                    viewTraceability1.updateTableUCHorizontalTraceability();
                     break;
             }
-            viewTraceability.setVisible(true);
+            viewTraceability1.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "You need Mapping Horizontal first");
         }
