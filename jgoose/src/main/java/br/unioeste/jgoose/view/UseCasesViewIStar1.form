@@ -109,19 +109,18 @@
                           </Group>
                           <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="jButtonAddUseCase" min="-2" pref="188" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                               <Component id="buttonDiagram" min="-2" pref="175" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="31" max="32767" attributes="0"/>
-                              <Component id="buttonGuidelines1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="buttonGuidelines2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="buttonNFRs" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                              <Component id="buttonShowIsas" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Component id="buttonSaveUseCases" min="-2" pref="191" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="buttonGuidelines" min="-2" pref="148" max="-2" attributes="0"/>
@@ -159,8 +158,8 @@
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="buttonGuidelines" alignment="3" max="32767" attributes="0"/>
                               <Component id="buttonSaveUseCases" alignment="3" max="32767" attributes="0"/>
-                              <Component id="buttonGuidelines1" alignment="3" max="32767" attributes="0"/>
-                              <Component id="buttonGuidelines2" alignment="3" max="32767" attributes="0"/>
+                              <Component id="buttonNFRs" alignment="3" max="32767" attributes="0"/>
+                              <Component id="buttonShowIsas" alignment="3" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
@@ -252,7 +251,7 @@
                 <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jButtonAddUseCaseMouseExited"/>
               </Events>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="        jButtonAddUseCase.addActionListener(new ActionListener() {&#xa;            @Override&#xa;            public void actionPerformed(ActionEvent e) {&#xa;                AddUseCasefromBPMN dialogAddUseCase = new AddUseCasefromBPMN();&#xa;                int option = dialogAddUseCase.createDialogAdd();&#xa;                if(option == AddUseCasefromBPMN.YES) {&#xa;                    updateTable();&#xa;                }&#xa;            }&#xa;        });"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="        jButtonAddUseCase.addActionListener(new ActionListener() {&#xa;            @Override&#xa;            public void actionPerformed(ActionEvent e) {&#xa;                MainView mainView = new MainView();&#xa;                AddUseCasefromBPMN addUseCase = new AddUseCasefromBPMN(mainView, true, &quot;i*&quot;);&#xa;                int option = addUseCase.createDialogAdd();&#xa;                if(option == AddUseCasefromBPMN.YES) {&#xa;                    updateTable();&#xa;                }&#xa;            }&#xa;        });"/>
               </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel1">
@@ -336,7 +335,7 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="buttonGuidelines1">
+            <Component class="javax.swing.JButton" name="buttonNFRs">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="14" style="0"/>
@@ -344,15 +343,15 @@
                 <Property name="text" type="java.lang.String" value="Show NFRs"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonGuidelines1MouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonGuidelines1MouseExited"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonGuidelines1ActionPerformed"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonNFRsMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonNFRsMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonNFRsActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="UseCasesViewBPMN_buttonGuidelines"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="buttonGuidelines2">
+            <Component class="javax.swing.JButton" name="buttonShowIsas">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto" size="14" style="0"/>
@@ -360,9 +359,9 @@
                 <Property name="text" type="java.lang.String" value="Show Isa&apos;s"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonGuidelines2MouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonGuidelines2MouseExited"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonGuidelines2ActionPerformed"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonShowIsasMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonShowIsasMouseExited"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonShowIsasActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="UseCasesViewBPMN_buttonGuidelines"/>
@@ -594,8 +593,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnMenuBPMN" min="-2" pref="60" max="-2" attributes="0"/>
                       <Component id="btnMenuUC" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="btnUCIStarView" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="btnUCViewBpmnBlock" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="btnUCIStarViewBlock" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
+                      <Component id="btnUCViewBpmn" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
                       <Component id="bntMenuTraceVertical" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
                       <Component id="btnMenuiStar" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
                       <Component id="btnMenuHome" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
@@ -617,9 +616,9 @@
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="btnMenuUC" min="-2" pref="60" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="btnUCIStarView" min="-2" pref="60" max="-2" attributes="0"/>
+                  <Component id="btnUCIStarViewBlock" min="-2" pref="60" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="btnUCViewBpmnBlock" min="-2" pref="60" max="-2" attributes="0"/>
+                  <Component id="btnUCViewBpmn" min="-2" pref="60" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="bntMenuTraceVertical" min="-2" pref="60" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
@@ -697,6 +696,7 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
+            <Property name="focusable" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMenuUCMouseEntered"/>
@@ -704,7 +704,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMenuUCActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnUCIStarView">
+        <Component class="javax.swing.JButton" name="btnUCIStarViewBlock">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="a5" green="71" red="b" type="rgb"/>
@@ -715,26 +715,30 @@
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Default Cursor"/>
+            </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
-          <Events>
-            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnUCIStarViewMouseEntered"/>
-            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnUCIStarViewMouseExited"/>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUCIStarViewActionPerformed"/>
-          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnUCViewBpmnBlock">
+        <Component class="javax.swing.JButton" name="btnUCViewBpmn">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="a5" green="71" red="b" type="rgb"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/icons/ICON-UC-BPMN.png"/>
             </Property>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
+            <Property name="focusable" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUCViewBpmnBlockActionPerformed"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnUCViewBpmnMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnUCViewBpmnMouseExited"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUCViewBpmnActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="bntMenuTraceVertical">

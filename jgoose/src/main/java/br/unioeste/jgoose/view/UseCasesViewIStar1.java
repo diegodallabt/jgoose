@@ -2,6 +2,9 @@ package br.unioeste.jgoose.view;
 
 import br.unioeste.jgoose.view.MainView;
 import br.unioeste.jgoose.UseCases.Actor;
+import br.unioeste.jgoose.UseCases.ActorISA;
+import br.unioeste.jgoose.UseCases.Extend;
+import br.unioeste.jgoose.UseCases.Step;
 import br.unioeste.jgoose.UseCases.UseCase;
 import br.unioeste.jgoose.controller.BPMNController;
 import br.unioeste.jgoose.controller.Controller;
@@ -49,6 +52,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -102,34 +106,36 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
     private Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
     private BasicBPMNEditor bpmnEditor;
     Font roboto;
+
     /**
      * Creates new form UseCasesView
+     *
      * @param E4JiStar
      * @param E4JBPMN
      * @param E4JUseCases
      * @param useCasesViewBPMN
      */
-    public UseCasesViewIStar1(EditorJFrame E4JiStar,EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewBPMN useCasesViewBPMN) {
+    public UseCasesViewIStar1(EditorJFrame E4JiStar, EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewBPMN useCasesViewBPMN) {
         this.E4JBPMN = E4JBPMN;
         this.E4JiStar = E4JiStar;
         this.E4JUseCases = E4JUseCases;
         this.useCasesViewBPMN = useCasesViewBPMN;
-        
+
         setLocationRelativeTo(null);
         initComponents();
         UIManager.put("OptionPane.yesButtonText", "Yes");
         UIManager.put("OptionPane.noButtonText", "No");
         updateTable();
-        
-        try{
-            InputStream myStream = new BufferedInputStream(new FileInputStream("./src/main/resources/fonts/Roboto-Black.ttf"))  ;
+
+        try {
+            InputStream myStream = new BufferedInputStream(new FileInputStream("./src/main/resources/fonts/Roboto-Black.ttf"));
             roboto = Font.createFont(Font.TRUETYPE_FONT, myStream);
             roboto = roboto.deriveFont(30f);
-            
-        }catch(IOException | FontFormatException e){
+
+        } catch (IOException | FontFormatException e) {
             System.out.println(e);
         }
-        
+
     }
 
     /*
@@ -147,16 +153,22 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         String vetCasosDeUso[] = new String[4];
         int cont = 1;
         // adiciona os dados dos casos de uso no modelo da tabela
-        for (Actor actor : Controller.getUseCases()) {
+        for (UseCase useCase : Controller.getallUseCases()) {
+            vetCasosDeUso[0] = String.valueOf(useCase.getId());
+            vetCasosDeUso[1] = useCase.getName();
+            vetCasosDeUso[2] = "";
+            vetCasosDeUso[3] = "";
+            tabCasosDeUso.addRow(vetCasosDeUso);
+        }
+        /*for (Actor actor : Controller.getUseCases()) {
             for (Object useCase : actor.getUseCases()) {
                 UseCase caso = (UseCase) useCase;
                 vetCasosDeUso[0] = "" + cont++;
-                vetCasosDeUso[1] = actor.getName();
                 vetCasosDeUso[2] = caso.getName();
                 vetCasosDeUso[3] = caso.getType();
                 tabCasosDeUso.addRow(vetCasosDeUso);
             }
-        }
+        }*/
         tabelUseCases.setModel(tabCasosDeUso);
         // seta a largura das colunas da tabela
         tabelUseCases.getColumnModel().getColumn(0).setMaxWidth(40);
@@ -169,10 +181,10 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
 
         tabelUseCases.getColumnModel().getColumn(3).setCellRenderer(new ButtonRendererDelete1());
         tabelUseCases.getColumnModel().getColumn(3).setCellEditor(new ButtonDelete1(new JTextField(), 0));
-        
+
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tabelUseCases.getModel());
         tabelUseCases.setRowSorter(rowSorter);
-        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
+        jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -202,7 +214,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             }
 
         });
-        
+
     }
 
     /*
@@ -229,7 +241,6 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
     @SuppressWarnings("empty-statement")
     private void tabelUseCasesValueChanged(ListSelectionEvent evt) {
 
-        buttonDiagram.setEnabled(true);
         int colunm = tabelUseCases.getSelectedColumn();
         int linha = tabelUseCases.getSelectedRow();
         if (linha != -1) {
@@ -239,64 +250,96 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             // define o objeto com formatação negrito negrito
             SimpleAttributeSet negrito = new SimpleAttributeSet();
             StyleConstants.setBold(negrito, true);
-            
+
             // insere os dados do caso de uso selecionado
-            UCUseCase useCase = BPMNController.getUseCases().get(linha);
+            UseCase useCase = Controller.getallUseCases().get(linha);
 
             insertStyle("Use Case", negrito);
-            insertStyle(": " + useCase.getDescription().getName() + "\n\n", null);
-
+            insertStyle(": " + useCase.getName() + "\n\n", null);
             insertStyle("CHARACTERISTIC INFORMATIONN\n", negrito);
-            insertStyle("	Goal in Context", negrito);
-            insertStyle(": " + useCase.getDescription().getGoal() + "\n", null);
+            insertStyle("	Goal in Context: ", negrito);
+            insertStyle(": \n", null);
             insertStyle("	Scope", negrito);
-            insertStyle(": " + useCase.getDescription().getScope() + "\n", null);
+            insertStyle(": \n", null);
             insertStyle("	Preconditions", negrito);
-            insertStyle(": " + useCase.getDescription().getPreConditions() + "\n", null);
+            insertStyle(": \n", null);
             insertStyle("	Success End Condition", negrito);
-            insertStyle(": " + useCase.getDescription().getEndSucess() + "\n", null);
+            insertStyle(": \n", null);
             insertStyle("	Failed End Condition", negrito);
-            insertStyle(": " + useCase.getDescription().getEndFailure() + "\n", null);
-            insertStyle("	Trigger", negrito);
-            insertStyle(": " + useCase.getDescription().getTrigger() + "\n", null);
+            insertStyle(": \n", null);
+
             insertStyle("	Primary actor", negrito);
-            insertStyle(": " + useCase.getDescription().getPrimaryActor() + "\n", null);
+            insertStyle(": " + useCase.getPrimaryActor().getName() + "\n", null);
 
             insertStyle("\nMAIN SUCCESS SCENARIO\n", negrito);
-            int i = 1;
-            for (String sentence : useCase.getDescription().getScenario()) {
-                insertStyle("<passo " + i++ + "> - " + sentence + "\n", null);
-            }
-            insertStyle("\n", null);
 
-            insertStyle("EXTENSIONS\n", negrito);
-            insertStyle("\n", null);
+            if (useCase.getSteps().isEmpty()) {
+                insertStyle("\nEXTENSIONS\n", negrito);
+            } else {
+                int cont = 1;
+                int n = useCase.getSteps().size();
+                Step step;
+                for (int i = n - 1; i >= 0; i--) {
+                    step = useCase.getSteps().get(i);
+                    String name = step.getName().replaceAll("\"", "");
+                    if (step.getExtends().isEmpty()) {
+                        if (step.isInclude()) {
+                            name += " << include >> ";
+                        }
+                        insertStyle("	" + cont++ + ". " + name + "\n", null);
+                    } else {
+                        int m = step.getExtends().size() - 1;
+                        name += " " + step.getExtend(m).getName().replaceAll("\"", "");
+                        if (step.isInclude()) {
+                            name += " << include >> ";
+                        }
+                        insertStyle("	" + cont++ + ". " + name + "\n", null);
+                    }
+                }
+                insertStyle("\nEXTENSIONS\n", negrito);
+                int aux = useCase.getSteps().size();
+                cont = 1;
+                for (int i = n - 1; i >= 0; i--) {
+                    step = useCase.getSteps().get(i);
+                    Extend extend;
+                    n = step.getExtends().size();
+                    if (n < 2) {
+                        aux--;
+                    } else {
+                        for (int j = n - 2; j >= 0; j--) {
+                            extend = step.getExtend(j);
+                            insertStyle("	" + cont + "." + (n - j - 1) + ". " + extend.getName().replaceAll("\"", "") + " << extend >>\n", null);
+                        }
+                    }
+                    cont++;
+                }
+            }
 
             insertStyle("RELATED INFORMATION\n", negrito);
             insertStyle("	Priority", negrito);
-            insertStyle(": " + useCase.getDescription().getPriority() + "\n", null);
+            insertStyle(": \n", null);
             insertStyle("	Target performance", negrito);
-            insertStyle(": " + useCase.getDescription().getPerformance() + "\n", null);
+            insertStyle(": \n", null);
             insertStyle("	Frequency", negrito);
-            insertStyle(": " + useCase.getDescription().getFrequency() + "\n", null);
+            insertStyle(": \n", null);
             insertStyle("	Use Case father", negrito);
-            insertStyle(": " + useCase.getDescription().getUseCaseFather() + "\n", null);
+            insertStyle(": \n", null);
             insertStyle("	Included Use Cases", negrito);
-            insertStyle(": " + useCase.getDescription().getIncludedUseCases() + "\n", null);
+            insertStyle(": \n", null);
             insertStyle("	Secondary actors", negrito);
-            insertStyle(": " + useCase.getDescription().getSecondaryActors() + "\n", null);
+            insertStyle(": \n", null);
             insertStyle("	Additional information", negrito);
-            insertStyle(": " + useCase.getDescription().getAdditionalInformation() + "\n", null);
+            insertStyle(": \n", null);
         } else {
             textUseCases.setText("");
         }
 
         if (colunm == 3) {
             int dialogButton = JOptionPane.YES_NO_OPTION;
-            UCUseCase useCase = BPMNController.getUseCases().get(linha);
+            UseCase useCase = Controller.getallUseCases().get(linha);
             int dialogResult = JOptionPane.showConfirmDialog(null, "Would you like to delete a " + useCase.getName() + "?", "Warning", dialogButton);
             if (dialogResult == JOptionPane.YES_OPTION) {
-                BPMNController.deleteUC(useCase);
+                Controller.deleteUC(useCase);
                 tabCasosDeUso.removeRow(linha);
             };
         }
@@ -326,7 +369,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-     @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -340,8 +383,9 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         jButtonAddUseCase.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AddUseCasefromBPMN dialogAddUseCase = new AddUseCasefromBPMN();
-                int option = dialogAddUseCase.createDialogAdd();
+                MainView mainView = new MainView();
+                AddUseCasefromBPMN addUseCase = new AddUseCasefromBPMN(mainView, true, "i*");
+                int option = addUseCase.createDialogAdd();
                 if(option == AddUseCasefromBPMN.YES) {
                     updateTable();
                 }
@@ -351,8 +395,8 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         labelSearchIcon = new javax.swing.JLabel();
         jtfFilter = new javax.swing.JTextField();
-        buttonGuidelines1 = new javax.swing.JButton();
-        buttonGuidelines2 = new javax.swing.JButton();
+        buttonNFRs = new javax.swing.JButton();
+        buttonShowIsas = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         textUseCases = new javax.swing.JTextPane();
@@ -377,8 +421,8 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         btnMenuiStar = new javax.swing.JButton();
         btnMenuBPMN = new javax.swing.JButton();
         btnMenuUC = new javax.swing.JButton();
-        btnUCIStarView = new javax.swing.JButton();
-        btnUCViewBpmnBlock = new javax.swing.JButton();
+        btnUCIStarViewBlock = new javax.swing.JButton();
+        btnUCViewBpmn = new javax.swing.JButton();
         bntMenuTraceVertical = new javax.swing.JButton();
         btnMenuTraceHorizontal = new javax.swing.JButton();
 
@@ -502,35 +546,35 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             .addComponent(labelSearchIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        buttonGuidelines1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        buttonGuidelines1.setText("Show NFRs");
-        buttonGuidelines1.addMouseListener(new java.awt.event.MouseAdapter() {
+        buttonNFRs.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        buttonNFRs.setText("Show NFRs");
+        buttonNFRs.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonGuidelines1MouseEntered(evt);
+                buttonNFRsMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonGuidelines1MouseExited(evt);
+                buttonNFRsMouseExited(evt);
             }
         });
-        buttonGuidelines1.addActionListener(new java.awt.event.ActionListener() {
+        buttonNFRs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonGuidelines1ActionPerformed(evt);
+                buttonNFRsActionPerformed(evt);
             }
         });
 
-        buttonGuidelines2.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        buttonGuidelines2.setText("Show Isa's");
-        buttonGuidelines2.addMouseListener(new java.awt.event.MouseAdapter() {
+        buttonShowIsas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        buttonShowIsas.setText("Show Isa's");
+        buttonShowIsas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                buttonGuidelines2MouseEntered(evt);
+                buttonShowIsasMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                buttonGuidelines2MouseExited(evt);
+                buttonShowIsasMouseExited(evt);
             }
         });
-        buttonGuidelines2.addActionListener(new java.awt.event.ActionListener() {
+        buttonShowIsas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonGuidelines2ActionPerformed(evt);
+                buttonShowIsasActionPerformed(evt);
             }
         });
 
@@ -546,18 +590,17 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JLabelUseCasesFromBPMN))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonAddUseCase, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23)
                         .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                        .addComponent(buttonGuidelines1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonGuidelines2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonNFRs)
+                        .addGap(10, 10, 10)
+                        .addComponent(buttonShowIsas)
+                        .addGap(10, 10, 10)
                         .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(buttonGuidelines, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -585,8 +628,8 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                     .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(buttonGuidelines, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonGuidelines1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonGuidelines2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(buttonNFRs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonShowIsas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -796,6 +839,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         btnMenuUC.setBackground(new java.awt.Color(11, 113, 165));
         btnMenuUC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UseCase.png"))); // NOI18N
         btnMenuUC.setBorder(null);
+        btnMenuUC.setFocusable(false);
         btnMenuUC.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnMenuUCMouseEntered(evt);
@@ -810,30 +854,28 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             }
         });
 
-        btnUCIStarView.setBackground(new java.awt.Color(11, 113, 165));
-        btnUCIStarView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-iStar.png"))); // NOI18N
-        btnUCIStarView.setBorder(null);
-        btnUCIStarView.setEnabled(false);
-        btnUCIStarView.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnUCIStarViewBlock.setBackground(new java.awt.Color(11, 113, 165));
+        btnUCIStarViewBlock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-iStar.png"))); // NOI18N
+        btnUCIStarViewBlock.setBorder(null);
+        btnUCIStarViewBlock.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        btnUCIStarViewBlock.setEnabled(false);
+
+        btnUCViewBpmn.setBackground(new java.awt.Color(11, 113, 165));
+        btnUCViewBpmn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-BPMN.png"))); // NOI18N
+        btnUCViewBpmn.setBorder(null);
+        btnUCViewBpmn.setFocusable(false);
+        btnUCViewBpmn.setOpaque(false);
+        btnUCViewBpmn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnUCIStarViewMouseEntered(evt);
+                btnUCViewBpmnMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnUCIStarViewMouseExited(evt);
+                btnUCViewBpmnMouseExited(evt);
             }
         });
-        btnUCIStarView.addActionListener(new java.awt.event.ActionListener() {
+        btnUCViewBpmn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUCIStarViewActionPerformed(evt);
-            }
-        });
-
-        btnUCViewBpmnBlock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-BPMN.png"))); // NOI18N
-        btnUCViewBpmnBlock.setBorder(null);
-        btnUCViewBpmnBlock.setOpaque(false);
-        btnUCViewBpmnBlock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUCViewBpmnBlockActionPerformed(evt);
+                btnUCViewBpmnActionPerformed(evt);
             }
         });
 
@@ -880,8 +922,8 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                 .addGroup(jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnMenuBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenuUC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUCIStarView, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUCViewBpmnBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUCIStarViewBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnUCViewBpmn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bntMenuTraceVertical, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenuiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenuHome, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -900,9 +942,9 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addComponent(btnMenuUC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(btnUCIStarView, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUCIStarViewBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(btnUCViewBpmnBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUCViewBpmn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(bntMenuTraceVertical, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
@@ -952,24 +994,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSaveUseCasesActionPerformed
 
     private void buttonExportThisSpecificationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExportThisSpecificationActionPerformed
-        String path = Controller.loadProperties();
-        JFileChooser fileChooser = new JFileChooser(path);
-        fileChooser.setFileFilter(new FiltroDOC());
-        int resultado = fileChooser.showSaveDialog(null);
-        Controller.saveProperties(fileChooser.getSelectedFile().getParent());
-        if (resultado == JFileChooser.CANCEL_OPTION) {
-            fileChooser.setVisible(false);
-        } else {
-            try {
-                File file = fileChooser.getSelectedFile();
-                try ( FileWriter writer = new FileWriter(file.getPath() + ".doc", true)) {
-                    writer.write(textUseCases.getText());
-                }
-                JOptionPane.showMessageDialog(null, "File generated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } catch (IOException ex) {
-                Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        saveDescription();
     }//GEN-LAST:event_buttonExportThisSpecificationActionPerformed
 
     private void jtfFilterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfFilterActionPerformed
@@ -984,9 +1009,13 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnMenuTraceHorizontalActionPerformed
 
-    private void btnUCViewBpmnBlockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCViewBpmnBlockActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUCViewBpmnBlockActionPerformed
+    private void btnUCViewBpmnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCViewBpmnActionPerformed
+        try {
+            this.bpmnUCView();
+        } catch (HeadlessException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnUCViewBpmnActionPerformed
 
     private void btnMenuiStarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuiStarMouseEntered
         setCursor(Cursor.HAND_CURSOR);
@@ -1027,16 +1056,6 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         setCursor(Cursor.DEFAULT_CURSOR);
         btnMenuUC.setBackground(new java.awt.Color(11, 113, 165));
     }//GEN-LAST:event_btnMenuUCMouseExited
-
-    private void btnUCIStarViewMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUCIStarViewMouseEntered
-        setCursor(Cursor.HAND_CURSOR);
-        btnUCIStarView.setBackground(new java.awt.Color(59, 141, 183));
-    }//GEN-LAST:event_btnUCIStarViewMouseEntered
-
-    private void btnUCIStarViewMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUCIStarViewMouseExited
-        setCursor(Cursor.DEFAULT_CURSOR);
-        btnUCIStarView.setBackground(new java.awt.Color(11, 113, 165));
-    }//GEN-LAST:event_btnUCIStarViewMouseExited
 
     private void bntMenuTraceVerticalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntMenuTraceVerticalMouseEntered
         setCursor(Cursor.HAND_CURSOR);
@@ -1130,43 +1149,47 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnMenuUCActionPerformed
 
-    private void btnUCIStarViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCIStarViewActionPerformed
-        /*Controller.mapUseCases();
-        if (useCasesViewBPMN == null) {
-            useCasesViewBPMN = new UseCasesViewBPMN();
-            useCasesViewBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        }
-        useCasesViewBPMN.updateTabel();
-        useCasesViewBPMN.setVisible(true);*/
-    }//GEN-LAST:event_btnUCIStarViewActionPerformed
-
     private void bntMenuTraceVerticalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntMenuTraceVerticalActionPerformed
         VerticalTraceController.openVerticalTraceabilityView();
     }//GEN-LAST:event_bntMenuTraceVerticalActionPerformed
 
-    private void buttonGuidelines1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines1MouseEntered
+    private void buttonNFRsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNFRsMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonGuidelines1MouseEntered
+    }//GEN-LAST:event_buttonNFRsMouseEntered
 
-    private void buttonGuidelines1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines1MouseExited
+    private void buttonNFRsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNFRsMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonGuidelines1MouseExited
+    }//GEN-LAST:event_buttonNFRsMouseExited
 
-    private void buttonGuidelines1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuidelines1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buttonGuidelines1ActionPerformed
+    private void buttonNFRsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNFRsActionPerformed
+        MainView mainView = new MainView();
+        ShowNRFs info = new ShowNRFs(mainView, true);
+        info.setVisible(true);
+    }//GEN-LAST:event_buttonNFRsActionPerformed
 
-    private void buttonGuidelines2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines2MouseEntered
+    private void buttonShowIsasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonShowIsasMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonGuidelines2MouseEntered
+    }//GEN-LAST:event_buttonShowIsasMouseEntered
 
-    private void buttonGuidelines2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelines2MouseExited
+    private void buttonShowIsasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonShowIsasMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonGuidelines2MouseExited
+    }//GEN-LAST:event_buttonShowIsasMouseExited
 
-    private void buttonGuidelines2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGuidelines2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_buttonGuidelines2ActionPerformed
+    private void buttonShowIsasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonShowIsasActionPerformed
+        MainView mainView = new MainView();
+        ShowISAs info = new ShowISAs(mainView, true);
+        info.setVisible(true);
+    }//GEN-LAST:event_buttonShowIsasActionPerformed
+
+    private void btnUCViewBpmnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUCViewBpmnMouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        btnUCViewBpmn.setBackground(new java.awt.Color(59, 141, 183));
+    }//GEN-LAST:event_btnUCViewBpmnMouseEntered
+
+    private void btnUCViewBpmnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUCViewBpmnMouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+        btnUCViewBpmn.setBackground(new java.awt.Color(11, 113, 165));
+    }//GEN-LAST:event_btnUCViewBpmnMouseExited
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelUseCasesFromBPMN;
@@ -1176,14 +1199,14 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
     private javax.swing.JButton btnMenuTraceHorizontal;
     private javax.swing.JButton btnMenuUC;
     private javax.swing.JButton btnMenuiStar;
-    private javax.swing.JButton btnUCIStarView;
-    private javax.swing.JButton btnUCViewBpmnBlock;
+    private javax.swing.JButton btnUCIStarViewBlock;
+    private javax.swing.JButton btnUCViewBpmn;
     private javax.swing.JButton buttonDiagram;
     private javax.swing.JButton buttonExportThisSpecification;
     private javax.swing.JButton buttonGuidelines;
-    private javax.swing.JButton buttonGuidelines1;
-    private javax.swing.JButton buttonGuidelines2;
+    private javax.swing.JButton buttonNFRs;
     private javax.swing.JButton buttonSaveUseCases;
+    private javax.swing.JButton buttonShowIsas;
     private javax.swing.JButton jButtonAddUseCase;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -1229,11 +1252,10 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
 
     // Gera e exibe o diagrama de Casos de Uso UML com base nas informações obtidas
     private mxGraph generateDiagram() throws IOException {
-
-        List<UCActor> actorsList = BPMNController.getActors();
-        List<UCUseCase> useCasesList = BPMNController.getUseCases();
-
-        mxGraph graph = ((BasicUseCasesEditor) e4jInstance.getEditor()).getGraphComponent().getGraph();
+        ArrayList<Actor> useCases = Controller.getUseCases();
+        ArrayList<ActorISA> isas = Controller.getIsas();
+        // comeca a atualizar o grafo
+        mxGraph graph = ((BasicUseCasesEditor)e4jInstance.getEditor()).getGraphComponent().getGraph();
         graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
         graph.removeCells(graph.getChildEdges(graph.getDefaultParent()));
         graph.getModel().beginUpdate();
@@ -1247,41 +1269,34 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         newShape = new mxStencilShape(nodeXml);
         String styleCase = "shape=" + newShape.getName() + ";";
         mxGeometry geo;
-
         // HashMaps para quardar as celular dos atores e casos de uso
         HashMap<String, mxCell> actors = new HashMap<>();
         HashMap<String, mxCell> cases = new HashMap<>();
         mxCell aresta;
         mxCell ext;
-
         // variaveis para controlar as posicoes X e Y dos elementos no diagrama
         int yActor = 110;
-        int xActor = 80;
         int yCase = 30;
         int xCase = 400;
         String cod;
-
-        // Seta atores e seus respectivos casos de uso
-        for (UCActor actor : actorsList) {
+        /*
+         * Adicionar ao diagrama todos os atores com seus respectivos
+         * casos de uso e arestas.
+         */
+        for (Actor actor : useCases) {
             // cria ator e sua geometria e estilo
             value = IStarUtils.createActorUseCase();
             value.setAttribute("label", actor.getName());
             geo = new mxGeometry(50, yActor, 80, 80);
-
-            if (actor.getChildren().isEmpty()) {
-                geo.setX(xActor - 50);
-            } else {
-                geo.setX(xActor);
-            }
-
+            geo.setX(50);
             geo.setY(yActor);
             mxCell cell = new mxCell(value, geo, styleActor);
             cell.setVertex(true);
-            actors.put(actor.getCode(), cell);
+            System.out.println("" + cell.getStyle());
+            actors.put(actor.getCod(), cell);
             graph.addCell(cell);
-
             // cria os casos de uso e arestas
-            for (UCUseCase caso : actor.getUseCases()) {
+            for (UseCase caso : actor.getUseCases()) {
                 // cria caso de uso, sua geometria e estilo
                 value = IStarUtils.createUseCase();
                 value.setAttribute("label", caso.getName().replace("\"", ""));
@@ -1290,129 +1305,109 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                 geo.setX(xCase);
                 geo.setY(yCase);
                 yCase += 100;
-                cod = String.valueOf(caso.getCode());
-
+                cod = caso.getCod();
+                // se o caso de uso possui elemento decomposto guarda o codigo dele
+                // pois é o elemento decomposto que é incluso por outros casos de uso
+                if (caso.getCodDecomposedElement() != null) {
+                    cod = caso.getCodDecomposedElement();
+                }
                 // verifica se o caso de uso ainda não foi adicionado no grafo
                 if (cases.get(cod) == null) {
                     cases.put(cod, new mxCell(value, geo, styleCase));
                     cases.get(cod).setVertex(true);
                     graph.addCell(cases.get(cod));
                 }
-
                 // cria uma aresta entre o ator e seu caso de uso
                 value = IStarUtils.createAssociation();
-                aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, actors.get(actor.getCode()), cases.get(cod), "straight;endArrow=none;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, actors.get(actor.getCod()), cases.get(cod), "straight;endArrow=none;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
                 aresta.setEdge(true);
                 aresta.setStyle("straight;endArrow=none;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
-                aresta.setSource(actors.get(actor.getCode()));
+                aresta.setSource(actors.get(actor.getCod()));
                 aresta.setTarget(cases.get(cod));
                 graph.addCell(aresta);
             }
             yActor = yCase + 100;
         }
-
-        // adiciona as ligações do tipo generalização entre atores
-        for (UCActor actor : actorsList) {
-            String codFather = actor.getCode();
-            String nameFather = actor.getName();
-            for (int i = 0; i < actor.getChildren().size(); i++) {
+        // Adiciona as ligacoes do tipo << include >> e << extend >>
+        for (Actor actor : useCases) {
+            for (UseCase caso : actor.getUseCases()) {
+                // cria as ligações do tipo << include >>
+                for (Step step : caso.getSteps()) {
+                    if (step.isInclude()) {
+                        cod = caso.getCod();
+                        // se o ator possui elemento decomposto, pega o código dele
+                        if (caso.getCodDecomposedElement() != null) {
+                            cod = caso.getCodDecomposedElement();
+                        }
+                        // cria a ligação include entre os casos de uso
+                        value = IStarUtils.createInclude();
+                        aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, cases.get(cod), cases.get(step.getCod()), "straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                        aresta.setSource(cases.get(cod));
+                        aresta.setTarget(cases.get(step.getCod()));
+                        aresta.setEdge(true);
+                        aresta.setValue(value);
+                        aresta.setStyle("straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                        graph.addCell(aresta);
+                        // cria as ligações do tipo << extend >>
+                        for (Extend extend : step.getExtends()) {
+                            // verifica se existe um caso de uso que é a extensão
+                            if (cases.get(extend.getCod()) != null) {
+                                value = IStarUtils.createExtend();
+                                ext = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, cases.get(extend.getCod()), cases.get(cod), "straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                                ext.setEdge(true);
+                                ext.setSource(cases.get(extend.getCod()));
+                                ext.setTarget(cases.get(cod));
+                                ext.setValue(value);
+                                ext.setStyle("straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                                graph.addCell(ext);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        // adiciona as ligações do tipo ISA (generalização de atores)
+        for (ActorISA isa : isas) {
+            for (int i = 0; i < isa.getCodFathers().size(); i++) {
+                String codFather = isa.getCodFathers().get(i);
+                String nameFather = isa.getNameFathers().get(i);
                 // cria a ligação generalization entre os atores
                 value = IStarUtils.createGeneralization();
-                aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, actors.get(codFather), actors.get(actor.getChildren().get(i).getCode()), "straight;noLabel=1;endArrow=diamond;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, actors.get(codFather), actors.get(isa.getCod()), "straight;noLabel=1;endArrow=diamond;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
                 aresta.setEdge(true);
-
                 // verifica se o ator está no diagrama
                 if (actors.get(codFather) == null) {
                     // cria ator e sua geometria e estilo
                     value = IStarUtils.createActorUseCase();
                     value.setAttribute("label", nameFather);
                     geo = new mxGeometry(50, yActor, 80, 80);
-                    geo.setX(xActor);
+                    geo.setX(50);
                     geo.setY(yActor);
                     actors.put(codFather, new mxCell(value, geo, styleActor));
                     actors.get(codFather).setVertex(true);
                     graph.addCell(actors.get(codFather));
                     yActor += 100;
                 }
-
                 aresta.setSource(actors.get(codFather));
-
-                // verifica se o ator filho está no diagrama
-                if (actor.getChildren().get(i) == null) {
+                // verifica se o ator está no diagrama
+                if (actors.get(isa.getCod()) == null) {
                     // cria ator e sua geometria e estilo
                     value = IStarUtils.createActorUseCase();
-                    value.setAttribute("label", actor.getChildren().get(i).getName());
+                    value.setAttribute("label", isa.getName());
                     geo = new mxGeometry(50, yActor, 80, 80);
                     geo.setX(50);
                     geo.setY(yActor);
-                    actors.put(actor.getChildren().get(i).getCode(), new mxCell(value, geo, styleActor));
-                    actors.get(actor.getChildren().get(i).getCode()).setVertex(true);
-                    graph.addCell(actors.get(actor.getChildren().get(i).getCode()));
+                    actors.put(isa.getCod(), new mxCell(value, geo, styleActor));
+                    actors.get(isa.getCod()).setVertex(true);
+                    graph.addCell(actors.get(isa.getCod()));
                     yActor += 100;
                 }
-                aresta.setTarget(actors.get(actor.getChildren().get(i).getCode()));
+                aresta.setTarget(actors.get(isa.getCod()));
                 aresta.setValue(value);
                 aresta.setStyle("straight;noLabel=1;endArrow=block;endFill=0;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
                 graph.addCell(aresta);
             }
         }
-
-        // Adiciona as ligacoes do tipo << include >>        
-        for (UCUseCase useCase : useCasesList) {
-            // verifica se o caso de uso ainda não foi adicionado no grafo
-            if (cases.get(String.valueOf(useCase.getCode())) == null) {
-
-                // Caso de uso ainda não inserido
-                // cria caso de uso, sua geometria e estilo
-                value = IStarUtils.createUseCase();
-                value.setAttribute("label", useCase.getName().replace("\"", ""));
-                geo = new mxGeometry(xCase, yCase, 120, 60);
-                xCase = xCase == 400 ? 700 : 400;
-                geo.setX(xCase);
-                geo.setY(yCase);
-                yCase += 100;
-                cod = String.valueOf(useCase.getCode());
-
-                cases.put(cod, new mxCell(value, geo, styleCase));
-                cases.get(cod).setVertex(true);
-                graph.addCell(cases.get(cod));
-            }
-
-            // cria as ligações do tipo << include >>
-            for (int i = 0; i < useCase.getIncludedUseCases().size(); i++) {
-                // Verifica se o caso de uso já foi inserido
-                // verifica se o caso de uso ainda não foi adicionado no grafo
-                if (cases.get(String.valueOf(useCase.getIncludedUseCases().get(i).getCode())) == null) {
-
-                    // Caso de uso ainda não inserido
-                    // cria caso de uso, sua geometria e estilo
-                    value = IStarUtils.createUseCase();
-                    value.setAttribute("label", useCase.getIncludedUseCases().get(i).getName().replace("\"", ""));
-                    geo = new mxGeometry(xCase, yCase, 120, 60);
-                    xCase = xCase == 400 ? 700 : 400;
-                    geo.setX(xCase);
-                    geo.setY(yCase);
-                    yCase += 100;
-                    cod = String.valueOf(useCase.getIncludedUseCases().get(i).getCode());
-
-                    cases.put(cod, new mxCell(value, geo, styleCase));
-                    cases.get(cod).setVertex(true);
-                    graph.addCell(cases.get(cod));
-                }
-
-                // cria a ligação include entre os casos de uso
-                value = IStarUtils.createInclude();
-                aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, cases.get(String.valueOf(useCase.getCode())), cases.get(String.valueOf(useCase.getIncludedUseCases().get(i).getCode())), "straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
-                aresta.setSource(cases.get(String.valueOf(useCase.getCode())));
-                aresta.setTarget(cases.get(String.valueOf(useCase.getIncludedUseCases().get(i).getCode())));
-                aresta.setEdge(true);
-                aresta.setValue(value);
-                aresta.setStyle("straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
-                graph.addCell(aresta);
-
-            }
-        }
-
         graph.getModel().endUpdate();
         return graph;
 
@@ -1435,11 +1430,6 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
     }
 
     private void showSaveUseCases() {
-        if (textUseCasesSave == null) {
-            textUseCasesSave = new JTextPane();
-        }
-
-        textUseCasesSave.setText("");
         String path = Controller.loadProperties();
         JFileChooser fileChooser = new JFileChooser(path);
         fileChooser.setFileFilter(new FiltroDOC());
@@ -1451,68 +1441,81 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             try {
                 File file = fileChooser.getSelectedFile();
                 try ( FileWriter writer = new FileWriter(file.getPath() + ".doc", true)) {
-
-                    // define o objeto com formatação negrito negrito
-                    SimpleAttributeSet negrito = new SimpleAttributeSet();
-                    StyleConstants.setBold(negrito, true);
-
-                    // insere os dados dos casos de uso
-                    for (UCUseCase useCase : BPMNController.getUseCases()) {
-                        textUseCasesSave.setText("");
-                        insertStyleSave("\nUse Case", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getName() + "\n\n", null);
-
-                        insertStyleSave("CHARACTERISTIC INFORMATION\n", negrito);
-                        insertStyleSave("	Goal in Context", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getGoal() + "\n", null);
-                        insertStyleSave("	Scope", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getScope() + "\n", null);
-                        insertStyleSave("	Preconditions", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getPreConditions() + "\n", null);
-                        insertStyleSave("	Success End Condition", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getEndSucess() + "\n", null);
-                        insertStyleSave("	Failed End Condition", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getEndFailure() + "\n", null);
-                        insertStyleSave("	Trigger", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getTrigger() + "\n", null);
-                        insertStyleSave("	Primary actor", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getPrimaryActor() + "\n", null);
-
-                        insertStyleSave("\nMAIN SUCCESS SCENARIO\n", negrito);
-                        int i = 1;
-                        for (String sentence : useCase.getDescription().getScenario()) {
-                            insertStyleSave("<passo " + i++ + "> - " + sentence + "\n", null);
+                    for (Actor actor : Controller.getUseCases()) {
+                        for (UseCase caso : actor.getUseCases()) {
+                            writer.write("Use Case: " + caso.getName() + "\n\n"
+                                    + "CHARACTERISTIC INFORMATION\n"
+                                    + "	Goal in Context:\n"
+                                    + "	Scope:\n"
+                                    + "	Preconditions:\n"
+                                    + "	Success End Condition:\n"
+                                    + "	Failed End Condition:\n"
+                                    + "	Primary Actor: " + actor.getName() + "\n"
+                                    + "\nMAIN SUCESS SCENARIO\n");
+                            if (caso.getSteps().isEmpty()) {
+                                writer.write("	1. Description Step 1 [<< include >> optional]\n"
+                                        + "	2. Description Step 2 [<< include >> optional]\n"
+                                        + "	3. Description Step 3 [<< include >> optional]\n"
+                                        + "\nEXTENSIONS\n"
+                                        + "	2.1. Extension Step 2 << extend >>\n"
+                                        + "	2.2. Extension Step 2 << extend >>\n"
+                                        + "	3.1. Extension Step 3 << extend >>\n");
+                            } else {
+                                int cont = 1;
+                                int n = caso.getSteps().size();
+                                Step step;
+                                for (int i = n - 1; i >= 0; i--) {
+                                    step = caso.getSteps().get(i);
+                                    String name = step.getName().replaceAll("\"", "");
+                                    if (step.isInclude()) {
+                                        name += " << include >> ";
+                                    }
+                                    if (step.getExtends().isEmpty()) {
+                                        if (step.isInclude()) {
+                                            name += " << include >> ";
+                                        }
+                                        writer.write("	" + cont++ + ". " + name + "\n");
+                                    } else {
+                                        int m = step.getExtends().size() - 1;
+                                        name += " " + step.getExtend(m).getName().replaceAll("\"", "");
+                                        if (step.isInclude()) {
+                                            name += " << include >> ";
+                                        }
+                                        writer.write("	" + cont++ + ". " + name + "\n");
+                                    }
+                                }
+                                writer.write("\nEXTENSIONS\n");
+                                int aux = caso.getSteps().size();
+                                cont = 1;
+                                for (int i = n - 1; i >= 0; i--) {
+                                    step = caso.getSteps().get(i);
+                                    Extend extend;
+                                    n = step.getExtends().size();
+                                    if (n < 2) {
+                                        aux--;
+                                    } else {
+                                        for (int j = n - 2; j >= 0; j--) {
+                                            extend = step.getExtend(j);
+                                            writer.write("	" + cont + "." + (n - j - 1) + "." + extend.getName().replaceAll("\"", "") + " << extend >>\n");
+                                        }
+                                    }
+                                    cont++;
+                                    if (aux == 0) {
+                                        writer.write("	2.1. Extension Step 2 << extend >>\n"
+                                                + "	2.2. Extension Step 2 << extend >>\n"
+                                                + "	3.1. Extension Step 3 << extend >>\n");
+                                    }
+                                }
+                            }
                         }
-                        insertStyleSave("\n", null);
-
-                        insertStyleSave("EXTENSIONS\n", negrito);
-                        insertStyleSave("\n", null);
-                        insertStyleSave("	Priority", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getPriority() + "\n", null);
-                        insertStyleSave("	Target performance", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getPerformance() + "\n", null);
-                        insertStyleSave("	Frequency", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getFrequency() + "\n", null);
-                        insertStyleSave("	Use Case father", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getUseCaseFather() + "\n", null);
-                        insertStyleSave("	Included Use Cases", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getIncludedUseCases() + "\n", null);
-                        insertStyleSave("	Secondary actors", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getSecondaryActors() + "\n", null);
-                        insertStyleSave("	Additional information", negrito);
-                        insertStyleSave(": " + useCase.getDescription().getAdditionalInformation() + "\n", null);
-
-                        writer.write(textUseCasesSave.getText());
                     }
-
-                    JOptionPane.showMessageDialog(null, "File generated successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                 }
             } catch (IOException ex) {
-                Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
+
     private void showE4JiStar() throws HeadlessException, IOException {
         if (E4JiStar == null) {
             E4JiStar = new EditorJFrame(0);
@@ -1607,6 +1610,51 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         this.setVisible(false);
     }
 
+    private void saveDescription() {
+        String path = Controller.loadProperties();
+        JFileChooser fileChooser = new JFileChooser(path);
+        fileChooser.setFileFilter(new FiltroDOC());
+        int resultado = fileChooser.showSaveDialog(null);
+        Controller.saveProperties(fileChooser.getSelectedFile().getParent());
+        if (resultado == JFileChooser.CANCEL_OPTION) {
+            fileChooser.setVisible(false);
+        } else {
+            try {
+                File file = fileChooser.getSelectedFile();
+                try ( FileWriter writer = new FileWriter(file.getPath() + ".doc", true)) {
+                    writer.write(textUseCases.getText());
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+    private void bpmnUCView() {
+        try {
+            if (useCasesViewBPMN == null) {
+                useCasesViewBPMN = new UseCasesViewBPMN(E4JiStar, E4JBPMN, E4JUseCases, this);
+                useCasesViewBPMN.setIconImage(iconJGOOSE);
+                useCasesViewBPMN.setExtendedState(MAXIMIZED_BOTH);
+                useCasesViewBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+                EditorWindowListener windowListener = new EditorWindowListener(this, useCasesViewBPMN);
+                this.addWindowListener(windowListener);
+                useCasesViewBPMN.addWindowListener(windowListener);
+                this.addWindowListener(windowListener);
+            }
+            useCasesViewBPMN.setVisible(true);
+            this.setVisible(false);
+        } catch (Exception e) {
+            StringBuilder sb = new StringBuilder(e.toString());
+            for (StackTraceElement ste : e.getStackTrace()) {
+                sb.append("\n\tat ");
+                sb.append(ste);
+            }
+            String trace = sb.toString();
+            JOptionPane.showMessageDialog(null, trace);
+        }
+    }
+
 //BUTTON RENDERER CLASS
     class ButtonRenderer extends JButton implements TableCellRenderer {
 
@@ -1662,26 +1710,13 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
 
         public String[] findElementAndInfos(int row) {
             int cont = 0;
-            for (UCUseCase useCase : BPMNController.getUseCases()) {
+            for (UseCase useCase : Controller.getallUseCases()) {
                 if (row == cont) {
                     String vetCasosDeUso[] = new String[6];
-                    vetCasosDeUso[0] = "" + cont++;
+                    vetCasosDeUso[0] = String.valueOf(useCase.getId());
                     vetCasosDeUso[1] = useCase.getName();
-                    vetCasosDeUso[2] = useCase.getPrimaryActor().getName();
-
-                    String actors = "";
-                    // Percorre os atores, identificando atores associados ao atual
-                    for (UCActor actor : useCase.getSecondaryActors()) {
-                        actors += actor.getName() + "; ";
-                    }
-                    vetCasosDeUso[3] = actors;
-                    String includedUseCases = "";
-                    //Percorre os casos de usos incluídos
-                    for (UCUseCase useCaseIncluded : useCase.getIncludedUseCases()) {
-                        includedUseCases += (Integer.parseInt(useCaseIncluded.getCode()) + 1) + " - " + useCaseIncluded.getName() + "; ";
-                    }
-                    vetCasosDeUso[4] = includedUseCases;
-                    vetCasosDeUso[5] = useCase.getGuidelineUsed();
+                    vetCasosDeUso[2] = useCase.getPrimaryActor() == null ?  "" : useCase.getPrimaryActor().getName();
+                    vetCasosDeUso[3] = useCase.getType();
                     return vetCasosDeUso;
                 }
                 cont++;
@@ -1715,12 +1750,9 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
             if (clicked) {
                 //SHOW US SOME MESSAGE
                 String vetCasosDeUso[] = findElementAndInfos(row);
-                MoreInfoUCFromBPMN info = new MoreInfoUCFromBPMN(new javax.swing.JFrame(), true, vetCasosDeUso);        
-                info.setModal(true);
-                info.setLocationRelativeTo(null);       
-                info.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width  - getSize().width) / 2, (Toolkit.getDefaultToolkit().getScreenSize().height - getSize().height) / 2);
+                MainView mainView = new MainView();
+                MoreInfoUCFromIStar info = new MoreInfoUCFromIStar(mainView, true, vetCasosDeUso);
                 info.setVisible(true);
-                //JOptionPane.showMessageDialog(btn, lbl + " Clicked");
             }
             //SET IT TO FALSE NOW THAT ITS CLICKED
             clicked = false;
@@ -1850,40 +1882,4 @@ class ButtonDelete1 extends DefaultCellEditor {
         super.fireEditingStopped();
     }
 }
-
-/*
-ABOUT
-        buttonDelete.setEnabled(false);
-        AboutDialogView about;
-        about = new AboutDialogView(this);
-        about.setModal(true);
-        int x = this.getX() + (this.getWidth() - about.getWidth()) / 2;
-        int y = this.getY() + (this.getHeight() - about.getHeight()) / 2;
-        about.setLocation(x, y);
-        about.setVisible(true);
- */
-
-//DELETE a USE FROM TABLE UC
-        /*
-        buttonDiagram.setEnabled(false);
-        int linha = tabelUseCases.getSelectedRow();
-        Actor actor = Controller.getActor("" + tabelUseCases.getValueAt(linha, 1));
-        String casoSelecionado = "" + tabelUseCases.getValueAt(linha, 2);
-        int c = JOptionPane.showConfirmDialog(null, "Confirm the deletion of the Use Case " + casoSelecionado + "?", "Deletion of Use Case", JOptionPane.YES_NO_OPTION);
-        if (c == 0) {
-            int n = actor.getUseCases().size();
-            UseCase caso;
-            System.out.println(" N: " + n);
-            for (int i = 0; i < n; i++) {
-                System.out.println("i = " + i);
-                caso = actor.getUseCases().get(i);
-                if (caso.getName().equals(casoSelecionado)) {
-                    actor.getUseCases().remove(i);
-                    updateTable();
-                    buttonDelete.setEnabled(false);
-                    JOptionPane.showMessageDialog(null, "Use Case deleted!", "Use Case deleted!", JOptionPane.INFORMATION_MESSAGE);
-                    break;
-                }
-            }
-        }*/
 

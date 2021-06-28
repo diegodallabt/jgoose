@@ -3,12 +3,13 @@ package br.unioeste.jgoose.controller;
 import br.unioeste.jgoose.UseCases.Actor;
 import br.unioeste.jgoose.UseCases.ActorISA;
 import br.unioeste.jgoose.UseCases.Mapping;
+import br.unioeste.jgoose.UseCases.UseCase;
 import br.unioeste.jgoose.model.IStarActorElement;
 import br.unioeste.jgoose.model.TokensOpenOME;
 import br.unioeste.jgoose.model.TokensUseCase;
 import br.unioeste.jgoose.model.UCActor;
 import br.unioeste.jgoose.view.MainView;
-import br.unioeste.jgoose.view.SelectActorView;
+import br.unioeste.jgoose.view.SelectActorSystem;
 import br.unioeste.jgoose.view.TableArtifacts;
 import br.unioeste.jgoose.view.UseCasesDiagramView;
 import java.io.File;
@@ -22,16 +23,18 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Diego Peliser
+ * @author Diego Peliser]
+ * @author Victor Augusto Pozzan
  */
 public class Controller {
 
     private static TokensUseCase tokensUC;
     private static MainView mainView = new MainView();
     private static TokensOpenOME ome;
-    private static String systemActor;
+    private static String systemActor = null;
     private static Mapping mapping;
     private static boolean flagMapUseCases;
+    private static boolean flagPreferenceSeeUC = false;
 
 
     /*
@@ -47,6 +50,15 @@ public class Controller {
                 mapping.mappingStep3();
             }
             flagMapUseCases = true;
+            flagPreferenceSeeUC = false;
+            JOptionPane.showMessageDialog(null, "Use Cases Mapped with success!", "SUCCESS!", JOptionPane.INFORMATION_MESSAGE);
+            
+            int dialogButton = JOptionPane.YES_NO_OPTION;
+            String message = "Would like to see the Use Cases?";
+            int dialogResult = JOptionPane.showConfirmDialog(null, message, "Warning", dialogButton);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                flagPreferenceSeeUC = true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error in Mapping of Use Cases!", "ERROR!", JOptionPane.ERROR_MESSAGE);
@@ -65,9 +77,8 @@ public class Controller {
             ome.searchFile();
             mainView.setEnabled(false);
             // Abre a janela para selecionar o Ator Sistema
-            SelectActorView atorsistema = new SelectActorView(mainView);
-            atorsistema.setVisible(true);
-            atorsistema.setAlwaysOnTop(true);
+            SelectActorSystem atorsistemaView = new SelectActorSystem(mainView, true);
+            atorsistemaView.setVisible(true);
         } else if (!ome.getDirIn().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Select a Telos File (.tel)", "ERROR!", JOptionPane.ERROR_MESSAGE);
         }
@@ -83,7 +94,7 @@ public class Controller {
         prop.setProperty("file.chooser", properties);
 
         try {
-            try (FileOutputStream fos = new FileOutputStream(new File("./caminho.properties"))) {
+            try ( FileOutputStream fos = new FileOutputStream(new File("./caminho.properties"))) {
                 prop.store(fos, "");
             }
         } catch (IOException e) {
@@ -151,12 +162,19 @@ public class Controller {
     }
 
     /*
-     * @returns the UseCases
+     * @returns the UseCases by actor
      */
     public static ArrayList<Actor> getUseCases() {
         return mapping.useCases;
     }
 
+    /*
+     *@returns all UseCases 
+     */
+    public static List<UseCase> getallUseCases(){
+       return Mapping.getAllUseCases();   
+    }
+    
     /*
      * @returns the ISAs
      */
@@ -177,12 +195,19 @@ public class Controller {
     }
 
     public static void showActorSystemSelectionView() {
-        SelectActorView atorsistema = new SelectActorView(mainView);
-        atorsistema.setVisible(true);
-        atorsistema.setAlwaysOnTop(true);
+        SelectActorSystem atorsistemaView = new SelectActorSystem(mainView, true);
+        atorsistemaView.setVisible(true);
     }
 
     public static boolean getFlagMapUseCases() {
         return flagMapUseCases;
+    }
+
+    public static void deleteUC(UseCase usecase) {
+        mapping.deleteUC(usecase);
+    }
+
+    public static boolean getFlagPreferences() {
+        return flagPreferenceSeeUC;
     }
 }

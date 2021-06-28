@@ -83,7 +83,6 @@ public class HorizontalControler extends AbstractAction {
     }
 
     public static void openViewTraceabilityHorizontal() {
-        System.out.println("index:" + index);
         if (index != -1) {
             if (viewTraceability == null) {
                 viewTraceability = new TraceabilityView(index);

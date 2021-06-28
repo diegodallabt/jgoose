@@ -12,8 +12,9 @@ import br.unioeste.jgoose.model.IStarElement;
 import br.unioeste.jgoose.model.IStarLink;
 import br.unioeste.jgoose.model.TokensOpenOME;
 import br.unioeste.jgoose.model.TokensTraceability;
+import br.unioeste.jgoose.view.MainView;
 import br.unioeste.jgoose.view.Matriz;
-import br.unioeste.jgoose.view.SelectActorView;
+import br.unioeste.jgoose.view.SelectActorSystem;
 import br.unioeste.jgoose.view.TraceabilityView;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
@@ -44,6 +45,7 @@ public class HorizontalIStarTraceController extends AbstractAction{
     private static TokensTraceability tokensTraceIStar;
 
     private static TraceIStarHorizontal traceIStarHorizontal;
+    private static MainView mainView = new MainView();
 
    
 
@@ -755,7 +757,8 @@ public class HorizontalIStarTraceController extends AbstractAction{
         }
         
         if(Controller.getSystemActor()==null){
-            SelectActorView atorsistema = new SelectActorView();   
+            SelectActorSystem atorsistemaView = new SelectActorSystem(mainView, true);
+            atorsistemaView.setVisible(true);        
         }
     }
 }

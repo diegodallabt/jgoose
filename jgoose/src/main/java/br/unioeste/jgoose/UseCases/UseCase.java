@@ -5,20 +5,31 @@ import java.util.ArrayList;
 /**
  *
  * @author Diego Peliser
+ * @author Victor Augusto Pozzan
  */
 public class UseCase extends NFR {
 
+    private final long id;
+    private static long idCounter = 0;
     private String type;
     private String codDecomposedElement;
     private String nameDecomposedElement;
     private ArrayList<Step> steps;
+    private Actor primaryActor;
 
-    public UseCase(String cod, String name, String tipo, String codElementoDecomposto,  String nameElementoDecomposto) {
+
+    public UseCase(String cod, String name, String tipo, String codElementoDecomposto, String nameElementoDecomposto, Actor primaryActor , Boolean mapping) {
         super(cod, name);
+        if (!mapping) {
+            this.id = setId();
+        }else{
+            this.id = idCounter;
+        }        
         this.type = tipo;
         this.codDecomposedElement = codElementoDecomposto;
         this.nameDecomposedElement = nameDecomposedElement;
         this.steps = new ArrayList<>();
+        this.primaryActor = primaryActor;
     }
 
     /**
@@ -48,8 +59,8 @@ public class UseCase extends NFR {
     public String setCodDecomposedElement(String codDecomposedElement) {
         return this.codDecomposedElement = codDecomposedElement;
     }
-    
-      /**
+
+    /**
      * @return Returns the nomeDecomposedElement.
      */
     public String getNameDecomposedElement() {
@@ -73,5 +84,17 @@ public class UseCase extends NFR {
 
     public void setStep(Step step) {
         this.steps.add(step);
+    }
+
+    private Long setId() {
+        return idCounter++;
+    }
+
+    public long getId() {
+        return id;
+    }
+    
+    public Actor getPrimaryActor(){
+        return primaryActor;
     }
 }

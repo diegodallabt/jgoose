@@ -47,8 +47,8 @@ import org.apache.log4j.Logger;
 /**
  *
  * @authors @Diego Peliser
- * @Alysson Girotto
- * @Victor Augusto Pozzan
+ * @Alysson @Girotto
+ * @Victor @Augusto Pozzan
  */
 public class MainView extends javax.swing.JFrame {
 
@@ -103,8 +103,7 @@ public class MainView extends javax.swing.JFrame {
                 g.setColor(new java.awt.Color(11, 113, 165));
                 g.fillRect(0, 0, c.getWidth(), c.getHeight());
             }
-        });
-
+        });  
     }
 
     /**
@@ -858,7 +857,6 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonBPMNToUseCasesActionPerformed
 
     private void buttunMappingUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesActionPerformed
-        Controller.mapUseCases();
         try{
             this.iStarUCView();
         } catch (HeadlessException ex){
@@ -1088,7 +1086,7 @@ public class MainView extends javax.swing.JFrame {
     /**
      * Abre o Editor E4J i*
      */
-    private void showE4JiStar() throws HeadlessException, IOException {
+    public void showE4JiStar() throws HeadlessException, IOException {
         if (E4JiStar == null) {
             E4JiStar = new EditorJFrame(0);
             E4JiStar.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -1108,7 +1106,6 @@ public class MainView extends javax.swing.JFrame {
             fileMenu.add(menuItem, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            //JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalIStarTraceController(E4JiStar)));
             JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalControler(E4JiStar, 1)));
             fileMenu.add(menuItem1, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
@@ -1272,10 +1269,9 @@ public class MainView extends javax.swing.JFrame {
 
     private void bpmnUCView() {
         try {
-            BPMNController.mapUseCases();
             if (useCasesViewBPMN == null) {
                 System.out.println("Aqui");
-                useCasesViewBPMN = new UseCasesViewBPMN(E4JiStar, E4JBPMN, E4JUseCases, useCasesView);
+                useCasesViewBPMN = new UseCasesViewBPMN(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar);
                 useCasesViewBPMN.setIconImage(iconJGOOSE);
                 useCasesViewBPMN.setExtendedState(MAXIMIZED_BOTH);
                 useCasesViewBPMN.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -1297,11 +1293,9 @@ public class MainView extends javax.swing.JFrame {
         }
     }
     
-    private void iStarUCView() {
+    public void iStarUCView() {
         try {
-            Controller.mapUseCases();
             if (useCasesViewIStar == null) {
-                System.out.println("Aqui");
                 useCasesViewIStar = new UseCasesViewIStar1(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewBPMN);
                 useCasesViewIStar.setIconImage(iconJGOOSE);
                 useCasesViewIStar.setExtendedState(MAXIMIZED_BOTH);

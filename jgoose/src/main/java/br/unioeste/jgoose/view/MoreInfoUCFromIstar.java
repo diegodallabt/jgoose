@@ -9,7 +9,7 @@ package br.unioeste.jgoose.view;
  *
  * @author Victor Augusto Pozzan
  */
-public class MoreInfoUCFromBPMN extends javax.swing.JDialog {
+public class MoreInfoUCFromIStar extends javax.swing.JDialog {
 
     /**
      * Creates new form MoreInfoUC
@@ -17,20 +17,21 @@ public class MoreInfoUCFromBPMN extends javax.swing.JDialog {
      * @param modal
      * @param vetorInfo
      */
-    public MoreInfoUCFromBPMN(java.awt.Frame parent, boolean modal, String[] vetorInfo) {
+    public MoreInfoUCFromIStar(java.awt.Frame parent, boolean modal, String[] vetorInfo) {
         super(parent, modal);
-        
+
+
         initComponents();
         setLocationRelativeTo(null);
-
-        //treat vetorInfo caso null
+        
         int i = 0;
         for(String info : vetorInfo){
             if(info == null){
                 vetorInfo[i] = "";
             }
             i++;
-        }        
+        }      
+        
         if(!vetorInfo[1].isEmpty()){
             nameUC.setText(vetorInfo[1]);
         }else{
@@ -47,20 +48,7 @@ public class MoreInfoUCFromBPMN extends javax.swing.JDialog {
             secondaryActors.setText(vetorInfo[3]);
         }else{
             secondaryActors.setText("");
-        }
-        
-        if(!vetorInfo[4].isEmpty()){
-            includedUC.setText(vetorInfo[1]);
-        }else{
-            includedUC.setText("");
-        }
-        
-        if(!vetorInfo[5].isEmpty()){
-            guideline.setText(vetorInfo[5]);
-        }else{
-            guideline .setText("");
-        }
-                                                
+        }                                        
     }
 
     /**
@@ -73,10 +61,6 @@ public class MoreInfoUCFromBPMN extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        guideline = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        includedUC = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         secondaryActors = new javax.swing.JLabel();
         primaryActor = new javax.swing.JLabel();
@@ -89,23 +73,9 @@ public class MoreInfoUCFromBPMN extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        guideline.setFont(new java.awt.Font("Roboto", 0, 12));
-        guideline.setText("jLabel10");
-
-        jLabel5.setFont(new java.awt.Font("Roboto", 0, 14));
-        jLabel5.setForeground(new java.awt.Color(15, 157, 229));
-        jLabel5.setText("Guideline Used:");
-
-        includedUC.setFont(new java.awt.Font("Roboto", 0, 12));
-        includedUC.setText("jLabel9");
-
-        jLabel4.setFont(new java.awt.Font("Roboto", 0, 14));
-        jLabel4.setForeground(new java.awt.Color(15, 157, 229));
-        jLabel4.setText("Included:");
-
         jLabel3.setFont(new java.awt.Font("Roboto", 0, 14));
         jLabel3.setForeground(new java.awt.Color(15, 157, 229));
-        jLabel3.setText("Secondary Actors:");
+        jLabel3.setText("Type:");
 
         secondaryActors.setFont(new java.awt.Font("Roboto", 0, 12));
         secondaryActors.setText("jLabel8");
@@ -136,9 +106,9 @@ public class MoreInfoUCFromBPMN extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(includedUC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(nameUC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -146,17 +116,7 @@ public class MoreInfoUCFromBPMN extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(primaryActor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel5)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(guideline, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(nameUC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(primaryActor, javax.swing.GroupLayout.DEFAULT_SIZE, 275, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -169,22 +129,16 @@ public class MoreInfoUCFromBPMN extends javax.swing.JDialog {
                 .addGap(7, 7, 7)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(9, 9, 9)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(primaryActor)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(primaryActor, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(secondaryActors)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(includedUC))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(guideline))
-                .addContainerGap())
+                    .addComponent(jLabel3)
+                    .addComponent(secondaryActors, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -198,19 +152,15 @@ public class MoreInfoUCFromBPMN extends javax.swing.JDialog {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setBounds(0, 0, 386, 215);
+        setBounds(0, 0, 386, 182);
     }// </editor-fold>//GEN-END:initComponents
 
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel guideline;
-    private javax.swing.JLabel includedUC;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel nameUC;

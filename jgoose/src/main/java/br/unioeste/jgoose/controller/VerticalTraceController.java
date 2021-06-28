@@ -213,7 +213,7 @@ public class VerticalTraceController extends AbstractAction {
 
     private static TraceabilityView viewTraceability = null;
 
-    public static Integer type;
+    public static Integer type = null;
 
     public VerticalTraceController(int i) {
         VerticalTraceController.type = i;
@@ -237,9 +237,12 @@ public class VerticalTraceController extends AbstractAction {
     }
 
     public static void openVerticalTraceabilityView() {
+        System.out.println("TYPE:"+type);
         if (type != null) {
             switch (type) {
                 case 1://rastreabilidade vertical BPMN to UC
+                    System.out.println("FLAG");
+                    System.out.println(BPMNController.getFlagMapUseCases());
                     if (BPMNController.getFlagMapUseCases()) {
                         traceBPMNVertical = new TraceBPMNVertical();
                         traceBPMNVertical.TraceElementsBPMNVertical();

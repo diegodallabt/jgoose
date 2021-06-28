@@ -5,6 +5,7 @@ import br.unioeste.jgoose.model.IStarActorElement;
 import br.unioeste.jgoose.model.IStarElement;
 import br.unioeste.jgoose.model.IStarLink;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,11 +17,14 @@ public class Mapping {
     private ArrayList<String> atoresExternos;
     public ArrayList<Actor> useCases;
     public ArrayList<ActorISA> isas;
+    private static List<UseCase> allUseCases;
+
 
     public Mapping() {
         this.atoresExternos = new ArrayList<>();
         this.useCases = new ArrayList<>();
         this.isas = new ArrayList<>();
+        this.allUseCases = new ArrayList<>();
     }
 
     /**
@@ -125,13 +129,15 @@ public class Mapping {
             // procura casos de uso do tipo Objetivo
             for (IStarElement goal : Controller.getOme().getGoals()) {
                 if ((ator.containsLink(goal.getLinks())) && (atorSistema.containsLink(goal.getLinks()))) {
-                    actor.setUseCase(new UseCase(goal.getCod(), goal.getName(), "Objetivo", null, null));
+                    actor.setUseCase(new UseCase(goal.getCod(), goal.getName(), "Objetivo", null, null, actor, true));
+                    allUseCases.add(new UseCase(goal.getCod(), goal.getName(), "Objetivo", null, null, actor, false));
                 }
                 String codElementDecomposed = goal.getCodDecomposedElement();
                 String nameElementDecomposed = goal.getNameDecomposedElement();
                 // verifica se o Objetivo é decomposto
                 if (ator.containsLink(goal.getLinks()) && atorSistema.containsChildren(codElementDecomposed)) {
-                    actor.setUseCase(new UseCase(goal.getCod(), goal.getName(), "Objetivo", codElementDecomposed, nameElementDecomposed));
+                    actor.setUseCase(new UseCase(goal.getCod(), goal.getName(), "Objetivo", codElementDecomposed, nameElementDecomposed, actor, true));
+                    allUseCases.add(new UseCase(goal.getCod(), goal.getName(), "Objetivo", codElementDecomposed, nameElementDecomposed, actor, false));
                 }
             }
             // verifica se o casos de uso do tipo Objetivo são decompostos em outros objetivos
@@ -155,32 +161,37 @@ public class Mapping {
                         } else { // E4J
                             nameCase += " " + fromElement.getName();
                         }
-                        actor.getUseCases().add(new UseCase(fromElement.getCod(), nameCase, "Objetivo", fromElement.getCod(), fromElement.getName()));
+                        actor.getUseCases().add(new UseCase(fromElement.getCod(), nameCase, "Objetivo", fromElement.getCod(), fromElement.getName(), actor, true));
+                        allUseCases.add(new UseCase(fromElement.getCod(),  nameCase, "Objetivo", fromElement.getCod(),  fromElement.getName(), actor, false));
                     }
                 }
             }
             // procura casos de uso do tipo Tarefa
             for (IStarElement task : Controller.getOme().getTasks()) {
                 if (task.getLinks().size() > 1 && (ator.containsLink(task.getLinks())) && (atorSistema.containsLink(task.getLinks()))) {
-                    actor.setUseCase(new UseCase(task.getCod(), task.getName(), "Tarefa", null, null));
+                    actor.setUseCase(new UseCase(task.getCod(), task.getName(), "Tarefa", null, null, actor, true));
+                    allUseCases.add(new UseCase(task.getCod(), task.getName(), "Tarefa", null, null, actor, false));
                 }
                 String codElementDecomposed = task.getCodDecomposedElement();
                 String nameElementDecomposed = task.getNameDecomposedElement();
                 // verifica se a Tarefa é decomposta
                 if (ator.containsLink(task.getLinks()) && atorSistema.containsChildren(codElementDecomposed)) {
-                    actor.setUseCase(new UseCase(task.getCod(), task.getName(), "Tarefa", codElementDecomposed, nameElementDecomposed));
+                    actor.setUseCase(new UseCase(task.getCod(), task.getName(), "Tarefa", codElementDecomposed, nameElementDecomposed, actor, true));
+                    allUseCases.add(new UseCase(task.getCod(), task.getName(), "Tarefa", codElementDecomposed, nameElementDecomposed, actor, false));
                 }
             }
             // procura casos de uso do tipo Recurso
             for (IStarElement resource : Controller.getOme().getResourcess()) {
                 if ((ator.containsLink(resource.getLinks())) && (atorSistema.containsLink(resource.getLinks()))) {
-                    actor.setUseCase(new UseCase(resource.getCod(), resource.getName(), "Recurso", null, null));
+                    actor.setUseCase(new UseCase(resource.getCod(), resource.getName(), "Recurso", null, null, actor, true));
+                    allUseCases.add(new UseCase(resource.getCod(), resource.getName(), "Recurso", null, null, actor, false));
                 }
                 String codElementDecomposed = resource.getCodDecomposedElement();
                 String nameElementDecomposed = resource.getNameDecomposedElement();
                 // verifica se o Recurso é decomposto
                 if (ator.containsLink(resource.getLinks()) && atorSistema.containsChildren(codElementDecomposed)) {
-                    actor.setUseCase(new UseCase(resource.getCod(), resource.getName(), "Recurso", codElementDecomposed, nameElementDecomposed));
+                    actor.setUseCase(new UseCase(resource.getCod(), resource.getName(), "Recurso", codElementDecomposed, nameElementDecomposed, actor, true));
+                    allUseCases.add(new UseCase(resource.getCod(), resource.getName(), "Recurso", codElementDecomposed, nameElementDecomposed, actor, false));
                 }
             }
             // procura NFRs (Requisitos Não Funcionais) do tipo Objetivo-Soft
@@ -216,6 +227,21 @@ public class Mapping {
             }
         }
 
+        
+        //this part is for allUseCase
+        for (UseCase usecase : allUseCases) {
+            if(usecase.getCodDecomposedElement() != null){
+                usecase.setSteps(getSteps(usecase.getCodDecomposedElement()));
+            }
+        }
+        
+        for(UseCase usecase : allUseCases){
+            for(Step step : usecase.getSteps()){
+                if(isUseCase2(step.getCod())){
+                    step.setInclude(true);
+                }
+            }
+        }
     }
 
     private boolean isUseCase(String cod) {
@@ -231,6 +257,17 @@ public class Mapping {
         return false;
     }
 
+     private boolean isUseCase2(String cod) {
+        for(UseCase usecase : allUseCases){
+            if(usecase.getCodDecomposedElement() != null){
+                if(usecase.getCodDecomposedElement().equals(cod)){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     /**
      * @param cod cod of the element to return
      * @return return a list of steps
@@ -262,5 +299,13 @@ public class Mapping {
             }
         }
         return extend;
+    }
+    
+    public static List<UseCase> getAllUseCases() {
+        return allUseCases;
+    }
+    
+    public void deleteUC(UseCase usecase){
+        allUseCases.remove(usecase);
     }
 }
