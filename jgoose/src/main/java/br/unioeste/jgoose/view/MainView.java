@@ -52,7 +52,6 @@ import org.apache.log4j.Logger;
  */
 public class MainView extends javax.swing.JFrame {
 
-    private UseCasesViewIStar useCasesView = null;
     private TableArtifacts tableArtifacts = null;
     private UseCasesViewBPMN useCasesViewBPMN = null;
     private UseCasesViewIStar1 useCasesViewIStar = null;

@@ -1511,7 +1511,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                     }
                 }
             } catch (IOException ex) {
-                Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -1625,7 +1625,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                     writer.write(textUseCases.getText());
                 }
             } catch (IOException ex) {
-                Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
