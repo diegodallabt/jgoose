@@ -92,7 +92,7 @@ import org.w3c.dom.Element;
  * @author Alysson Girotto
  * @author Victor Augusto Pozzan
  */
-public final class UseCasesViewIStar1 extends javax.swing.JFrame {
+public final class UseCasesViewIStar extends javax.swing.JFrame {
 
     private Actor selectedActor = null;
     private String selectedCase = "";
@@ -115,7 +115,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
      * @param E4JUseCases
      * @param useCasesViewBPMN
      */
-    public UseCasesViewIStar1(EditorJFrame E4JiStar, EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewBPMN useCasesViewBPMN) {
+    public UseCasesViewIStar(EditorJFrame E4JiStar, EditorJFrame E4JBPMN, EditorJFrame E4JUseCases, UseCasesViewBPMN useCasesViewBPMN) {
         this.E4JBPMN = E4JBPMN;
         this.E4JiStar = E4JiStar;
         this.E4JUseCases = E4JUseCases;
@@ -225,7 +225,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         try {
             doc.insertString(doc.getLength(), text, style);
         } catch (BadLocationException ex) {
-            Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -234,7 +234,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         try {
             doc.insertString(doc.getLength(), text, style);
         } catch (BadLocationException ex) {
-            Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -975,7 +975,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         try {
             this.showGuidelinesDialog();
         } catch (URISyntaxException ex) {
-            Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonGuidelinesActionPerformed
 
@@ -983,9 +983,9 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         try {
             this.showUseCasesDiagram();
         } catch (HeadlessException ex) {
-            Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonDiagramActionPerformed
 
@@ -1145,7 +1145,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
         } catch (HeadlessException ex) {
             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnMenuUCActionPerformed
 
@@ -1511,7 +1511,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                     }
                 }
             } catch (IOException ex) {
-                Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -1625,7 +1625,7 @@ public final class UseCasesViewIStar1 extends javax.swing.JFrame {
                     writer.write(textUseCases.getText());
                 }
             } catch (IOException ex) {
-                Logger.getLogger(UseCasesViewIStar1.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(UseCasesViewIStar.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
