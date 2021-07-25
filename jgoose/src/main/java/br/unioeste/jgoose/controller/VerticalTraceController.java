@@ -10,6 +10,7 @@ import br.unioeste.jgoose.TraceabilityHorizontal.TraceIStarVertical;
 import br.unioeste.jgoose.model.TokensTraceability;
 import br.unioeste.jgoose.view.Matriz;
 import br.unioeste.jgoose.view.TraceabilityView;
+import br.unioeste.jgoose.view.TraceabilityView1;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -24,9 +25,15 @@ import javax.swing.JOptionPane;
 public class VerticalTraceController extends AbstractAction {
 
     private static TraceBPMNVertical traceBPMNVertical;
+    
     private static TraceIStarVertical traceIStarVertical;
     private static TokensTraceability tokensTraceability;
+    //private static TraceabilityView viewTraceability = null;
+    private static TraceabilityView1 viewTraceability = null;
+    public static Integer type = null;
+    public static int index = -1;
 
+    
     public static Matriz propertiesMatriz(int indice) {
         String title;
         switch (indice) {
@@ -211,12 +218,9 @@ public class VerticalTraceController extends AbstractAction {
         }
     }
 
-    private static TraceabilityView viewTraceability = null;
-
-    public static Integer type = null;
-
     public VerticalTraceController(int i) {
         VerticalTraceController.type = i;
+        index = -1;
     }
 
     public static Integer getType() {
@@ -237,47 +241,51 @@ public class VerticalTraceController extends AbstractAction {
     }
 
     public static void openVerticalTraceabilityView() {
-        System.out.println("TYPE:"+type);
-        if (type != null) {
+        if (type != null) {            
             switch (type) {
                 case 1://rastreabilidade vertical BPMN to UC
-                    System.out.println("FLAG");
-                    System.out.println(BPMNController.getFlagMapUseCases());
                     if (BPMNController.getFlagMapUseCases()) {
                         traceBPMNVertical = new TraceBPMNVertical();
                         traceBPMNVertical.TraceElementsBPMNVertical();
-
-                        if (viewTraceability == null) {
-                            viewTraceability = new TraceabilityView(4);
-                            viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                        }
-                        viewTraceability.updateTableVerticalBPMNtoUCTraceability();
-                        viewTraceability.setVisible(true);
+                        index = 4;
                     } else {
                         JOptionPane.showMessageDialog(null, "YOU NEED FIRST MAPPING BPMN to Use Cases");
                     }
-
                     break;
                 case 2://rastreabilidade vertical i* to UC 
                     if (Controller.getFlagMapUseCases()) {
                         traceIStarVertical = new TraceIStarVertical();
                         traceIStarVertical.TraceElementsIStarVertical();
-
-                        if (viewTraceability == null) {
-                            viewTraceability = new TraceabilityView(5);
-                            viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                        }
-                        viewTraceability.updateTableVerticalIStartoUCTraceability();
-                        viewTraceability.setVisible(true);
+                        index = 5;
                     } else {
                         JOptionPane.showMessageDialog(null, "YOU NEED FIRST MAPPING i* to Use Cases");
                     }
-
                     break;
             }
         } else {
             JOptionPane.showMessageDialog(null, "You need traceability vertical fisrt");
         }
+        
+        openViewTraceabilityVertical();
     }
+    public static void openViewTraceabilityVertical() {
+     if (index != -1) {
+            if (viewTraceability == null) {
+                viewTraceability = new TraceabilityView1(index);
+                viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            }
+            switch (type) {
+                case 1: //rastreabilidade vertical BPMN to UC                    
+                    viewTraceability.updateTableVerticalBPMNtoUCTraceability();
+                    break;
 
+                case 2: //rastreabilidade vertical i* to UC
+                    viewTraceability.updateTableVerticalIStartoUCTraceability();
+                    break;
+            }
+            viewTraceability.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "You need Mapping Horizontal first");
+        }
+    }
 }
