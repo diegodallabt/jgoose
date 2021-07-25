@@ -77,6 +77,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 
 /**
  *
@@ -146,7 +148,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         }
     }
     /*
-     * Método que atualiza a Tabela de Casos de Uso
+     * Método que atualiza a Tabela
      */
     public void updateTable() {
         tabCasosDeUso = new DefaultTableModel();
@@ -230,9 +232,14 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         jPanelHeader = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         labelTypeTraceability = new javax.swing.JLabel();
+        UIManager.put("ComboBox.background", new ColorUIResource(Color.yellow));
+        UIManager.put("JTextField.background", new ColorUIResource(Color.yellow));
+        UIManager.put("ComboBox.selectionBackground", new ColorUIResource(Color.magenta));
+        UIManager.put("ComboBox.selectionForeground", new ColorUIResource(Color.blue));
         choiceMatrixTrace = new javax.swing.JComboBox<>();
         buttonSaveUseCases = new javax.swing.JButton();
         buttonSaveUseCases1 = new javax.swing.JButton();
+        btnTraceability = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableTraceability = new javax.swing.JTable(){
@@ -292,6 +299,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         labelTypeTraceability.setText("Traceability");
 
         choiceMatrixTrace.setBackground(new java.awt.Color(244, 251, 255));
+        choiceMatrixTrace.setEditable(true);
         choiceMatrixTrace.setFont(new java.awt.Font("Roboto", 1, 14));
         choiceMatrixTrace.setForeground(new java.awt.Color(101, 196, 245));
         choiceMatrixTrace.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Informação Externa x Informação Externa ", "Informação Externa x Informação Organizacional", "Informação Organizacional x Informação Organizacional", "Informação Organizacional x Requisitos", "Objetivo do Sistema x Objetivo do Sistema", "Objetivo do Sistema x Requisitos", "Stakeholder x Stakeholder", "Stakeholder x Requisitos", "Requisitos x Requisitos", "Requisitos x Informação Externa", "Objetivo do Sistema x Informação Organizacional", "Objetivo do Sistema x Ator Sistema", "Ator Sistema x Stakeholder" }));
@@ -300,7 +308,6 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         choiceMatrixTrace.setBorder(null);
         choiceMatrixTrace.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         choiceMatrixTrace.setFocusable(false);
-        choiceMatrixTrace.setOpaque(false);
         choiceMatrixTrace.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 choiceMatrixTraceActionPerformed(evt);
@@ -328,18 +335,28 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
             }
         });
 
+        btnTraceability.setBackground(new java.awt.Color(0, 204, 255));
+        btnTraceability.setForeground(new java.awt.Color(255, 255, 255));
+        btnTraceability.setText("Rastrear");
+        btnTraceability.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTraceabilityActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
         jPanelHeader.setLayout(jPanelHeaderLayout);
         jPanelHeaderLayout.setHorizontalGroup(
             jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHeaderLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(choiceMatrixTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(496, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelHeaderLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnTraceability)
+                    .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(choiceMatrixTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE)
                 .addComponent(buttonSaveUseCases)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonSaveUseCases1)
@@ -357,10 +374,11 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(choiceMatrixTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
+                .addGap(14, 14, 14)
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonSaveUseCases)
-                    .addComponent(buttonSaveUseCases1))
+                    .addComponent(buttonSaveUseCases1)
+                    .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
             .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelHeaderLayout.createSequentialGroup()
@@ -368,6 +386,9 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                     .addComponent(labelTypeTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(129, Short.MAX_VALUE)))
         );
+
+        choiceMatrixTrace.getEditor().getEditorComponent().setBackground(Color.YELLOW);
+        ((JTextField) choiceMatrixTrace.getEditor().getEditorComponent()).setBackground(Color.YELLOW);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -1122,6 +1143,43 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_choiceMatrixTraceActionPerformed
 
+    private void btnTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraceabilityActionPerformed
+        int indice = choiceMatrixTrace.getSelectedIndex();
+        switch (type) {
+            case 1: //Horizontal BPMN
+            //try {
+                HorizontalBPMNTraceController.selectMatriz(indice);
+                //} catch (Exception error) {
+
+                //JOptionPane.showMessageDialog(this, "MATRIZ ERROR" + error.getMessage());
+                // }
+            break;
+            case 2: //Horizontal UC
+            try {
+                HorizontalUseCaseTraceController.selectMatriz(indice);
+            } catch (Exception error) {
+                JOptionPane.showMessageDialog(this, "MATRIZ ERROR" + error.getMessage());
+            }
+            break;
+            case 3://Horizonal i*
+            try {
+                HorizontalIStarTraceController.selectMatriz(indice);
+            } catch (Exception error) {
+                JOptionPane.showMessageDialog(this, "MATRIZ ERROR" + error.getMessage());
+            }
+            break;
+            case 4://Vertical rastreabilidade vertical BPMN to UC
+            case 5://Vertical rastreabilidade vertical i* to UC
+            try {
+                VerticalTraceController.selectMatriz(indice);
+            } catch (Exception error) {
+                JOptionPane.showMessageDialog(this, "MATRIZ ERROR" + error.getMessage());
+            }
+            break;
+
+        }
+    }//GEN-LAST:event_btnTraceabilityActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelTracedElements;
     private javax.swing.JButton bntMenuTraceVertical;
@@ -1130,6 +1188,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     private javax.swing.JButton btnMenuTraceHorizontal;
     private javax.swing.JButton btnMenuUC;
     private javax.swing.JButton btnMenuiStar;
+    private javax.swing.JButton btnTraceability;
     private javax.swing.JButton btnUCIStarView;
     private javax.swing.JButton btnUCViewBpmnBlock;
     private javax.swing.JButton buttonSaveUseCases;

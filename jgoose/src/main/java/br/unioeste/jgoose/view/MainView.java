@@ -16,6 +16,7 @@ import br.unioeste.jgoose.e4j.swing.BasicUseCasesEditor;
 import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.e4j.swing.menubar.EditorMenuBar;
 import com.mxgraph.util.mxResources;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
@@ -23,10 +24,13 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import javax.swing.Action;
@@ -801,6 +805,9 @@ public class MainView extends javax.swing.JFrame {
         menuLes.setMargin(new java.awt.Insets(0, 20, 0, 20));
         menuLes.setOpaque(true);
         menuLes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuLesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 menuLesMouseEntered(evt);
             }
@@ -1052,6 +1059,24 @@ public class MainView extends javax.swing.JFrame {
         buttonHorizontalTraceability.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_buttonHorizontalTraceabilityMouseExited
 
+    private void menuLesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLesMouseClicked
+        URI lesURI;
+        try {
+            lesURI = new URI("https://www.inf.unioeste.br/les/index.php/listamembros");
+            open(lesURI);
+        } catch (URISyntaxException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuLesMouseClicked
+
+    private static void open(URI uri) {
+        if (Desktop.isDesktopSupported()) {
+        try {
+            Desktop.getDesktop().browse(uri);
+        } catch (IOException e) { /* TODO: error handling */ }
+        } else { /* TODO: error handling */ }
+    }
+    
     /**
      * Abre uma janela GuidelinesDialogView
      */

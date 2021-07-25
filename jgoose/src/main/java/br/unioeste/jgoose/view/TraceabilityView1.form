@@ -94,13 +94,15 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="choiceMatrixTrace" min="-2" pref="402" max="-2" attributes="0"/>
-                      <EmptySpace pref="496" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="btnTraceability" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="choiceMatrixTrace" min="-2" pref="450" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace pref="270" max="32767" attributes="0"/>
                       <Component id="buttonSaveUseCases" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="buttonSaveUseCases1" min="-2" max="-2" attributes="0"/>
@@ -123,10 +125,11 @@
                           <Component id="choiceMatrixTrace" alignment="1" min="-2" pref="48" max="-2" attributes="0"/>
                           <Component id="jLabel1" alignment="0" min="-2" pref="127" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="buttonSaveUseCases" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="buttonSaveUseCases1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnTraceability" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -165,6 +168,7 @@
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="fb" red="f4" type="rgb"/>
                 </Property>
+                <Property name="editable" type="boolean" value="true"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new java.awt.Font(&quot;Roboto&quot;, 1, 14)" type="code"/>
                 </Property>
@@ -197,12 +201,13 @@
                   <Color id="Hand Cursor"/>
                 </Property>
                 <Property name="focusable" type="boolean" value="false"/>
-                <Property name="opaque" type="boolean" value="false"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="choiceMatrixTraceActionPerformed"/>
               </Events>
               <AuxValues>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="choiceMatrixTrace.getEditor().getEditorComponent().setBackground(Color.YELLOW);&#xd;&#xa;((JTextField) choiceMatrixTrace.getEditor().getEditorComponent()).setBackground(Color.YELLOW);"/>
+                <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="        UIManager.put(&quot;ComboBox.background&quot;, new ColorUIResource(Color.yellow));&#xd;&#xa;        UIManager.put(&quot;JTextField.background&quot;, new ColorUIResource(Color.yellow));&#xd;&#xa;        UIManager.put(&quot;ComboBox.selectionBackground&quot;, new ColorUIResource(Color.magenta));&#xd;&#xa;        UIManager.put(&quot;ComboBox.selectionForeground&quot;, new ColorUIResource(Color.blue));"/>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
@@ -237,6 +242,20 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonSaveUseCases1ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnTraceability">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="cc" red="0" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Rastrear"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnTraceabilityActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
