@@ -258,15 +258,33 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         labelSearchIcon = new javax.swing.JLabel();
         jtfFilter = new javax.swing.JTextField();
         JLabelTracedElements = new javax.swing.JLabel();
-        jButtonAddUseCase = new javax.swing.JButton();
-        jButtonAddUseCase.addActionListener(new ActionListener() {
+        jButtonAddTracedElement = new javax.swing.JButton();
+        jButtonAddTracedElement.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MainView mainView = new MainView();
-                AddUseCasefromBPMN addUseCase = new AddUseCasefromBPMN(mainView, true, "bpmn");
-                int option = addUseCase.createDialogAdd();
+                AddTraceElement addTraceElement = new AddTraceElement(mainView, true, type, lista);
+                addTraceElement.setVisible(true);
+                int option = addTraceElement.newTraceElement();
                 if(option == AddUseCasefromBPMN.YES) {
-                    updateTable();
+                    System.out.println("result OK:"+ option);
+                    switch (type) {
+                        case 1: //Horizontal BPMN
+                        updateTableBPMNHorizontalTraceability();
+                        break;
+                        case 2: //Horizontal UC
+                        updateTableUCHorizontalTraceability();
+                        break;
+                        case 3://Horizonal i*
+                        updateTableIStarHorizontalTraceability();
+                        break;
+                        case 4://Vertical rastreabilidade vertical BPMN to UC
+                        updateTableVerticalBPMNtoUCTraceability();
+                        break;
+                        case 5://Vertical rastreabilidade vertical i* to UC
+                        updateTableVerticalIStartoUCTraceability();
+                        break;
+                    }
                 }
             }
         });
@@ -482,22 +500,17 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         JLabelTracedElements.setForeground(new java.awt.Color(85, 190, 244));
         JLabelTracedElements.setText("Traced Elements");
 
-        jButtonAddUseCase.setBackground(new java.awt.Color(15, 157, 229));
-        jButtonAddUseCase.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
-        jButtonAddUseCase.setForeground(new java.awt.Color(250, 250, 250));
-        jButtonAddUseCase.setText("Add a new Element");
-        jButtonAddUseCase.setBorder(null);
-        jButtonAddUseCase.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonAddTracedElement.setBackground(new java.awt.Color(15, 157, 229));
+        jButtonAddTracedElement.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
+        jButtonAddTracedElement.setForeground(new java.awt.Color(250, 250, 250));
+        jButtonAddTracedElement.setText("Add a new Element");
+        jButtonAddTracedElement.setBorder(null);
+        jButtonAddTracedElement.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jButtonAddUseCaseMouseEntered(evt);
+                jButtonAddTracedElementMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jButtonAddUseCaseMouseExited(evt);
-            }
-        });
-        jButtonAddUseCase.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddUseCaseActionPerformed(evt);
+                jButtonAddTracedElementMouseExited(evt);
             }
         });
 
@@ -515,7 +528,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonAddUseCase, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jButtonAddTracedElement, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -526,7 +539,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonAddUseCase, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonAddTracedElement, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -820,15 +833,15 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         btnMenuTraceHorizontal.setBackground(new java.awt.Color(11, 113, 165));
     }//GEN-LAST:event_btnMenuTraceHorizontalMouseExited
 
-    private void jButtonAddUseCaseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddUseCaseMouseEntered
+    private void jButtonAddTracedElementMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddTracedElementMouseEntered
         setCursor(Cursor.HAND_CURSOR);
-        jButtonAddUseCase.setBackground(new java.awt.Color(69, 185, 243));
-    }//GEN-LAST:event_jButtonAddUseCaseMouseEntered
+        jButtonAddTracedElement.setBackground(new java.awt.Color(69, 185, 243));
+    }//GEN-LAST:event_jButtonAddTracedElementMouseEntered
 
-    private void jButtonAddUseCaseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddUseCaseMouseExited
+    private void jButtonAddTracedElementMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddTracedElementMouseExited
         setCursor(Cursor.DEFAULT_CURSOR);
-        jButtonAddUseCase.setBackground(new java.awt.Color(15, 157, 229));
-    }//GEN-LAST:event_jButtonAddUseCaseMouseExited
+        jButtonAddTracedElement.setBackground(new java.awt.Color(15, 157, 229));
+    }//GEN-LAST:event_jButtonAddTracedElementMouseExited
 
     private void btnMenuiStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuiStarActionPerformed
         try {
@@ -886,10 +899,6 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     private void bntMenuTraceVerticalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntMenuTraceVerticalActionPerformed
         VerticalTraceController.openVerticalTraceabilityView();
     }//GEN-LAST:event_bntMenuTraceVerticalActionPerformed
-
-    private void jButtonAddUseCaseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddUseCaseActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonAddUseCaseActionPerformed
 
     private void buttonSaveUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveUseCasesActionPerformed
         Document document = new Document(PageSize.A4.rotate());
@@ -1194,7 +1203,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     private javax.swing.JButton buttonSaveUseCases;
     private javax.swing.JButton buttonSaveUseCases1;
     private javax.swing.JComboBox<String> choiceMatrixTrace;
-    private javax.swing.JButton jButtonAddUseCase;
+    private javax.swing.JButton jButtonAddTracedElement;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
