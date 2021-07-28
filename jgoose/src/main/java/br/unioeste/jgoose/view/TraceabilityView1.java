@@ -1218,7 +1218,9 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private javax.swing.JTextPane textUseCasesSave;
     
-        /**
+     
+    
+    /**
      * Atualiza as Tabelas relacionadas à rastreabilidade
      *
      */
@@ -1232,126 +1234,234 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         traceabilityInfo.addColumn("Model");
         traceabilityInfo.addColumn("Class");
         traceabilityInfo.addColumn("Segment");
+        traceabilityInfo.addColumn(" ");
+        traceabilityInfo.addColumn(" ");
+        
         // adiciona os dados dos casos de uso no modelo da tabela
         for (int i = 0; i < HorizontalBPMNTraceController.getTokensTraceability().getStakeholders().size(); i++) {
-            String vetStakeholder[] = new String[5];
+            String vetStakeholder[] = new String[7];
             vetStakeholder[0] = HorizontalBPMNTraceController.getTokensTraceability().getStakeholders().get(i).getAbreviacao();
             vetStakeholder[1] = HorizontalBPMNTraceController.getTokensTraceability().getStakeholders().get(i).getLabel();
             vetStakeholder[2] = HorizontalBPMNTraceController.getTokensTraceability().getStakeholders().get(i).getModel();
             vetStakeholder[3] = HorizontalBPMNTraceController.getTokensTraceability().getStakeholders().get(i).getClasse();
             vetStakeholder[4] = HorizontalBPMNTraceController.getTokensTraceability().getStakeholders().get(i).getFase();
+            vetStakeholder[5] = "";
+            vetStakeholder[6] = "";
             elementTracedReport.add(vetStakeholder);
             traceabilityInfo.addRow(vetStakeholder);
         }
         for (int i = 0; i < HorizontalBPMNTraceController.getTokensTraceability().getInformcaoExterna().size(); i++) {
-            String vetInfExterna[] = new String[5];
+            String vetInfExterna[] = new String[7];
             vetInfExterna[0] = HorizontalBPMNTraceController.getTokensTraceability().getInformcaoExterna().get(i).getAbreviacao();
             vetInfExterna[1] = HorizontalBPMNTraceController.getTokensTraceability().getInformcaoExterna().get(i).getLabel();
             vetInfExterna[2] = HorizontalBPMNTraceController.getTokensTraceability().getInformcaoExterna().get(i).getModel();
             vetInfExterna[3] = HorizontalBPMNTraceController.getTokensTraceability().getInformcaoExterna().get(i).getClasse();
             vetInfExterna[4] = HorizontalBPMNTraceController.getTokensTraceability().getInformcaoExterna().get(i).getFase();
+            vetInfExterna[5] = "";
+            vetInfExterna[6] = "";
             elementTracedReport.add(vetInfExterna);
             traceabilityInfo.addRow(vetInfExterna);
         }
         for (int i = 0; i < HorizontalBPMNTraceController.getTokensTraceability().getInformacaoOrg().size(); i++) {
-            String vetInfOrganizacional[] = new String[5];
+            String vetInfOrganizacional[] = new String[7];
             vetInfOrganizacional[0] = HorizontalBPMNTraceController.getTokensTraceability().getInformacaoOrg().get(i).getAbreviacao();
             vetInfOrganizacional[1] = HorizontalBPMNTraceController.getTokensTraceability().getInformacaoOrg().get(i).getLabel();
             vetInfOrganizacional[2] = HorizontalBPMNTraceController.getTokensTraceability().getInformacaoOrg().get(i).getModel();
             vetInfOrganizacional[3] = HorizontalBPMNTraceController.getTokensTraceability().getInformacaoOrg().get(i).getClasse();
             vetInfOrganizacional[4] = HorizontalBPMNTraceController.getTokensTraceability().getInformacaoOrg().get(i).getFase();
+            vetInfOrganizacional[5] = "";
+            vetInfOrganizacional[6] = "";
             elementTracedReport.add(vetInfOrganizacional);
             traceabilityInfo.addRow(vetInfOrganizacional);
         }
         for (int i = 0; i < HorizontalBPMNTraceController.getTokensTraceability().getObjetivoSistema().size(); i++) {
-            String vetObjetivoSistema[] = new String[5];
+            String vetObjetivoSistema[] = new String[7];
             vetObjetivoSistema[0] = HorizontalBPMNTraceController.getTokensTraceability().getObjetivoSistema().get(i).getAbreviacao();
             vetObjetivoSistema[1] = HorizontalBPMNTraceController.getTokensTraceability().getObjetivoSistema().get(i).getLabel();
             vetObjetivoSistema[2] = HorizontalBPMNTraceController.getTokensTraceability().getObjetivoSistema().get(i).getModel();
             vetObjetivoSistema[3] = HorizontalBPMNTraceController.getTokensTraceability().getObjetivoSistema().get(i).getClasse();
             vetObjetivoSistema[4] = HorizontalBPMNTraceController.getTokensTraceability().getObjetivoSistema().get(i).getFase();
+            vetObjetivoSistema[5] = "";
+            vetObjetivoSistema[6] = "";
             elementTracedReport.add(vetObjetivoSistema);
             traceabilityInfo.addRow(vetObjetivoSistema);
         }
         for (int i = 0; i < HorizontalBPMNTraceController.getTokensTraceability().getRequisitos().size(); i++) {
-            String vetRequisitos[] = new String[5];
+            String vetRequisitos[] = new String[7];
             vetRequisitos[0] = HorizontalBPMNTraceController.getTokensTraceability().getRequisitos().get(i).getAbreviacao();
             vetRequisitos[1] = HorizontalBPMNTraceController.getTokensTraceability().getRequisitos().get(i).getLabel();
             vetRequisitos[2] = HorizontalBPMNTraceController.getTokensTraceability().getRequisitos().get(i).getModel();
             vetRequisitos[3] = HorizontalBPMNTraceController.getTokensTraceability().getRequisitos().get(i).getClasse();
             vetRequisitos[4] = HorizontalBPMNTraceController.getTokensTraceability().getRequisitos().get(i).getFase();
+            vetRequisitos[5] = "";
+            vetRequisitos[6] = "";
             elementTracedReport.add(vetRequisitos);
             traceabilityInfo.addRow(vetRequisitos);
         }
 
         tableTraceability.setModel(traceabilityInfo);
-        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(30);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(200);
+        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
         tableTraceability.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(300);
-        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(200);
+        tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(180);
+        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(180);
+        tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
+        tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
+        
+        tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
+        tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
+
+        tableTraceability.getColumnModel().getColumn(6).setCellRenderer(new ButtonRendererDelete());
+        tableTraceability.getColumnModel().getColumn(6).setCellEditor(new ButtonDelete(new JTextField(), 0));
+        
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableTraceability.getModel());
+        tableTraceability.setRowSorter(rowSorter);
+        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = jtfFilter.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = jtfFilter.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
     }
 
     public void updateTableUCHorizontalTraceability() {
         DefaultTableModel traceabilityInfo = new DefaultTableModel();
         traceabilityInfo.addColumn("Abreviation");
         traceabilityInfo.addColumn("Name");
-        traceabilityInfo.addColumn("Model");//2
+        traceabilityInfo.addColumn("Model");
         traceabilityInfo.addColumn("Class");
         traceabilityInfo.addColumn("Segment");
+        traceabilityInfo.addColumn(" ");
+        traceabilityInfo.addColumn(" ");
 
-        String vetStakeholder[] = new String[5];
+
+        String vetStakeholder[] = new String[7];
         for (int i = 0; i < HorizontalUseCaseTraceController.getTokensTraceability().getStakeholders().size(); i++) {
             vetStakeholder[0] = HorizontalUseCaseTraceController.getTokensTraceability().getStakeholders().get(i).getAbreviacao();
             vetStakeholder[1] = HorizontalUseCaseTraceController.getTokensTraceability().getStakeholders().get(i).getLabel();
             vetStakeholder[2] = HorizontalUseCaseTraceController.getTokensTraceability().getStakeholders().get(i).getModel();
             vetStakeholder[3] = HorizontalUseCaseTraceController.getTokensTraceability().getStakeholders().get(i).getClasse();
             vetStakeholder[4] = HorizontalUseCaseTraceController.getTokensTraceability().getStakeholders().get(i).getFase();
+            vetStakeholder[5] = "";
+            vetStakeholder[6] = "";
             traceabilityInfo.addRow(vetStakeholder);
         }
-        String vetInfExterna[] = new String[5];
+        String vetInfExterna[] = new String[7];
         for (int i = 0; i < HorizontalUseCaseTraceController.getTokensTraceability().getInformcaoExterna().size(); i++) {
             vetInfExterna[0] = HorizontalUseCaseTraceController.getTokensTraceability().getInformcaoExterna().get(i).getAbreviacao();
             vetInfExterna[1] = HorizontalUseCaseTraceController.getTokensTraceability().getInformcaoExterna().get(i).getLabel();
             vetInfExterna[2] = HorizontalUseCaseTraceController.getTokensTraceability().getInformcaoExterna().get(i).getModel();
             vetInfExterna[3] = HorizontalUseCaseTraceController.getTokensTraceability().getInformcaoExterna().get(i).getClasse();
             vetInfExterna[4] = HorizontalUseCaseTraceController.getTokensTraceability().getInformcaoExterna().get(i).getFase();
+            vetInfExterna[5] = "";
+            vetInfExterna[6] = "";
             traceabilityInfo.addRow(vetInfExterna);
         }
-        String vetInfOrganizacional[] = new String[5];
+        String vetInfOrganizacional[] = new String[7];
         for (int i = 0; i < HorizontalUseCaseTraceController.getTokensTraceability().getInformacaoOrg().size(); i++) {
             vetInfOrganizacional[0] = HorizontalUseCaseTraceController.getTokensTraceability().getInformacaoOrg().get(i).getAbreviacao();
             vetInfOrganizacional[1] = HorizontalUseCaseTraceController.getTokensTraceability().getInformacaoOrg().get(i).getLabel();
             vetInfOrganizacional[2] = HorizontalUseCaseTraceController.getTokensTraceability().getInformacaoOrg().get(i).getModel();
             vetInfOrganizacional[3] = HorizontalUseCaseTraceController.getTokensTraceability().getInformacaoOrg().get(i).getClasse();
             vetInfOrganizacional[4] = HorizontalUseCaseTraceController.getTokensTraceability().getInformacaoOrg().get(i).getFase();
+            vetInfOrganizacional[5] = "";
+            vetInfOrganizacional[6] = "";
             traceabilityInfo.addRow(vetInfOrganizacional);
         }
-        String vetObjetivoSistema[] = new String[5];
+        String vetObjetivoSistema[] = new String[7];
         for (int i = 0; i < HorizontalUseCaseTraceController.getTokensTraceability().getObjetivoSistema().size(); i++) {
             vetObjetivoSistema[0] = HorizontalUseCaseTraceController.getTokensTraceability().getObjetivoSistema().get(i).getAbreviacao();
             vetObjetivoSistema[1] = HorizontalUseCaseTraceController.getTokensTraceability().getObjetivoSistema().get(i).getLabel();
             vetObjetivoSistema[2] = HorizontalUseCaseTraceController.getTokensTraceability().getObjetivoSistema().get(i).getModel();
             vetObjetivoSistema[3] = HorizontalUseCaseTraceController.getTokensTraceability().getObjetivoSistema().get(i).getClasse();
             vetObjetivoSistema[4] = HorizontalUseCaseTraceController.getTokensTraceability().getObjetivoSistema().get(i).getFase();
+            vetObjetivoSistema[5] = "";
+            vetObjetivoSistema[6] = "";
             traceabilityInfo.addRow(vetObjetivoSistema);
         }
-        String vetRequisitos[] = new String[5];
+        String vetRequisitos[] = new String[7];
         for (int i = 0; i < HorizontalUseCaseTraceController.getTokensTraceability().getRequisitos().size(); i++) {
             vetRequisitos[0] = HorizontalUseCaseTraceController.getTokensTraceability().getRequisitos().get(i).getAbreviacao();
             vetRequisitos[1] = HorizontalUseCaseTraceController.getTokensTraceability().getRequisitos().get(i).getLabel();
             vetRequisitos[2] = HorizontalUseCaseTraceController.getTokensTraceability().getRequisitos().get(i).getModel();
             vetRequisitos[3] = HorizontalUseCaseTraceController.getTokensTraceability().getRequisitos().get(i).getClasse();
             vetRequisitos[4] = HorizontalUseCaseTraceController.getTokensTraceability().getRequisitos().get(i).getFase();
+            vetRequisitos[5] = "";
+            vetRequisitos[6] = "";
             traceabilityInfo.addRow(vetRequisitos);
         }
 
         tableTraceability.setModel(traceabilityInfo);
-        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(30);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(200);
+        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
         tableTraceability.getColumnModel().getColumn(2).setPreferredWidth(100);
         tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(300);
         tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(200);
+        tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
+        tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
+        
+        tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
+        tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
+
+        tableTraceability.getColumnModel().getColumn(6).setCellRenderer(new ButtonRendererDelete());
+        tableTraceability.getColumnModel().getColumn(6).setCellEditor(new ButtonDelete(new JTextField(), 0));
+        
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableTraceability.getModel());
+        tableTraceability.setRowSorter(rowSorter);
+        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = jtfFilter.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = jtfFilter.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
     }
 
     public void updateTableIStarHorizontalTraceability() {
@@ -1362,7 +1472,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         traceabilityInfo.addColumn("Class");//3
         traceabilityInfo.addColumn("Segment");//4
         traceabilityInfo.addColumn(" ");//5
-        traceabilityInfo.addColumn(" ");//4
+        traceabilityInfo.addColumn(" ");//6
 
         String vetActorsystem[] = new String[7];
         // adiciona os dados dos casos de uso no modelo da tabela
@@ -1483,12 +1593,15 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
 
     public void updateTableVerticalBPMNtoUCTraceability() {
         DefaultTableModel traceabilityInfo = new DefaultTableModel();
-        traceabilityInfo.addColumn("Abreviation");//0
-        traceabilityInfo.addColumn("Name");//1
-        traceabilityInfo.addColumn("Model");//2
-        traceabilityInfo.addColumn("Class");//3
-        traceabilityInfo.addColumn("Segment");//4
-        String vetAtorSistema[] = new String[5];
+        traceabilityInfo.addColumn("Abreviation");
+        traceabilityInfo.addColumn("Name");
+        traceabilityInfo.addColumn("Model");
+        traceabilityInfo.addColumn("Class");
+        traceabilityInfo.addColumn("Segment");
+        traceabilityInfo.addColumn(" ");
+        traceabilityInfo.addColumn(" ");
+        
+        String vetAtorSistema[] = new String[7];
         // adiciona os dados dos casos de uso no modelo da tabela
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getAtorSistema().size(); i++) {
             vetAtorSistema[0] = VerticalTraceController.getTokensVertical().getAtorSistema().get(i).getAbreviacao();
@@ -1496,60 +1609,113 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
             vetAtorSistema[2] = VerticalTraceController.getTokensVertical().getAtorSistema().get(i).getModel();
             vetAtorSistema[3] = VerticalTraceController.getTokensVertical().getAtorSistema().get(i).getClasse();
             vetAtorSistema[4] = VerticalTraceController.getTokensVertical().getAtorSistema().get(i).getFase();
+            vetAtorSistema[5] = "";
+            vetAtorSistema[6] = "";
             traceabilityInfo.addRow(vetAtorSistema);
         }
-        String vetStakeholder[] = new String[5];
+        String vetStakeholder[] = new String[7];
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getStakeholders().size(); i++) {
             vetStakeholder[0] = VerticalTraceController.getTokensVertical().getStakeholders().get(i).getAbreviacao();
             vetStakeholder[1] = VerticalTraceController.getTokensVertical().getStakeholders().get(i).getLabel();
             vetStakeholder[2] = VerticalTraceController.getTokensVertical().getStakeholders().get(i).getModel();
             vetStakeholder[3] = VerticalTraceController.getTokensVertical().getStakeholders().get(i).getClasse();
             vetStakeholder[4] = VerticalTraceController.getTokensVertical().getStakeholders().get(i).getFase();
+            vetStakeholder[5] = "";
+            vetStakeholder[6] = "";
             traceabilityInfo.addRow(vetStakeholder);
         }
-        String vetInfExterna[] = new String[5];
+        String vetInfExterna[] = new String[7];
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getInformcaoExterna().size(); i++) {
             vetInfExterna[0] = VerticalTraceController.getTokensVertical().getInformcaoExterna().get(i).getAbreviacao();
             vetInfExterna[1] = VerticalTraceController.getTokensVertical().getInformcaoExterna().get(i).getLabel();
             vetInfExterna[2] = VerticalTraceController.getTokensVertical().getInformcaoExterna().get(i).getModel();
             vetInfExterna[3] = VerticalTraceController.getTokensVertical().getInformcaoExterna().get(i).getClasse();
             vetInfExterna[4] = VerticalTraceController.getTokensVertical().getInformcaoExterna().get(i).getFase();
+            vetInfExterna[5] = "";
+            vetInfExterna[6] = "";
             traceabilityInfo.addRow(vetInfExterna);
         }
-        String vetInfOrganizacional[] = new String[5];
+        String vetInfOrganizacional[] = new String[7];
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getInformacaoOrg().size(); i++) {
             vetInfOrganizacional[0] = VerticalTraceController.getTokensVertical().getInformacaoOrg().get(i).getAbreviacao();
             vetInfOrganizacional[1] = VerticalTraceController.getTokensVertical().getInformacaoOrg().get(i).getLabel();
             vetInfOrganizacional[2] = VerticalTraceController.getTokensVertical().getInformacaoOrg().get(i).getModel();
             vetInfOrganizacional[3] = VerticalTraceController.getTokensVertical().getInformacaoOrg().get(i).getClasse();
             vetInfOrganizacional[4] = VerticalTraceController.getTokensVertical().getInformacaoOrg().get(i).getFase();
+            vetInfOrganizacional[5] = "";
+            vetInfOrganizacional[6] = "";
             traceabilityInfo.addRow(vetInfOrganizacional);
         }
-        String vetObjetivoSistema[] = new String[5];
+        String vetObjetivoSistema[] = new String[7];
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getObjetivoSistema().size(); i++) {
             vetObjetivoSistema[0] = VerticalTraceController.getTokensVertical().getObjetivoSistema().get(i).getAbreviacao();
             vetObjetivoSistema[1] = VerticalTraceController.getTokensVertical().getObjetivoSistema().get(i).getLabel();
             vetObjetivoSistema[2] = VerticalTraceController.getTokensVertical().getObjetivoSistema().get(i).getModel();
             vetObjetivoSistema[3] = VerticalTraceController.getTokensVertical().getObjetivoSistema().get(i).getClasse();
             vetObjetivoSistema[4] = VerticalTraceController.getTokensVertical().getObjetivoSistema().get(i).getFase();
+            vetObjetivoSistema[5] = "";
+            vetObjetivoSistema[6] = "";
             traceabilityInfo.addRow(vetObjetivoSistema);
         }
-        String vetRequisitos[] = new String[5];
+        String vetRequisitos[] = new String[7];
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getRequisitos().size(); i++) {
             vetRequisitos[0] = VerticalTraceController.getTokensVertical().getRequisitos().get(i).getAbreviacao();
             vetRequisitos[1] = VerticalTraceController.getTokensVertical().getRequisitos().get(i).getLabel();
             vetRequisitos[2] = VerticalTraceController.getTokensVertical().getRequisitos().get(i).getModel();
             vetRequisitos[3] = VerticalTraceController.getTokensVertical().getRequisitos().get(i).getClasse();
             vetRequisitos[4] = VerticalTraceController.getTokensVertical().getRequisitos().get(i).getFase();
+            vetRequisitos[5] = "";
+            vetRequisitos[6] = "";
             traceabilityInfo.addRow(vetRequisitos);
         }
 
         tableTraceability.setModel(traceabilityInfo);
-        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(30);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(200);
+        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
         tableTraceability.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(300);
-        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(200);
+        tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(180);
+        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(180);
+        tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
+        tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
+        
+        tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
+        tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
+
+        tableTraceability.getColumnModel().getColumn(6).setCellRenderer(new ButtonRendererDelete());
+        tableTraceability.getColumnModel().getColumn(6).setCellEditor(new ButtonDelete(new JTextField(), 0));
+        
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableTraceability.getModel());
+        tableTraceability.setRowSorter(rowSorter);
+        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = jtfFilter.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = jtfFilter.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
     }
 
     public void updateTableVerticalIStartoUCTraceability() {
@@ -1558,8 +1724,11 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         traceabilityInfo.addColumn("Name");//1
         traceabilityInfo.addColumn("Model");//2
         traceabilityInfo.addColumn("Class");//3
-        traceabilityInfo.addColumn("Segment");//4
-        String vetActorSystem[] = new String[5];
+        traceabilityInfo.addColumn("Segment");
+        traceabilityInfo.addColumn(" ");
+        traceabilityInfo.addColumn(" ");
+        
+        String vetActorSystem[] = new String[7];
         // adiciona os dados dos casos de uso no modelo da tabela
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getAtorSistema().size(); i++) {
             vetActorSystem[0] = VerticalTraceController.getTokensVertical().getAtorSistema().get(i).getAbreviacao();
@@ -1567,60 +1736,113 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
             vetActorSystem[2] = VerticalTraceController.getTokensVertical().getAtorSistema().get(i).getModel();
             vetActorSystem[3] = VerticalTraceController.getTokensVertical().getAtorSistema().get(i).getClasse();
             vetActorSystem[4] = VerticalTraceController.getTokensVertical().getAtorSistema().get(i).getFase();
+            vetActorSystem[5] = "";
+            vetActorSystem[6] = "";
             traceabilityInfo.addRow(vetActorSystem);
         }
-        String vetStakeholder[] = new String[5];
+        String vetStakeholder[] = new String[7];
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getStakeholders().size(); i++) {
             vetStakeholder[0] = VerticalTraceController.getTokensVertical().getStakeholders().get(i).getAbreviacao();
             vetStakeholder[1] = VerticalTraceController.getTokensVertical().getStakeholders().get(i).getLabel();
             vetStakeholder[2] = VerticalTraceController.getTokensVertical().getStakeholders().get(i).getModel();
             vetStakeholder[3] = VerticalTraceController.getTokensVertical().getStakeholders().get(i).getClasse();
             vetStakeholder[4] = VerticalTraceController.getTokensVertical().getStakeholders().get(i).getFase();
+            vetStakeholder[5] = "";
+            vetStakeholder[6] = "";
             traceabilityInfo.addRow(vetStakeholder);
         }
-        String vetInfExterna[] = new String[5];
+        String vetInfExterna[] = new String[7];
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getInformcaoExterna().size(); i++) {
             vetInfExterna[0] = VerticalTraceController.getTokensVertical().getInformcaoExterna().get(i).getAbreviacao();
             vetInfExterna[1] = VerticalTraceController.getTokensVertical().getInformcaoExterna().get(i).getLabel();
             vetInfExterna[2] = VerticalTraceController.getTokensVertical().getInformcaoExterna().get(i).getModel();
             vetInfExterna[3] = VerticalTraceController.getTokensVertical().getInformcaoExterna().get(i).getClasse();
             vetInfExterna[4] = VerticalTraceController.getTokensVertical().getInformcaoExterna().get(i).getFase();
+            vetInfExterna[5] = "";
+            vetInfExterna[6] = "";
             traceabilityInfo.addRow(vetInfExterna);
         }
-        String vetInfOrganizacional[] = new String[5];
+        String vetInfOrganizacional[] = new String[7];
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getInformacaoOrg().size(); i++) {
             vetInfOrganizacional[0] = VerticalTraceController.getTokensVertical().getInformacaoOrg().get(i).getAbreviacao();
             vetInfOrganizacional[1] = VerticalTraceController.getTokensVertical().getInformacaoOrg().get(i).getLabel();
             vetInfOrganizacional[2] = VerticalTraceController.getTokensVertical().getInformacaoOrg().get(i).getModel();
             vetInfOrganizacional[3] = VerticalTraceController.getTokensVertical().getInformacaoOrg().get(i).getClasse();
             vetInfOrganizacional[4] = VerticalTraceController.getTokensVertical().getInformacaoOrg().get(i).getFase();
+            vetInfOrganizacional[5] = "";
+            vetInfOrganizacional[6] = "";
             traceabilityInfo.addRow(vetInfOrganizacional);
         }
-        String vetObjetivoSistema[] = new String[5];
+        String vetObjetivoSistema[] = new String[7];
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getObjetivoSistema().size(); i++) {
             vetObjetivoSistema[0] = VerticalTraceController.getTokensVertical().getObjetivoSistema().get(i).getAbreviacao();
             vetObjetivoSistema[1] = VerticalTraceController.getTokensVertical().getObjetivoSistema().get(i).getLabel();
             vetObjetivoSistema[2] = VerticalTraceController.getTokensVertical().getObjetivoSistema().get(i).getModel();
             vetObjetivoSistema[3] = VerticalTraceController.getTokensVertical().getObjetivoSistema().get(i).getClasse();
             vetObjetivoSistema[4] = VerticalTraceController.getTokensVertical().getObjetivoSistema().get(i).getFase();
+            vetObjetivoSistema[5] = "";
+            vetObjetivoSistema[6] = "";
             traceabilityInfo.addRow(vetObjetivoSistema);
         }
-        String vetRequisitos[] = new String[5];
+        String vetRequisitos[] = new String[7];
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getRequisitos().size(); i++) {
             vetRequisitos[0] = VerticalTraceController.getTokensVertical().getRequisitos().get(i).getAbreviacao();
             vetRequisitos[1] = VerticalTraceController.getTokensVertical().getRequisitos().get(i).getLabel();
             vetRequisitos[2] = VerticalTraceController.getTokensVertical().getRequisitos().get(i).getModel();
             vetRequisitos[3] = VerticalTraceController.getTokensVertical().getRequisitos().get(i).getClasse();
             vetRequisitos[4] = VerticalTraceController.getTokensVertical().getRequisitos().get(i).getFase();
+            vetRequisitos[5] = "";
+            vetRequisitos[6] = "";
             traceabilityInfo.addRow(vetRequisitos);
         }
 
         tableTraceability.setModel(traceabilityInfo);
-        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(30);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(200);
+        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(50);
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
         tableTraceability.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(300);
-        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(200);
+        tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(180);
+        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(180);
+        tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
+        tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
+        
+        tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
+        tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
+
+        tableTraceability.getColumnModel().getColumn(6).setCellRenderer(new ButtonRendererDelete());
+        tableTraceability.getColumnModel().getColumn(6).setCellEditor(new ButtonDelete(new JTextField(), 0));
+        
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableTraceability.getModel());
+        tableTraceability.setRowSorter(rowSorter);
+        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                String text = jtfFilter.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                String text = jtfFilter.getText();
+
+                if (text.trim().length() == 0) {
+                    rowSorter.setRowFilter(null);
+                } else {
+                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+
+        });
     }
 
     public String getSelectedCase() {
