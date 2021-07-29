@@ -64,7 +64,7 @@ public class HorizontalControler extends AbstractAction {
                 horizontalBPMNTraceController.actionPerformed(e);
                 traceBPMNHorizontal = new TraceBPMNHorizontal();
                 traceBPMNHorizontal.TraceElementsBPMNHorizontal();
-                index = 2;
+                index = 1;
                 break;
 
             case 3: // UC Horizontal Trace
@@ -72,7 +72,7 @@ public class HorizontalControler extends AbstractAction {
                 horizontalUseCaseTraceController.actionPerformed(e);
                 traceUCHorizontal = new TraceUCHorizontal();
                 traceUCHorizontal.TraceElementsUCHorizontal();
-                index = 1;
+                index = 2;
                 break;
 
             default:
@@ -103,6 +103,7 @@ public class HorizontalControler extends AbstractAction {
                     viewTraceability1.updateTableUCHorizontalTraceability();
                     break;
             }
+            viewTraceability1.atualizeType(index);
             viewTraceability1.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "You need Mapping Horizontal first");

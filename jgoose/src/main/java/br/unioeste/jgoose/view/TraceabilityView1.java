@@ -93,7 +93,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
 
     private static Matriz matriz;
     private Integer type;
-    private final DefaultTableModel traceabilityInfo = new DefaultTableModel();
+    private DefaultTableModel traceabilityInfo = new DefaultTableModel();
     private TokensTraceability lista;
     private ArrayList<String[]> elementTracedReport;
     private Actor selectedActor = null;
@@ -412,12 +412,14 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         });
 
         tableTraceability.getTableHeader().setFont(new java.awt.Font("Roboto", 0, 14));
-        tableTraceability.getColumnModel().getColumn(1).setMinWidth(MAXIMIZED_HORIZ);
         jScrollPane1.setViewportView(tableTraceability);
         if (tableTraceability.getColumnModel().getColumnCount() > 0) {
             tableTraceability.getColumnModel().getColumn(0).setResizable(false);
+            tableTraceability.getColumnModel().getColumn(0).setHeaderValue("ID");
             tableTraceability.getColumnModel().getColumn(1).setResizable(false);
+            tableTraceability.getColumnModel().getColumn(1).setHeaderValue("");
             tableTraceability.getColumnModel().getColumn(2).setResizable(false);
+            tableTraceability.getColumnModel().getColumn(2).setHeaderValue("");
         }
         tableTraceability.getAccessibleContext().setAccessibleName("");
         tableTraceability.getAccessibleContext().setAccessibleDescription("");
@@ -1190,7 +1192,8 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         /*
          * Atualiza Informações Arquivo
          */
-        DefaultTableModel traceabilityInfo = new DefaultTableModel();
+        traceabilityInfo = new DefaultTableModel();
+        tableTraceability.setAutoResizeMode(MAXIMIZED_HORIZ);
         traceabilityInfo.addColumn("Abreviation");
         traceabilityInfo.addColumn("Name");
         traceabilityInfo.addColumn("Model");
@@ -1262,13 +1265,20 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         }
 
         tableTraceability.setModel(traceabilityInfo);
-        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
-        tableTraceability.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(180);
-        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(180);
-        tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
-        tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
+        tableTraceability.getColumnModel().getColumn(0).setMaxWidth(100);
+        tableTraceability.getColumnModel().getColumn(0).setMinWidth(100);
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ); 
+        tableTraceability.getColumnModel().getColumn(2).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(2).setMinWidth(80);
+        tableTraceability.getColumnModel().getColumn(3).setMaxWidth(240);
+        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);       
+        tableTraceability.getColumnModel().getColumn(4).setMaxWidth(200);
+        tableTraceability.getColumnModel().getColumn(4).setMinWidth(200);
+        tableTraceability.getColumnModel().getColumn(5).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);       
+        tableTraceability.getColumnModel().getColumn(6).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(6).setMinWidth(80);
+
 
         tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
         tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
@@ -1311,7 +1321,8 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     }
 
     public void updateTableUCHorizontalTraceability() {
-        DefaultTableModel traceabilityInfo = new DefaultTableModel();
+        traceabilityInfo = new DefaultTableModel();
+        tableTraceability.setAutoResizeMode(MAXIMIZED_HORIZ);
         traceabilityInfo.addColumn("Abreviation");
         traceabilityInfo.addColumn("Name");
         traceabilityInfo.addColumn("Model");
@@ -1377,13 +1388,19 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         }
 
         tableTraceability.setModel(traceabilityInfo);
-        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
-        tableTraceability.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(300);
-        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(200);
-        tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
-        tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
+        tableTraceability.getColumnModel().getColumn(0).setMaxWidth(100);
+        tableTraceability.getColumnModel().getColumn(0).setMinWidth(100);
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ); 
+        tableTraceability.getColumnModel().getColumn(2).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(2).setMinWidth(80);
+        tableTraceability.getColumnModel().getColumn(3).setMaxWidth(240);
+        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);       
+        tableTraceability.getColumnModel().getColumn(4).setMaxWidth(200);
+        tableTraceability.getColumnModel().getColumn(4).setMinWidth(200);
+        tableTraceability.getColumnModel().getColumn(5).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);       
+        tableTraceability.getColumnModel().getColumn(6).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(6).setMinWidth(80);
 
         tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
         tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
@@ -1426,7 +1443,8 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     }
 
     public void updateTableIStarHorizontalTraceability() {
-        DefaultTableModel traceabilityInfo = new DefaultTableModel();
+        traceabilityInfo = new DefaultTableModel();
+        tableTraceability.setAutoResizeMode(MAXIMIZED_HORIZ);
         traceabilityInfo.addColumn("Abreviation");//0
         traceabilityInfo.addColumn("Name");//1
         traceabilityInfo.addColumn("Model");//2
@@ -1504,13 +1522,19 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         }
 
         tableTraceability.setModel(traceabilityInfo);
-        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
-        tableTraceability.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(300);
-        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(200);
-        tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
-        tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
+        tableTraceability.getColumnModel().getColumn(0).setMaxWidth(100);
+        tableTraceability.getColumnModel().getColumn(0).setMinWidth(100);
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ); 
+        tableTraceability.getColumnModel().getColumn(2).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(2).setMinWidth(80);
+        tableTraceability.getColumnModel().getColumn(3).setMaxWidth(240);
+        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);       
+        tableTraceability.getColumnModel().getColumn(4).setMaxWidth(200);
+        tableTraceability.getColumnModel().getColumn(4).setMinWidth(200);
+        tableTraceability.getColumnModel().getColumn(5).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);       
+        tableTraceability.getColumnModel().getColumn(6).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(6).setMinWidth(80);
 
         tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
         tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
@@ -1553,7 +1577,8 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     }
 
     public void updateTableVerticalBPMNtoUCTraceability() {
-        DefaultTableModel traceabilityInfo = new DefaultTableModel();
+        traceabilityInfo = new DefaultTableModel();
+        tableTraceability.setAutoResizeMode(MAXIMIZED_HORIZ);
         traceabilityInfo.addColumn("Abreviation");
         traceabilityInfo.addColumn("Name");
         traceabilityInfo.addColumn("Model");
@@ -1631,13 +1656,19 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         }
 
         tableTraceability.setModel(traceabilityInfo);
-        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
-        tableTraceability.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(180);
-        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(180);
-        tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
-        tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
+        tableTraceability.getColumnModel().getColumn(0).setMaxWidth(100);
+        tableTraceability.getColumnModel().getColumn(0).setMinWidth(100);
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ); 
+        tableTraceability.getColumnModel().getColumn(2).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(2).setMinWidth(80);
+        tableTraceability.getColumnModel().getColumn(3).setMaxWidth(240);
+        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);       
+        tableTraceability.getColumnModel().getColumn(4).setMaxWidth(200);
+        tableTraceability.getColumnModel().getColumn(4).setMinWidth(200);
+        tableTraceability.getColumnModel().getColumn(5).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);       
+        tableTraceability.getColumnModel().getColumn(6).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(6).setMinWidth(80);
 
         tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
         tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
@@ -1680,7 +1711,8 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     }
 
     public void updateTableVerticalIStartoUCTraceability() {
-        DefaultTableModel traceabilityInfo = new DefaultTableModel();
+        traceabilityInfo = new DefaultTableModel();
+        tableTraceability.setAutoResizeMode(MAXIMIZED_HORIZ);
         traceabilityInfo.addColumn("Abreviation");//0
         traceabilityInfo.addColumn("Name");//1
         traceabilityInfo.addColumn("Model");//2
@@ -1759,13 +1791,19 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         }
 
         tableTraceability.setModel(traceabilityInfo);
-        tableTraceability.getColumnModel().getColumn(0).setPreferredWidth(50);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
-        tableTraceability.getColumnModel().getColumn(2).setPreferredWidth(100);
-        tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(180);
-        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(180);
-        tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
-        tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
+        tableTraceability.getColumnModel().getColumn(0).setMaxWidth(100);
+        tableTraceability.getColumnModel().getColumn(0).setMinWidth(100);
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ); 
+        tableTraceability.getColumnModel().getColumn(2).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(2).setMinWidth(80);
+        tableTraceability.getColumnModel().getColumn(3).setMaxWidth(240);
+        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);       
+        tableTraceability.getColumnModel().getColumn(4).setMaxWidth(200);
+        tableTraceability.getColumnModel().getColumn(4).setMinWidth(200);
+        tableTraceability.getColumnModel().getColumn(5).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);       
+        tableTraceability.getColumnModel().getColumn(6).setMaxWidth(80);
+        tableTraceability.getColumnModel().getColumn(6).setMinWidth(80);
 
         tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
         tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
@@ -1923,8 +1961,6 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
 
                     if (dialogResult == JOptionPane.YES_OPTION) {
                         removeTracedElement(linha, abreviation);
-
-                        //tabCasosDeUso.removeRow(linha+1);
                     }
                 } catch (HeadlessException e) {
                     JOptionPane.showMessageDialog(null, "Ops some problem occurred");
@@ -2114,6 +2150,10 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 VerticalTraceController.getTokensVertical().removeInformacaoExterna(infoExt);
                 break;
         }
+    }
+
+    public void atualizeType(int index) {
+        this.type = index;
     }
 
 //BUTTON RENDERER CLASS

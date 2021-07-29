@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
 public class VerticalTraceController extends AbstractAction {
 
     private static TraceBPMNVertical traceBPMNVertical;
-    
+
     private static TraceIStarVertical traceIStarVertical;
     private static TokensTraceability tokensTraceability;
     //private static TraceabilityView viewTraceability = null;
@@ -33,7 +33,6 @@ public class VerticalTraceController extends AbstractAction {
     public static Integer type = null;
     public static int index = -1;
 
-    
     public static Matriz propertiesMatriz(int indice) {
         String title;
         switch (indice) {
@@ -241,7 +240,7 @@ public class VerticalTraceController extends AbstractAction {
     }
 
     public static void openVerticalTraceabilityView() {
-        if (type != null) {            
+        if (type != null) {
             switch (type) {
                 case 1://rastreabilidade vertical BPMN to UC
                     if (BPMNController.getFlagMapUseCases()) {
@@ -265,11 +264,11 @@ public class VerticalTraceController extends AbstractAction {
         } else {
             JOptionPane.showMessageDialog(null, "You need traceability vertical fisrt");
         }
-        
         openViewTraceabilityVertical();
     }
+
     public static void openViewTraceabilityVertical() {
-     if (index != -1) {
+        if (index != -1) {
             if (viewTraceability == null) {
                 viewTraceability = new TraceabilityView1(index);
                 viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -283,6 +282,7 @@ public class VerticalTraceController extends AbstractAction {
                     viewTraceability.updateTableVerticalIStartoUCTraceability();
                     break;
             }
+            viewTraceability.atualizeType(index);
             viewTraceability.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "You need Mapping Horizontal first");
