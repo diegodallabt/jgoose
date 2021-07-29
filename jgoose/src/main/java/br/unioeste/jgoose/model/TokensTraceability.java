@@ -45,6 +45,10 @@ public class TokensTraceability {
     public void setAtorSistema(TracedAtorSistema atorSistema) {
        this.atorSistema.add(atorSistema);
     }
+
+    public void removeAtorSistema(TracedElement atorSistema) {
+        this.atorSistema.remove(atorSistema);
+    }
     
     public List<TracedElement> getStakeholders() {
         return stakeholders;
@@ -54,12 +58,20 @@ public class TokensTraceability {
         stakeholders.add(stakeholder);
     }
 
+    public void removeStakeholder(TracedElement stakeholder) {
+        this.stakeholders.remove(stakeholder);
+    }
+    
     public void setInformacaoExterna(TracedInformacaoExterna tracedInfExt) {
         informacaoExt.add(tracedInfExt);
     }
     
     public List<TracedElement> getInformcaoExterna(){
         return informacaoExt;
+    }
+    
+    public void removeInformacaoExterna(TracedElement tracedInfExt) {
+        this.informacaoExt.remove(tracedInfExt);
     }
     
     public List<TracedElement> getInformacaoOrg() {
@@ -70,12 +82,20 @@ public class TokensTraceability {
         informacaoOrg.add(infOrg);
     }
     
+    public void removeInformacaoOrg(TracedElement infOrg) {
+        this.informacaoOrg.remove(infOrg);
+    }
+    
     public void setObjetivoSistema(TracedObjetivoSistema tracedObjSistema) {
         objetivoDoSistema.add(tracedObjSistema);
     }
     
     public List<TracedElement> getObjetivoSistema(){
         return objetivoDoSistema;
+    }
+    
+    public void removeObjetivoSistema(TracedElement tracedObjSistema) {
+        this.objetivoDoSistema.remove(tracedObjSistema);
     }
     
     public void setRequisitos(TracedRequisitos tracedReq) {
@@ -86,17 +106,69 @@ public class TokensTraceability {
         return requisitos;
     }
     
-   /* @Override
-    public String toString() {
-        String resposta = "Modelo BPMN\n";
-        
-        resposta += "\n\tStakeholders\n";
-        
-        for(TracedStakeholders bPMNStakeholders : stakeholders){
-            resposta += "\t\t" + bPMNStakeholders.toString() + "\n";
+    public void removeRequisito(TracedElement tracedReq) {
+        this.requisitos.remove(tracedReq);
+    }
+
+    public TracedElement getActorSystem(String abreviation) {
+        int index = 0;
+        for(int i=0; i<atorSistema.size(); i++){
+            if(atorSistema.get(i).getAbreviacao().equals(abreviation)){
+                index = i; 
+            }
         }
-                
-        return resposta;
-    }*/
+        return atorSistema.get(index);
+    }
+    
+    public TracedElement getStakeholder(String abreviation) {
+        int index = 0;
+        for(int i=0; i<stakeholders.size(); i++){
+            if(stakeholders.get(i).getAbreviacao().equals(abreviation)){
+                index = i; 
+            }
+        }
+        return stakeholders.get(index);
+    }
+    
+    public TracedElement getInfoExterna(String abreviation) {
+        int index = 0;
+        for(int i=0; i<informacaoExt.size(); i++){
+            if(informacaoExt.get(i).getAbreviacao().equals(abreviation)){
+                index = i; 
+            }
+        }
+        return informacaoExt.get(index);
+    }
+    
+    public TracedElement getInfoOrg(String abreviation) {
+        int index = 0;
+        for(int i=0; i<informacaoOrg.size(); i++){
+            if(informacaoOrg.get(i).getAbreviacao().equals(abreviation)){
+                index = i; 
+            }
+        }
+        return informacaoOrg.get(index);
+    }
+    
+    public TracedElement getObjetivoSistema(String abreviation) {
+        int index = 0;
+        for(int i=0; i<objetivoDoSistema.size(); i++){
+            if(objetivoDoSistema.get(i).getAbreviacao().equals(abreviation)){
+                index = i; 
+            }
+        }
+        return objetivoDoSistema.get(index);
+    }
+    
+    public TracedElement getRequisito(String abreviation) {
+        int index = 0;
+        for(int i=0; i<requisitos.size(); i++){
+            if(requisitos.get(i).getAbreviacao().equals(abreviation)){
+                index = i; 
+            }
+        }
+        return requisitos.get(index);
+    }
+    
 }
 

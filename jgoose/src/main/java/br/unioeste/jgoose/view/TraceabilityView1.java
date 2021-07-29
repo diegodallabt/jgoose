@@ -21,6 +21,8 @@ import br.unioeste.jgoose.e4j.swing.BasicUseCasesEditor;
 import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.e4j.swing.menubar.EditorMenuBar;
 import br.unioeste.jgoose.model.TokensTraceability;
+import br.unioeste.jgoose.model.TracedAtorSistema;
+import br.unioeste.jgoose.model.TracedElement;
 import br.unioeste.jgoose.model.UCActor;
 import br.unioeste.jgoose.model.UCUseCase;
 import com.mxgraph.util.mxResources;
@@ -77,14 +79,18 @@ import com.itextpdf.text.pdf.PdfPTable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import static java.lang.String.valueOf;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 
 /**
  *
  * @author Victor Augusto Pozzan
  */
 public final class TraceabilityView1 extends javax.swing.JFrame {
+
     private static Matriz matriz;
     private Integer type;
     private final DefaultTableModel traceabilityInfo = new DefaultTableModel();
@@ -101,15 +107,19 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger("console");
     private final Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
     private BasicBPMNEditor bpmnEditor;
+    private int flagDelete;
     Font roboto;
+
     /**
      * Creates new form UseCasesView
+     *
      * @param E4JiStar
      * @param E4JBPMN
      * @param E4JUseCases
      * @param useCasesView
      */
     public TraceabilityView1(int type) {
+        this.flagDelete = 2;
         this.type = type;
         this.elementTracedReport = new ArrayList<>();
         initComponents();
@@ -122,7 +132,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         this.setVisible(true);
         configTraceabilityView();
     }
-    
+
     private void configTraceabilityView() {
         switch (type) {
             case 1: //Horizontal BPMN
@@ -147,84 +157,37 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 break;
         }
     }
+
     /*
-     * Método que atualiza a Tabela
+     * Método que atualiza as Tabelas
      */
     public void updateTable() {
-        tabCasosDeUso = new DefaultTableModel();
-        tableTraceability.setAutoResizeMode(MAXIMIZED_HORIZ);
-        tabCasosDeUso.addColumn("ID"); // 0
-        tabCasosDeUso.addColumn("Use Case");
-        tabCasosDeUso.addColumn("Info"); // 2
-        tabCasosDeUso.addColumn("Delete"); // 3       
-        //tabCasosDeUso.addColumn("Included"); //4
-        //tabCasosDeUso.addColumn("Guideline"); // 5
-        String vetCasosDeUso[] = new String[4];
-        int cont = 1;
-        // adiciona os dados dos casos de uso no modelo da tabela
-        for (UCUseCase useCase : BPMNController.getUseCases()) {
-            vetCasosDeUso[0] = "" + cont++;
-            vetCasosDeUso[1] = useCase.getName();
-            vetCasosDeUso[2] = "";
-            vetCasosDeUso[3] = "";
-            tabCasosDeUso.addRow(vetCasosDeUso);
-
+        switch (type) {
+            case 1: //Horizontal BPMN
+                updateTableBPMNHorizontalTraceability();
+                break;
+            case 2: //Horizontal UC
+                updateTableUCHorizontalTraceability();
+                break;
+            case 3://Horizonal i*
+                updateTableIStarHorizontalTraceability();
+                break;
+            case 4://Vertical rastreabilidade vertical BPMN to UC
+                updateTableVerticalBPMNtoUCTraceability();
+                break;
+            case 5://Vertical rastreabilidade vertical i* to UC
+                updateTableVerticalIStartoUCTraceability();
+                break;
         }
-        tableTraceability.setModel(tabCasosDeUso);
-        // seta a largura das colunas da tabela
-        tableTraceability.getColumnModel().getColumn(0).setMaxWidth(40);
-        tableTraceability.getColumnModel().getColumn(1).setMinWidth(MAXIMIZED_HORIZ);
-        tableTraceability.getColumnModel().getColumn(2).setMaxWidth(30);
-        tableTraceability.getColumnModel().getColumn(3).setMaxWidth(30);
 
-        tableTraceability.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer2());
-        tableTraceability.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor2(new JTextField()));
-
-        tableTraceability.getColumnModel().getColumn(3).setCellRenderer(new ButtonRendererDelete());
-        tableTraceability.getColumnModel().getColumn(3).setCellEditor(new ButtonDelete(new JTextField(), 0));
-        
-        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableTraceability.getModel());
-        tableTraceability.setRowSorter(rowSorter);
-        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
-
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                String text = jtfFilter.getText();
-
-                if (text.trim().length() == 0) {
-                    rowSorter.setRowFilter(null);
-                } else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-                }
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                String text = jtfFilter.getText();
-
-                if (text.trim().length() == 0) {
-                    rowSorter.setRowFilter(null);
-                } else {
-                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-                }
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-            }
-
-        });
-        
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-     @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -444,6 +407,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         tableTraceability.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent evt) {
                 tableTraceability.repaint();
+                tableTraceabilityValueChanged(evt);
             }
         });
 
@@ -872,7 +836,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuUCActionPerformed
 
     private void btnUCIStarViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCIStarViewActionPerformed
-       /* try {
+        /* try {
             if (useCasesViewIStar == null) {
                 useCasesViewIStar = new UseCasesViewIStar(E4JiStar, E4JBPMN, E4JUseCases, this);
                 useCasesViewIStar.setIconImage(iconJGOOSE);
@@ -931,7 +895,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 table.addCell(cell1);
             }
 
-            for(int i = 0; i < lista.getAtorSistema().size(); i++){
+            for (int i = 0; i < lista.getAtorSistema().size(); i++) {
                 String[] vetor = new String[5];
                 vetor[0] = lista.getAtorSistema().get(i).getAbreviacao();
                 vetor[1] = lista.getAtorSistema().get(i).getLabel();
@@ -949,7 +913,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 }
             }
 
-            for(int i = 0; i < lista.getStakeholders().size(); i++){
+            for (int i = 0; i < lista.getStakeholders().size(); i++) {
                 String[] vetor = new String[5];
                 vetor[0] = lista.getStakeholders().get(i).getAbreviacao();
                 vetor[1] = lista.getStakeholders().get(i).getLabel();
@@ -967,7 +931,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 }
             }
 
-            for(int i = 0; i < lista.getInformcaoExterna().size(); i++){
+            for (int i = 0; i < lista.getInformcaoExterna().size(); i++) {
                 String[] vetor = new String[5];
                 vetor[0] = lista.getInformcaoExterna().get(i).getAbreviacao();
                 vetor[1] = lista.getInformcaoExterna().get(i).getLabel();
@@ -985,7 +949,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 }
             }
 
-            for(int i = 0; i < lista.getInformacaoOrg().size(); i++){
+            for (int i = 0; i < lista.getInformacaoOrg().size(); i++) {
                 String[] vetor = new String[5];
                 vetor[0] = lista.getInformacaoOrg().get(i).getAbreviacao();
                 vetor[1] = lista.getInformacaoOrg().get(i).getLabel();
@@ -1003,7 +967,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 }
             }
 
-            for(int i = 0; i < lista.getObjetivoSistema().size(); i++){
+            for (int i = 0; i < lista.getObjetivoSistema().size(); i++) {
                 String[] vetor = new String[5];
                 vetor[0] = lista.getObjetivoSistema().get(i).getAbreviacao();
                 vetor[1] = lista.getObjetivoSistema().get(i).getLabel();
@@ -1021,7 +985,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 }
             }
 
-            for(int i = 0; i < lista.getRequisitos().size(); i++){
+            for (int i = 0; i < lista.getRequisitos().size(); i++) {
                 String[] vetor = new String[5];
                 vetor[0] = lista.getRequisitos().get(i).getAbreviacao();
                 vetor[1] = lista.getRequisitos().get(i).getLabel();
@@ -1156,13 +1120,13 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         int indice = choiceMatrixTrace.getSelectedIndex();
         switch (type) {
             case 1: //Horizontal BPMN
-            //try {
+                //try {
                 HorizontalBPMNTraceController.selectMatriz(indice);
                 //} catch (Exception error) {
 
                 //JOptionPane.showMessageDialog(this, "MATRIZ ERROR" + error.getMessage());
                 // }
-            break;
+                break;
             case 2: //Horizontal UC
             try {
                 HorizontalUseCaseTraceController.selectMatriz(indice);
@@ -1217,9 +1181,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     public javax.swing.JTable tableTraceability;
     // End of variables declaration//GEN-END:variables
     private javax.swing.JTextPane textUseCasesSave;
-    
-     
-    
+
     /**
      * Atualiza as Tabelas relacionadas à rastreabilidade
      *
@@ -1236,7 +1198,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         traceabilityInfo.addColumn("Segment");
         traceabilityInfo.addColumn(" ");
         traceabilityInfo.addColumn(" ");
-        
+
         // adiciona os dados dos casos de uso no modelo da tabela
         for (int i = 0; i < HorizontalBPMNTraceController.getTokensTraceability().getStakeholders().size(); i++) {
             String vetStakeholder[] = new String[7];
@@ -1307,16 +1269,16 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(180);
         tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
         tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
-        
+
         tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
         tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
 
         tableTraceability.getColumnModel().getColumn(6).setCellRenderer(new ButtonRendererDelete());
         tableTraceability.getColumnModel().getColumn(6).setCellEditor(new ButtonDelete(new JTextField(), 0));
-        
+
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableTraceability.getModel());
         tableTraceability.setRowSorter(rowSorter);
-        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
+        jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -1357,7 +1319,6 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         traceabilityInfo.addColumn("Segment");
         traceabilityInfo.addColumn(" ");
         traceabilityInfo.addColumn(" ");
-
 
         String vetStakeholder[] = new String[7];
         for (int i = 0; i < HorizontalUseCaseTraceController.getTokensTraceability().getStakeholders().size(); i++) {
@@ -1423,16 +1384,16 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(200);
         tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
         tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
-        
+
         tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
         tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
 
         tableTraceability.getColumnModel().getColumn(6).setCellRenderer(new ButtonRendererDelete());
         tableTraceability.getColumnModel().getColumn(6).setCellEditor(new ButtonDelete(new JTextField(), 0));
-        
+
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableTraceability.getModel());
         tableTraceability.setRowSorter(rowSorter);
-        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
+        jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -1547,19 +1508,19 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
         tableTraceability.getColumnModel().getColumn(2).setPreferredWidth(100);
         tableTraceability.getColumnModel().getColumn(3).setPreferredWidth(300);
-        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(200);        
+        tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(200);
         tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
         tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
-        
+
         tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
         tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
 
         tableTraceability.getColumnModel().getColumn(6).setCellRenderer(new ButtonRendererDelete());
         tableTraceability.getColumnModel().getColumn(6).setCellEditor(new ButtonDelete(new JTextField(), 0));
-        
+
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableTraceability.getModel());
         tableTraceability.setRowSorter(rowSorter);
-        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
+        jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -1600,7 +1561,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         traceabilityInfo.addColumn("Segment");
         traceabilityInfo.addColumn(" ");
         traceabilityInfo.addColumn(" ");
-        
+
         String vetAtorSistema[] = new String[7];
         // adiciona os dados dos casos de uso no modelo da tabela
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getAtorSistema().size(); i++) {
@@ -1677,16 +1638,16 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(180);
         tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
         tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
-        
+
         tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
         tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
 
         tableTraceability.getColumnModel().getColumn(6).setCellRenderer(new ButtonRendererDelete());
         tableTraceability.getColumnModel().getColumn(6).setCellEditor(new ButtonDelete(new JTextField(), 0));
-        
+
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableTraceability.getModel());
         tableTraceability.setRowSorter(rowSorter);
-        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
+        jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -1727,7 +1688,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         traceabilityInfo.addColumn("Segment");
         traceabilityInfo.addColumn(" ");
         traceabilityInfo.addColumn(" ");
-        
+
         String vetActorSystem[] = new String[7];
         // adiciona os dados dos casos de uso no modelo da tabela
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getAtorSistema().size(); i++) {
@@ -1740,6 +1701,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
             vetActorSystem[6] = "";
             traceabilityInfo.addRow(vetActorSystem);
         }
+
         String vetStakeholder[] = new String[7];
         for (int i = 0; i < VerticalTraceController.getTokensVertical().getStakeholders().size(); i++) {
             vetStakeholder[0] = VerticalTraceController.getTokensVertical().getStakeholders().get(i).getAbreviacao();
@@ -1804,16 +1766,16 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         tableTraceability.getColumnModel().getColumn(4).setPreferredWidth(180);
         tableTraceability.getColumnModel().getColumn(5).setPreferredWidth(30);
         tableTraceability.getColumnModel().getColumn(6).setPreferredWidth(30);
-        
+
         tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
         tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
 
         tableTraceability.getColumnModel().getColumn(6).setCellRenderer(new ButtonRendererDelete());
         tableTraceability.getColumnModel().getColumn(6).setCellEditor(new ButtonDelete(new JTextField(), 0));
-        
+
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(tableTraceability.getModel());
         tableTraceability.setRowSorter(rowSorter);
-        jtfFilter.getDocument().addDocumentListener(new DocumentListener(){
+        jtfFilter.getDocument().addDocumentListener(new DocumentListener() {
 
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -1852,7 +1814,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     public void setSelectedCase(String selectedCase) {
         this.selectedCase = selectedCase;
     }
-    
+
     private void showE4JiStar() throws HeadlessException, IOException {
         if (E4JiStar == null) {
             E4JiStar = new EditorJFrame(0);
@@ -1945,6 +1907,213 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         }
         E4JUseCases.setVisible(true);
         this.setVisible(false);
+    }
+
+    @SuppressWarnings("empty-statement")
+    private void tableTraceabilityValueChanged(ListSelectionEvent evt) {
+        int colunm = tableTraceability.getSelectedColumn();
+        int linha = tableTraceability.getSelectedRow();
+        if (linha >= 0) {
+            if (colunm == 6) {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                try {
+                    String nameElementTraced = String.valueOf(tableTraceability.getValueAt(linha, 1));
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Would you like to delete a " + nameElementTraced + "?", "Warning", dialogButton);
+                    String abreviation = String.valueOf(tableTraceability.getValueAt(linha, 0));
+
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        removeTracedElement(linha, abreviation);
+
+                        //tabCasosDeUso.removeRow(linha+1);
+                    }
+                } catch (HeadlessException e) {
+                    JOptionPane.showMessageDialog(null, "Ops some problem occurred");
+                }
+            }
+        }
+
+    }
+
+    private void removeTracedElement(int linha, String abreviation) {
+        String name = String.valueOf(tableTraceability.getValueAt(linha, 3));
+        System.out.println("name:" + name);
+        switch (name) {
+            case "Ator Sistema":
+                removeActorSystem(abreviation);
+                break;
+            case "Stakeholder":
+                removeStakeholder(abreviation);
+                break;
+            case "Requisitos":
+                removeRequisito(abreviation);
+                break;
+            case "Objetivo Do Sistema":
+                removeObjSistema(abreviation);
+                break;
+            case "Informação Organizacional":
+                removeInfoOrg(abreviation);
+                break;
+            case "Informação Externa":
+                removeInfoExt(abreviation);
+                break;
+        }
+        updateTable();
+    }
+
+    private void removeActorSystem(String abreviation) {
+        TracedElement atorSistema;
+        switch (type) {
+            case 1: //Horizontal BPMN
+                atorSistema = TraceBPMNHorizontal.getLista().getActorSystem(abreviation);
+                TraceBPMNHorizontal.getLista().removeAtorSistema(atorSistema);
+                break;
+            case 2: //Horizontal UC
+                atorSistema = TraceUCHorizontal.getLista().getActorSystem(abreviation);
+                TraceUCHorizontal.getLista().removeAtorSistema(atorSistema);
+                break;
+            case 3://Horizonal i*
+                atorSistema = TraceIStarHorizontal.getLista().getActorSystem(abreviation);
+                TraceIStarHorizontal.getLista().removeAtorSistema(atorSistema);
+                break;
+            case 4://Vertical rastreabilidade vertical BPMN to UC
+                atorSistema = VerticalTraceController.getTokensVertical().getActorSystem(abreviation);
+                VerticalTraceController.getTokensVertical().removeAtorSistema(atorSistema);
+                break;
+            case 5://Vertical rastreabilidade vertical i* to UC
+                atorSistema = VerticalTraceController.getTokensVertical().getActorSystem(abreviation);
+                VerticalTraceController.getTokensVertical().removeAtorSistema(atorSistema);
+                break;
+        }
+    }
+
+    private void removeStakeholder(String abreviation) {
+        TracedElement stakeholder;
+        switch (type) {
+            case 1: //Horizontal BPMN
+                stakeholder = TraceBPMNHorizontal.getLista().getStakeholder(abreviation);
+                TraceBPMNHorizontal.getLista().removeStakeholder(stakeholder);
+                break;
+            case 2: //Horizontal UC
+                stakeholder = TraceUCHorizontal.getLista().getStakeholder(abreviation);
+                TraceUCHorizontal.getLista().removeStakeholder(stakeholder);
+                break;
+            case 3://Horizonal i*
+                stakeholder = TraceIStarHorizontal.getLista().getStakeholder(abreviation);
+                TraceIStarHorizontal.getLista().removeStakeholder(stakeholder);
+                break;
+            case 4://Vertical rastreabilidade vertical BPMN to UC
+                stakeholder = VerticalTraceController.getTokensVertical().getStakeholder(abreviation);
+                VerticalTraceController.getTokensVertical().removeStakeholder(stakeholder);
+                break;
+            case 5://Vertical rastreabilidade vertical i* to UC
+                stakeholder = VerticalTraceController.getTokensVertical().getStakeholder(abreviation);
+                VerticalTraceController.getTokensVertical().removeStakeholder(stakeholder);
+                break;
+        }
+    }
+
+    private void removeRequisito(String abreviation) {
+        TracedElement requisito;
+        switch (type) {
+            case 1: //Horizontal BPMN
+                requisito = TraceBPMNHorizontal.getLista().getRequisito(abreviation);
+                TraceBPMNHorizontal.getLista().removeRequisito(requisito);
+                break;
+            case 2: //Horizontal UC
+                requisito = TraceUCHorizontal.getLista().getRequisito(abreviation);
+                TraceUCHorizontal.getLista().removeRequisito(requisito);
+                break;
+            case 3://Horizonal i*
+                requisito = TraceIStarHorizontal.getLista().getRequisito(abreviation);
+                TraceIStarHorizontal.getLista().removeRequisito(requisito);
+                break;
+            case 4://Vertical rastreabilidade vertical BPMN to UC
+                requisito = VerticalTraceController.getTokensVertical().getRequisito(abreviation);
+                VerticalTraceController.getTokensVertical().removeRequisito(requisito);
+                break;
+            case 5://Vertical rastreabilidade vertical i* to UC
+                requisito = VerticalTraceController.getTokensVertical().getRequisito(abreviation);
+                VerticalTraceController.getTokensVertical().removeRequisito(requisito);
+                break;
+        }
+    }
+
+    private void removeObjSistema(String abreviation) {
+        TracedElement objSistema;
+        switch (type) {
+            case 1: //Horizontal BPMN
+                objSistema = TraceBPMNHorizontal.getLista().getObjetivoSistema(abreviation);
+                TraceBPMNHorizontal.getLista().removeObjetivoSistema(objSistema);
+                break;
+            case 2: //Horizontal UC
+                objSistema = TraceUCHorizontal.getLista().getObjetivoSistema(abreviation);
+                TraceUCHorizontal.getLista().removeObjetivoSistema(objSistema);
+                break;
+            case 3://Horizonal i*
+                objSistema = TraceIStarHorizontal.getLista().getObjetivoSistema(abreviation);
+                TraceIStarHorizontal.getLista().removeObjetivoSistema(objSistema);
+                break;
+            case 4://Vertical rastreabilidade vertical BPMN to UC
+                objSistema = VerticalTraceController.getTokensVertical().getObjetivoSistema(abreviation);
+                VerticalTraceController.getTokensVertical().removeObjetivoSistema(objSistema);
+                break;
+            case 5://Vertical rastreabilidade vertical i* to UC
+                objSistema = VerticalTraceController.getTokensVertical().getObjetivoSistema(abreviation);
+                VerticalTraceController.getTokensVertical().removeObjetivoSistema(objSistema);
+                break;
+        }
+    }
+
+    private void removeInfoOrg(String abreviation) {
+        TracedElement infoOrg;
+        switch (type) {
+            case 1: //Horizontal BPMN
+                infoOrg = TraceBPMNHorizontal.getLista().getInfoOrg(abreviation);
+                TraceBPMNHorizontal.getLista().removeInformacaoOrg(infoOrg);
+                break;
+            case 2: //Horizontal UC
+                infoOrg = TraceUCHorizontal.getLista().getInfoOrg(abreviation);
+                TraceUCHorizontal.getLista().removeInformacaoOrg(infoOrg);
+                break;
+            case 3://Horizonal i*
+                infoOrg = TraceIStarHorizontal.getLista().getInfoOrg(abreviation);
+                TraceIStarHorizontal.getLista().removeInformacaoOrg(infoOrg);
+                break;
+            case 4://Vertical rastreabilidade vertical BPMN to UC
+                infoOrg = VerticalTraceController.getTokensVertical().getInfoOrg(abreviation);
+                VerticalTraceController.getTokensVertical().removeInformacaoOrg(infoOrg);
+                break;
+            case 5://Vertical rastreabilidade vertical i* to UC
+                infoOrg = VerticalTraceController.getTokensVertical().getInfoOrg(abreviation);
+                VerticalTraceController.getTokensVertical().removeInformacaoOrg(infoOrg);
+                break;
+        }
+    }
+
+    private void removeInfoExt(String abreviation) {
+        TracedElement infoExt;
+        switch (type) {
+            case 1: //Horizontal BPMN
+                infoExt = TraceBPMNHorizontal.getLista().getInfoExterna(abreviation);
+                TraceBPMNHorizontal.getLista().removeInformacaoExterna(infoExt);
+                break;
+            case 2: //Horizontal UC
+                infoExt = TraceUCHorizontal.getLista().getInfoExterna(abreviation);
+                TraceUCHorizontal.getLista().removeInformacaoExterna(infoExt);
+                break;
+            case 3://Horizonal i*
+                infoExt = TraceIStarHorizontal.getLista().getInfoExterna(abreviation);
+                TraceIStarHorizontal.getLista().removeInformacaoExterna(infoExt);
+                break;
+            case 4://Vertical rastreabilidade vertical BPMN to UC
+                infoExt = VerticalTraceController.getTokensVertical().getInfoExterna(abreviation);
+                VerticalTraceController.getTokensVertical().removeInformacaoExterna(infoExt);
+                break;
+            case 5://Vertical rastreabilidade vertical i* to UC
+                infoExt = VerticalTraceController.getTokensVertical().getInfoExterna(abreviation);
+                VerticalTraceController.getTokensVertical().removeInformacaoExterna(infoExt);
+                break;
+        }
     }
 
 //BUTTON RENDERER CLASS
@@ -2056,7 +2225,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 //SHOW US SOME MESSAGE
                 String vetCasosDeUso[] = findElementAndInfos(row);
                 MainView mainView = new MainView();
-                MoreInfoUCFromBPMN info = new MoreInfoUCFromBPMN(mainView, true, vetCasosDeUso);        
+                MoreInfoUCFromBPMN info = new MoreInfoUCFromBPMN(mainView, true, vetCasosDeUso);
                 info.setVisible(true);
                 //JOptionPane.showMessageDialog(btn, lbl + " Clicked");
             }
