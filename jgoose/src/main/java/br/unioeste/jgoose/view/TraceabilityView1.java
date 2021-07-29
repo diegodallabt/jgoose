@@ -195,13 +195,12 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         jPanelHeader = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         labelTypeTraceability = new javax.swing.JLabel();
-        UIManager.put("ComboBox.background", new ColorUIResource(Color.yellow));
-        UIManager.put("JTextField.background", new ColorUIResource(Color.yellow));
-        UIManager.put("ComboBox.selectionBackground", new ColorUIResource(Color.magenta));
-        UIManager.put("ComboBox.selectionForeground", new ColorUIResource(Color.blue));
+        UIManager.put("ComboBox.background", new ColorUIResource(new java.awt.Color(253, 253, 253)));
+        UIManager.put("ComboBox.selectionBackground", new ColorUIResource(new java.awt.Color(244, 251, 255)));
+        UIManager.put("ComboBox.selectionForeground", new ColorUIResource(new java.awt.Color(15,157,229)));
         choiceMatrixTrace = new javax.swing.JComboBox<>();
         buttonSaveUseCases = new javax.swing.JButton();
-        buttonSaveUseCases1 = new javax.swing.JButton();
+        buttonHelp = new javax.swing.JButton();
         btnTraceability = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -285,7 +284,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         choiceMatrixTrace.setForeground(new java.awt.Color(101, 196, 245));
         choiceMatrixTrace.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Informação Externa x Informação Externa ", "Informação Externa x Informação Organizacional", "Informação Organizacional x Informação Organizacional", "Informação Organizacional x Requisitos", "Objetivo do Sistema x Objetivo do Sistema", "Objetivo do Sistema x Requisitos", "Stakeholder x Stakeholder", "Stakeholder x Requisitos", "Requisitos x Requisitos", "Requisitos x Informação Externa", "Objetivo do Sistema x Informação Organizacional", "Objetivo do Sistema x Ator Sistema", "Ator Sistema x Stakeholder" }));
         choiceMatrixTrace.setSelectedIndex(1);
-        choiceMatrixTrace.setToolTipText("");
+        choiceMatrixTrace.setToolTipText("Choose a Matrix");
         choiceMatrixTrace.setBorder(null);
         choiceMatrixTrace.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         choiceMatrixTrace.setFocusable(false);
@@ -295,30 +294,60 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
             }
         });
 
-        buttonSaveUseCases.setBackground(new java.awt.Color(255, 204, 204));
-        buttonSaveUseCases.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        buttonSaveUseCases.setBackground(new java.awt.Color(255, 255, 255));
+        buttonSaveUseCases.setFont(new java.awt.Font("Roboto", 1, 14));
         buttonSaveUseCases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/pdf.png"))); // NOI18N
         buttonSaveUseCases.setText("Save PDF ");
-        buttonSaveUseCases.setToolTipText("");
+        buttonSaveUseCases.setToolTipText("Save PDF ");
+        buttonSaveUseCases.setBorder(null);
+        buttonSaveUseCases.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonSaveUseCasesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonSaveUseCasesMouseExited(evt);
+            }
+        });
         buttonSaveUseCases.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonSaveUseCasesActionPerformed(evt);
             }
         });
 
-        buttonSaveUseCases1.setBackground(new java.awt.Color(255, 204, 204));
-        buttonSaveUseCases1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        buttonSaveUseCases1.setText("Help");
-        buttonSaveUseCases1.setToolTipText("");
-        buttonSaveUseCases1.addActionListener(new java.awt.event.ActionListener() {
+        buttonHelp.setBackground(new java.awt.Color(255, 255, 255));
+        buttonHelp.setFont(new java.awt.Font("Roboto", 1, 14));
+        buttonHelp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/helpicon.png"))); // NOI18N
+        buttonHelp.setText("Help");
+        buttonHelp.setToolTipText("Help");
+        buttonHelp.setBorder(null);
+        buttonHelp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                buttonHelpMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                buttonHelpMouseExited(evt);
+            }
+        });
+        buttonHelp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSaveUseCases1ActionPerformed(evt);
+                buttonHelpActionPerformed(evt);
             }
         });
 
-        btnTraceability.setBackground(new java.awt.Color(0, 204, 255));
+        btnTraceability.setBackground(new java.awt.Color(15, 157, 229));
+        btnTraceability.setFont(new java.awt.Font("Roboto", 1, 14));
         btnTraceability.setForeground(new java.awt.Color(255, 255, 255));
-        btnTraceability.setText("Rastrear");
+        btnTraceability.setText("Traceability");
+        btnTraceability.setToolTipText("Traceability");
+        btnTraceability.setBorder(null);
+        btnTraceability.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnTraceabilityMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnTraceabilityMouseExited(evt);
+            }
+        });
         btnTraceability.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTraceabilityActionPerformed(evt);
@@ -332,15 +361,15 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
             .addGroup(jPanelHeaderLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnTraceability)
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(choiceMatrixTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE)
-                .addComponent(buttonSaveUseCases)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonSaveUseCases1)
+                        .addComponent(choiceMatrixTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
+                .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(buttonHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelHeaderLayout.createSequentialGroup()
@@ -357,8 +386,8 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonSaveUseCases)
-                    .addComponent(buttonSaveUseCases1)
+                    .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
             .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -437,7 +466,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
 
         jtfFilter.setBackground(new java.awt.Color(244, 251, 255));
         jtfFilter.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        jtfFilter.setToolTipText("");
+        jtfFilter.setToolTipText("Seach");
         jtfFilter.setBorder(null);
         jtfFilter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -470,6 +499,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         jButtonAddTracedElement.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jButtonAddTracedElement.setForeground(new java.awt.Color(250, 250, 250));
         jButtonAddTracedElement.setText("Add a new Element");
+        jButtonAddTracedElement.setToolTipText("Add a new Element");
         jButtonAddTracedElement.setBorder(null);
         jButtonAddTracedElement.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -507,8 +537,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAddTracedElement, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanelBackgroundLayout = new javax.swing.GroupLayout(jPanelBackground);
@@ -1110,9 +1139,9 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         //this.saveDocTraceability(tableTraceability);
     }//GEN-LAST:event_buttonSaveUseCasesActionPerformed
 
-    private void buttonSaveUseCases1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveUseCases1ActionPerformed
+    private void buttonHelpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHelpActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_buttonSaveUseCases1ActionPerformed
+    }//GEN-LAST:event_buttonHelpActionPerformed
 
     private void choiceMatrixTraceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_choiceMatrixTraceActionPerformed
         // TODO add your handling code here:
@@ -1155,6 +1184,36 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnTraceabilityActionPerformed
 
+    private void buttonSaveUseCasesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSaveUseCasesMouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        buttonSaveUseCases.setBackground(new java.awt.Color(240, 240, 240));
+    }//GEN-LAST:event_buttonSaveUseCasesMouseEntered
+
+    private void buttonSaveUseCasesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSaveUseCasesMouseExited
+        buttonSaveUseCases.setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(Cursor.DEFAULT_CURSOR);
+    }//GEN-LAST:event_buttonSaveUseCasesMouseExited
+
+    private void btnTraceabilityMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTraceabilityMouseExited
+        btnTraceability.setBackground(new java.awt.Color(15, 157, 229));
+        setCursor(Cursor.DEFAULT_CURSOR);
+    }//GEN-LAST:event_btnTraceabilityMouseExited
+
+    private void btnTraceabilityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTraceabilityMouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        btnTraceability.setBackground(new java.awt.Color(69, 185, 243));
+    }//GEN-LAST:event_btnTraceabilityMouseEntered
+
+    private void buttonHelpMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonHelpMouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        buttonHelp.setBackground(new java.awt.Color(240, 240, 240));
+    }//GEN-LAST:event_buttonHelpMouseEntered
+
+    private void buttonHelpMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonHelpMouseExited
+        buttonHelp.setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(Cursor.DEFAULT_CURSOR);
+    }//GEN-LAST:event_buttonHelpMouseExited
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelTracedElements;
     private javax.swing.JButton bntMenuTraceVertical;
@@ -1166,8 +1225,8 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     private javax.swing.JButton btnTraceability;
     private javax.swing.JButton btnUCIStarView;
     private javax.swing.JButton btnUCViewBpmnBlock;
+    private javax.swing.JButton buttonHelp;
     private javax.swing.JButton buttonSaveUseCases;
-    private javax.swing.JButton buttonSaveUseCases1;
     private javax.swing.JComboBox<String> choiceMatrixTrace;
     private javax.swing.JButton jButtonAddTracedElement;
     private javax.swing.JLabel jLabel1;
@@ -1267,18 +1326,17 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         tableTraceability.setModel(traceabilityInfo);
         tableTraceability.getColumnModel().getColumn(0).setMaxWidth(100);
         tableTraceability.getColumnModel().getColumn(0).setMinWidth(100);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ); 
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
         tableTraceability.getColumnModel().getColumn(2).setMaxWidth(80);
         tableTraceability.getColumnModel().getColumn(2).setMinWidth(80);
         tableTraceability.getColumnModel().getColumn(3).setMaxWidth(240);
-        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);       
+        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);
         tableTraceability.getColumnModel().getColumn(4).setMaxWidth(200);
         tableTraceability.getColumnModel().getColumn(4).setMinWidth(200);
         tableTraceability.getColumnModel().getColumn(5).setMaxWidth(80);
-        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);       
+        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);
         tableTraceability.getColumnModel().getColumn(6).setMaxWidth(80);
         tableTraceability.getColumnModel().getColumn(6).setMinWidth(80);
-
 
         tableTraceability.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer2());
         tableTraceability.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor2(new JTextField()));
@@ -1390,15 +1448,15 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         tableTraceability.setModel(traceabilityInfo);
         tableTraceability.getColumnModel().getColumn(0).setMaxWidth(100);
         tableTraceability.getColumnModel().getColumn(0).setMinWidth(100);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ); 
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
         tableTraceability.getColumnModel().getColumn(2).setMaxWidth(80);
         tableTraceability.getColumnModel().getColumn(2).setMinWidth(80);
         tableTraceability.getColumnModel().getColumn(3).setMaxWidth(240);
-        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);       
+        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);
         tableTraceability.getColumnModel().getColumn(4).setMaxWidth(200);
         tableTraceability.getColumnModel().getColumn(4).setMinWidth(200);
         tableTraceability.getColumnModel().getColumn(5).setMaxWidth(80);
-        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);       
+        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);
         tableTraceability.getColumnModel().getColumn(6).setMaxWidth(80);
         tableTraceability.getColumnModel().getColumn(6).setMinWidth(80);
 
@@ -1524,15 +1582,15 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         tableTraceability.setModel(traceabilityInfo);
         tableTraceability.getColumnModel().getColumn(0).setMaxWidth(100);
         tableTraceability.getColumnModel().getColumn(0).setMinWidth(100);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ); 
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
         tableTraceability.getColumnModel().getColumn(2).setMaxWidth(80);
         tableTraceability.getColumnModel().getColumn(2).setMinWidth(80);
         tableTraceability.getColumnModel().getColumn(3).setMaxWidth(240);
-        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);       
+        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);
         tableTraceability.getColumnModel().getColumn(4).setMaxWidth(200);
         tableTraceability.getColumnModel().getColumn(4).setMinWidth(200);
         tableTraceability.getColumnModel().getColumn(5).setMaxWidth(80);
-        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);       
+        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);
         tableTraceability.getColumnModel().getColumn(6).setMaxWidth(80);
         tableTraceability.getColumnModel().getColumn(6).setMinWidth(80);
 
@@ -1658,15 +1716,15 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         tableTraceability.setModel(traceabilityInfo);
         tableTraceability.getColumnModel().getColumn(0).setMaxWidth(100);
         tableTraceability.getColumnModel().getColumn(0).setMinWidth(100);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ); 
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
         tableTraceability.getColumnModel().getColumn(2).setMaxWidth(80);
         tableTraceability.getColumnModel().getColumn(2).setMinWidth(80);
         tableTraceability.getColumnModel().getColumn(3).setMaxWidth(240);
-        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);       
+        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);
         tableTraceability.getColumnModel().getColumn(4).setMaxWidth(200);
         tableTraceability.getColumnModel().getColumn(4).setMinWidth(200);
         tableTraceability.getColumnModel().getColumn(5).setMaxWidth(80);
-        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);       
+        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);
         tableTraceability.getColumnModel().getColumn(6).setMaxWidth(80);
         tableTraceability.getColumnModel().getColumn(6).setMinWidth(80);
 
@@ -1793,15 +1851,15 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         tableTraceability.setModel(traceabilityInfo);
         tableTraceability.getColumnModel().getColumn(0).setMaxWidth(100);
         tableTraceability.getColumnModel().getColumn(0).setMinWidth(100);
-        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ); 
+        tableTraceability.getColumnModel().getColumn(1).setPreferredWidth(MAXIMIZED_HORIZ);
         tableTraceability.getColumnModel().getColumn(2).setMaxWidth(80);
         tableTraceability.getColumnModel().getColumn(2).setMinWidth(80);
         tableTraceability.getColumnModel().getColumn(3).setMaxWidth(240);
-        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);       
+        tableTraceability.getColumnModel().getColumn(3).setMinWidth(240);
         tableTraceability.getColumnModel().getColumn(4).setMaxWidth(200);
         tableTraceability.getColumnModel().getColumn(4).setMinWidth(200);
         tableTraceability.getColumnModel().getColumn(5).setMaxWidth(80);
-        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);       
+        tableTraceability.getColumnModel().getColumn(5).setMinWidth(80);
         tableTraceability.getColumnModel().getColumn(6).setMaxWidth(80);
         tableTraceability.getColumnModel().getColumn(6).setMinWidth(80);
 

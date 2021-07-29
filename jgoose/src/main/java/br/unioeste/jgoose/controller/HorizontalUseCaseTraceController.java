@@ -288,15 +288,6 @@ public class HorizontalUseCaseTraceController extends AbstractAction {
             LOG.debug("total elements interpreted: " + vertex.size());
             LOG.debug("total links interpreted: " + edges.size());
 
-            traceUCHorizontal = new TraceUCHorizontal();
-            traceUCHorizontal.TraceElementsUCHorizontal();
-
-            if (viewTraceability == null) {
-                viewTraceability = new TraceabilityView(2);
-                viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-            }
-            viewTraceability.updateTableUCHorizontalTraceability();
-            viewTraceability.setVisible(true);
 
         }
 
