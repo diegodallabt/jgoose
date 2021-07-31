@@ -174,7 +174,6 @@ public final class MainView extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
         helpGuidelines = new javax.swing.JMenuItem();
-        helpAbout = new javax.swing.JMenuItem();
         menuAbout = new javax.swing.JMenu();
         menuLes = new javax.swing.JMenu();
 
@@ -786,16 +785,6 @@ public final class MainView extends javax.swing.JFrame {
         });
         menuHelp.add(helpGuidelines);
 
-        helpAbout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
-        helpAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/info_16x16.png"))); // NOI18N
-        helpAbout.setText("About");
-        helpAbout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                helpAboutActionPerformed(evt);
-            }
-        });
-        menuHelp.add(helpAbout);
-
         menuBar.add(menuHelp);
 
         menuAbout.setBackground(new java.awt.Color(11, 113, 165));
@@ -805,6 +794,9 @@ public final class MainView extends javax.swing.JFrame {
         menuAbout.setMargin(new java.awt.Insets(0, 20, 0, 20));
         menuAbout.setOpaque(true);
         menuAbout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuAboutMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 menuAboutMouseEntered(evt);
             }
@@ -902,10 +894,6 @@ public final class MainView extends javax.swing.JFrame {
     private void menuBarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_menuBarFocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_menuBarFocusGained
-
-    private void helpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpAboutActionPerformed
-        this.showAboutDialog();
-    }//GEN-LAST:event_helpAboutActionPerformed
 
     private void helpGuidelinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpGuidelinesActionPerformed
         try {
@@ -1083,6 +1071,10 @@ public final class MainView extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_menuLesMouseClicked
+
+    private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
+        this.showAboutDialog();
+    }//GEN-LAST:event_menuAboutMouseClicked
 
     private static void open(URI uri) {
         if (Desktop.isDesktopSupported()) {
@@ -1383,7 +1375,6 @@ public final class MainView extends javax.swing.JFrame {
     private javax.swing.JButton buttunMappingUseCases;
     private javax.swing.JMenuItem fileOpenTelosFile;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JMenuItem helpAbout;
     private javax.swing.JMenuItem helpGuidelines;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -67,9 +67,10 @@ public class AboutDialogView extends JDialog {
         panel.add(titleLabel, BorderLayout.NORTH);
 
         // Adds optional subtitle
-        JLabel subtitleLabel = new JLabel("Java Goal Into Object Oriented Standard Extension - Versão 2013");
+        JLabel subtitleLabel = new JLabel("Java Goal Into Object Oriented Standard Extension - Version 2021");
         subtitleLabel.setBorder(BorderFactory.createEmptyBorder(4, 18, 0, 0));
         subtitleLabel.setOpaque(false);
+        subtitleLabel.setFont(new java.awt.Font("Roboto", 1, 14));
         panel.add(subtitleLabel, BorderLayout.CENTER);
 
         getContentPane().add(panel, BorderLayout.NORTH);
@@ -77,24 +78,26 @@ public class AboutDialogView extends JDialog {
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
         content.setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
-
-        content.add(new JLabel("Unioeste - Universidade Estadual do Oeste do Paraná"));
-        content.add(new JLabel(" "));
-        content.add(new JLabel("Center of Exact Sciences and Technology"));
-        content.add(new JLabel("College of Computer Science"));
-        content.add(new JLabel(" "));
-        content.add(new JLabel("Development of the E4J BPMN and BP2UC by:"));
-        content.add(new JLabel("   Alysson Nathan Girotto"));
-        content.add(new JLabel("Development of the 2013 Version by:"));
-        content.add(new JLabel("   Diego Peliser"));
-        content.add(new JLabel("Development of the 2011 Version by:"));
-        content.add(new JLabel("   Mauro Brischke"));
-        content.add(new JLabel("Development by:"));
-        content.add(new JLabel("   André Abe Vicente"));
-        content.add(new JLabel(" "));
-        content.add(new JLabel("Leader:"));
-        content.add(new JLabel("   Prof. Dr. Victor Francisco Araya Santander"));
-
+        JLabel contentMidle = new JLabel("<html><body>Unioeste - Universidade Estadual do Oeste do Paraná <br> " 
+                + "<html><body>Center of Exact Sciences and Technology <br>"
+                + "College of Computer Science<br><br>"
+                + "Development of new UI/UX and general improvements by:<br>"
+                + "   Victor Augusto Pozzan<br>"
+                + "Development of traceability by:<br>"
+                + "   Victor Augusto Pozzan<br>"
+                + "Development of the E4J BPMN and BP2UC by:<br>"
+                + "   Alysson Nathan Girottoz<br>"
+                + "Development of the 2013 Version by:<br>"
+                + "   Diego Peliser<br>"
+                + "Development of the 2011 Version by:<br>"
+                + "   Mauro Brischke<br>"
+                + "Development by:<br>"
+                + "   André Abe Vicente<br><br>"
+                + "Leader:<br>"
+                +"   Prof. Dr. Victor Francisco Araya Santander <br></body></html>");
+        content.setFont(new java.awt.Font("Roboto", 1, 16));
+        content.add(contentMidle);
+        
         getContentPane().add(content, BorderLayout.CENTER);
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory
@@ -102,22 +105,8 @@ public class AboutDialogView extends JDialog {
                 .createEmptyBorder(16, 8, 8, 8)));
         getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 
-        // Adds OK button to close window
-        JButton closeButton = new JButton("Close");
-        closeButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-            }
-        });
-
-        buttonPanel.add(closeButton);
-
-        // Sets default button for enter key
-        getRootPane().setDefaultButton(closeButton);
-
         setResizable(false);
-        setSize(400, 400);
+        setSize(600, 500);
     }
 
     /**
