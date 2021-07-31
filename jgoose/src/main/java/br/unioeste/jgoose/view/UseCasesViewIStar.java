@@ -10,6 +10,7 @@ import br.unioeste.jgoose.controller.BPMNController;
 import br.unioeste.jgoose.controller.Controller;
 import br.unioeste.jgoose.controller.EditorWindowListener;
 import br.unioeste.jgoose.controller.HorizontalBPMNTraceController;
+import br.unioeste.jgoose.controller.HorizontalControler;
 import br.unioeste.jgoose.controller.HorizontalIStarTraceController;
 import br.unioeste.jgoose.controller.HorizontalUseCaseTraceController;
 import br.unioeste.jgoose.controller.ImportBPMNGraph;
@@ -57,6 +58,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Action;
 import javax.swing.DefaultCellEditor;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -1006,7 +1008,7 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuHomeActionPerformed
 
     private void btnMenuTraceHorizontalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuTraceHorizontalActionPerformed
-        // TODO add your handling code here:
+        HorizontalControler.openViewTraceabilityHorizontal();
     }//GEN-LAST:event_btnMenuTraceHorizontalActionPerformed
 
     private void btnUCViewBpmnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCViewBpmnActionPerformed
@@ -1238,10 +1240,10 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
             JMenuBar menubar = e4jInstance.getJMenuBar();
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalUseCaseTraceController(e4jInstance)));
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, this, useCasesViewBPMN, 3)));
             fileMenu.add(menuItem1, 3);
             String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(1)));
+            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(E4JiStar, E4JBPMN, E4JUseCases, this, useCasesViewBPMN, 1)));
             fileMenu.add(menuItem2, 3);
         }
         mxGraph graph = generateDiagram();
@@ -1534,11 +1536,11 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
             fileMenu.add(menuItem, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalIStarTraceController(E4JiStar)));
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, this, useCasesViewBPMN, 1)));
             fileMenu.add(menuItem1, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(2)));
+            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(E4JiStar, E4JBPMN, E4JUseCases, this, useCasesViewBPMN, 2)));
             fileMenu.add(menuItem2, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
         }
@@ -1563,11 +1565,11 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
                 JMenuBar menubar = E4JBPMN.getJMenuBar();
                 JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
                 String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-                JMenuItem menuItem1 = new JMenuItem(bpmnEditor.bind(label1, new HorizontalBPMNTraceController(E4JBPMN)));
+                JMenuItem menuItem1 = new JMenuItem(bpmnEditor.bind(label1,  new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, this, useCasesViewBPMN, 2)));
                 fileMenu.add(menuItem1, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);
                 String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-                JMenuItem menuItem2 = new JMenuItem(bpmnEditor.bind(label2, new VerticalTraceController(1)));
+                JMenuItem menuItem2 = new JMenuItem(bpmnEditor.bind(label2, new VerticalTraceController(E4JiStar, E4JBPMN, E4JUseCases, this, useCasesViewBPMN, 1)));
                 fileMenu.add(menuItem2, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);
                 String label = mxResources.get("useCaseMaker", null, "Generate Use Cases");
@@ -1603,7 +1605,7 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
             JMenuBar menubar = E4JUseCases.getJMenuBar();
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalUseCaseTraceController(E4JUseCases)));
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, this, useCasesViewBPMN, 3)));
             fileMenu.add(menuItem1, 3);
         }
         E4JUseCases.setVisible(true);

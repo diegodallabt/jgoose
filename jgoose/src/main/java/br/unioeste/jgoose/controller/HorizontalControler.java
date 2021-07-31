@@ -11,6 +11,8 @@ import br.unioeste.jgoose.TraceabilityHorizontal.TraceUCHorizontal;
 import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.view.TraceabilityView;
 import br.unioeste.jgoose.view.TraceabilityView1;
+import br.unioeste.jgoose.view.UseCasesViewBPMN;
+import br.unioeste.jgoose.view.UseCasesViewIStar;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -38,7 +40,21 @@ public class HorizontalControler extends AbstractAction {
     public static EditorJFrame E4J;
     public static int index = -1;
 
-    public HorizontalControler(EditorJFrame E4J, int type) {
+    private static EditorJFrame E4JiStar = null;
+    private static EditorJFrame E4JUseCases = null;
+    private static EditorJFrame E4JBPMN = null;
+    private static UseCasesViewBPMN useCasesViewBPMN = null;
+    private static UseCasesViewIStar useCasesViewIStar = null;
+
+    public HorizontalControler(EditorJFrame E4JiStar, EditorJFrame E4JBPMN, EditorJFrame E4JUseCases,
+            UseCasesViewIStar useCasesViewIStar, UseCasesViewBPMN useCasesViewBPMN, int type) {
+
+        this.E4JBPMN = E4JBPMN;
+        this.E4JiStar = E4JiStar;
+        this.E4JUseCases = E4JUseCases;
+        this.useCasesViewIStar = useCasesViewIStar;
+        this.useCasesViewBPMN = useCasesViewBPMN;
+
         this.type = type;
         this.E4J = E4J;
         index = -1;
@@ -79,7 +95,7 @@ public class HorizontalControler extends AbstractAction {
                 JOptionPane.showMessageDialog(null, "Sorry! An error occurred");
                 break;
         }
-
+        setVisebleFalse();
         openViewTraceabilityHorizontal();
 
     }
@@ -87,7 +103,8 @@ public class HorizontalControler extends AbstractAction {
     public static void openViewTraceabilityHorizontal() {
         if (index != -1) {
             if (viewTraceability1 == null) {
-                viewTraceability1 = new TraceabilityView1(index);
+                viewTraceability1 = new TraceabilityView1(index, E4JiStar, E4JBPMN, E4JUseCases,
+                        useCasesViewIStar, useCasesViewBPMN);
                 viewTraceability1.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             }
             switch (type) {
@@ -107,6 +124,18 @@ public class HorizontalControler extends AbstractAction {
             viewTraceability1.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "You need Mapping Horizontal first");
+        }
+    }
+
+    private static void setVisebleFalse() {
+        if (E4JBPMN != null) {
+            E4JBPMN.setVisible(false);
+        }
+        if (E4JiStar != null) {
+            E4JiStar.setVisible(false);
+        }
+        if (E4JUseCases != null) {
+            E4JUseCases.setVisible(false);
         }
     }
 }

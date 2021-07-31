@@ -7,10 +7,13 @@ package br.unioeste.jgoose.controller;
 
 import br.unioeste.jgoose.TraceabilityHorizontal.TraceBPMNVertical;
 import br.unioeste.jgoose.TraceabilityHorizontal.TraceIStarVertical;
+import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.model.TokensTraceability;
 import br.unioeste.jgoose.view.Matriz;
 import br.unioeste.jgoose.view.TraceabilityView;
 import br.unioeste.jgoose.view.TraceabilityView1;
+import br.unioeste.jgoose.view.UseCasesViewBPMN;
+import br.unioeste.jgoose.view.UseCasesViewIStar;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -32,6 +35,25 @@ public class VerticalTraceController extends AbstractAction {
     private static TraceabilityView1 viewTraceability = null;
     public static Integer type = null;
     public static int index = -1;
+
+    private static EditorJFrame E4JiStar = null;
+    private static EditorJFrame E4JUseCases = null;
+    private static EditorJFrame E4JBPMN = null;
+    private static UseCasesViewBPMN useCasesViewBPMN = null;
+    private static UseCasesViewIStar useCasesViewIStar = null;
+
+    public VerticalTraceController(EditorJFrame E4JiStar, EditorJFrame E4JBPMN, EditorJFrame E4JUseCases,
+            UseCasesViewIStar useCasesViewIStar, UseCasesViewBPMN useCasesViewBPMN, int i) {
+
+        this.E4JBPMN = E4JBPMN;
+        this.E4JiStar = E4JiStar;
+        this.E4JUseCases = E4JUseCases;
+        this.useCasesViewIStar = useCasesViewIStar;
+        this.useCasesViewBPMN = useCasesViewBPMN;
+
+        VerticalTraceController.type = i;
+        index = -1;
+    }
 
     public static Matriz propertiesMatriz(int indice) {
         String title;
@@ -217,11 +239,6 @@ public class VerticalTraceController extends AbstractAction {
         }
     }
 
-    public VerticalTraceController(int i) {
-        VerticalTraceController.type = i;
-        index = -1;
-    }
-
     public static Integer getType() {
         return type;
     }
@@ -264,13 +281,15 @@ public class VerticalTraceController extends AbstractAction {
         } else {
             JOptionPane.showMessageDialog(null, "You need traceability vertical fisrt");
         }
+        setVisebleFalse();
         openViewTraceabilityVertical();
     }
 
     public static void openViewTraceabilityVertical() {
         if (index != -1) {
             if (viewTraceability == null) {
-                viewTraceability = new TraceabilityView1(index);
+                viewTraceability = new TraceabilityView1(index, E4JiStar, E4JBPMN, E4JUseCases,
+                        useCasesViewIStar, useCasesViewBPMN);
                 viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
             }
             switch (type) {
@@ -286,6 +305,18 @@ public class VerticalTraceController extends AbstractAction {
             viewTraceability.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "You need Mapping Horizontal first");
+        }
+    }
+
+    private static void setVisebleFalse() {
+        if (E4JBPMN != null) {
+            E4JBPMN.setVisible(false);
+        }
+        if (E4JiStar != null) {
+            E4JiStar.setVisible(false);
+        }
+        if (E4JUseCases != null) {
+            E4JUseCases.setVisible(false);
         }
     }
 }

@@ -5,10 +5,7 @@ import br.unioeste.jgoose.controller.Controller;
 import br.unioeste.jgoose.controller.EditorWindowListener;
 import br.unioeste.jgoose.controller.ImportBPMNGraph;
 import br.unioeste.jgoose.controller.ImportIStarGraph;
-import br.unioeste.jgoose.controller.HorizontalBPMNTraceController;
 import br.unioeste.jgoose.controller.HorizontalControler;
-import br.unioeste.jgoose.controller.HorizontalIStarTraceController;
-import br.unioeste.jgoose.controller.HorizontalUseCaseTraceController;
 import br.unioeste.jgoose.controller.VerticalTraceController;
 import br.unioeste.jgoose.e4j.swing.BasicBPMNEditor;
 import br.unioeste.jgoose.e4j.swing.BasicIStarEditor;
@@ -24,8 +21,6 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -54,11 +49,12 @@ import org.apache.log4j.Logger;
  * @Alysson @Girotto
  * @Victor @Augusto Pozzan
  */
-public class MainView extends javax.swing.JFrame {
+public final class MainView extends javax.swing.JFrame {
 
     private TableArtifacts tableArtifacts = null;
     private UseCasesViewBPMN useCasesViewBPMN = null;
     private UseCasesViewIStar useCasesViewIStar = null;
+    private TraceabilityView1 traceabilityView = null;
     private static final Logger LOG = Logger.getLogger("console");
     private EditorJFrame E4JiStar = null;
     private EditorJFrame E4JUseCases = null;
@@ -71,8 +67,28 @@ public class MainView extends javax.swing.JFrame {
 
     /**
      * Creates new form MainView
+     *
+     * @param E4JiStar
+     * @param E4JBPMN
+     * @param useCasesViewIStar
+     * @param E4JUseCases
+     * @param useCasesViewBPMN
      */
+    public MainView(EditorJFrame E4JiStar, EditorJFrame E4JBPMN, EditorJFrame E4JUseCases,
+            UseCasesViewIStar useCasesViewIStar, UseCasesViewBPMN useCasesViewBPMN) {
+        this.E4JBPMN = E4JBPMN;
+        this.E4JiStar = E4JiStar;
+        this.E4JUseCases = E4JUseCases;
+        this.useCasesViewIStar = useCasesViewIStar;
+        this.useCasesViewBPMN = useCasesViewBPMN;
+        initMain();
+    }
+
     public MainView() {
+        initMain();
+    }
+
+    public void initMain() {
         initComponents();
         setLocationRelativeTo(null);
         setIconImage(iconJGOOSE);
@@ -106,7 +122,7 @@ public class MainView extends javax.swing.JFrame {
                 g.setColor(new java.awt.Color(11, 113, 165));
                 g.fillRect(0, 0, c.getWidth(), c.getHeight());
             }
-        });  
+        });
     }
 
     /**
@@ -846,28 +862,21 @@ public class MainView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonHorizontalTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHorizontalTraceabilityActionPerformed
-        HorizontalControler.openViewTraceabilityHorizontal();
-       /* try {
-            this.showTraceability();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        } */
+        int hasTraceability = HorizontalControler.index;
+        if (hasTraceability == -1) {
+            JOptionPane.showMessageDialog(null, "No horizontal traceability was done");
+        } else {
+            this.setVisible(false);
+            HorizontalControler.openViewTraceabilityHorizontal();
+        }
     }//GEN-LAST:event_buttonHorizontalTraceabilityActionPerformed
 
     private void buttonBPMNToUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBPMNToUseCasesActionPerformed
-        try {
-            this.bpmnUCView();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.bpmnUCView();
     }//GEN-LAST:event_buttonBPMNToUseCasesActionPerformed
 
     private void buttunMappingUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesActionPerformed
-        try{
-            this.iStarUCView();
-        } catch (HeadlessException ex){
-             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.iStarUCView();
     }//GEN-LAST:event_buttunMappingUseCasesActionPerformed
 
     private void buttonOpenE4JUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JUseCasesActionPerformed
@@ -990,7 +999,13 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_menuLesMouseExited
 
     private void buttonVerticalTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVerticalTraceabilityActionPerformed
-        VerticalTraceController.openVerticalTraceabilityView();
+        int hasTraceability = VerticalTraceController.index;
+        if (hasTraceability == -1) {
+            JOptionPane.showMessageDialog(null, "No horizontal traceability was done");
+        } else {
+            this.setVisible(false);
+            VerticalTraceController.openVerticalTraceabilityView();
+        }
     }//GEN-LAST:event_buttonVerticalTraceabilityActionPerformed
 
     private void buttonOpenE4JiStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JiStarActionPerformed
@@ -1071,12 +1086,14 @@ public class MainView extends javax.swing.JFrame {
 
     private static void open(URI uri) {
         if (Desktop.isDesktopSupported()) {
-        try {
-            Desktop.getDesktop().browse(uri);
-        } catch (IOException e) { /* TODO: error handling */ }
-        } else { /* TODO: error handling */ }
+            try {
+                Desktop.getDesktop().browse(uri);
+            } catch (IOException e) {
+                /* TODO: error handling */ }
+        } else {
+            /* TODO: error handling */ }
     }
-    
+
     /**
      * Abre uma janela GuidelinesDialogView
      */
@@ -1130,22 +1147,14 @@ public class MainView extends javax.swing.JFrame {
             fileMenu.add(menuItem, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalControler(E4JiStar, 1)));
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 1)));
             fileMenu.add(menuItem1, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(2)));
+            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 2)));
             fileMenu.add(menuItem2, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
 
-            /*String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new HorizontalIStarTraceController(E4JiStar)));
-            fileMenu.add(menuItem2, 3);
-            fileMenu.add(new JPopupMenu.Separator(), 4);*/
-            //diagramMenu.addSeparator();
-            //label = mxResources.get("iStarMLMaker", null, "Gerar iarML");
-            // menu.add(editor.bind(label, new GenerateIStarMLAction()));
-            //menubar.add(diagramMenu);
         }
         Controller.setMainView(this);
         E4JiStar.setVisible(true);
@@ -1169,7 +1178,7 @@ public class MainView extends javax.swing.JFrame {
             JMenuBar menubar = E4JUseCases.getJMenuBar();
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JUseCases, 3)));
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 3)));
             fileMenu.add(menuItem1, 3);
         }
         Controller.setMainView(this);
@@ -1198,11 +1207,11 @@ public class MainView extends javax.swing.JFrame {
                 JMenuBar menubar = E4JBPMN.getJMenuBar();
                 JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
                 String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-                JMenuItem menuItem1 = new JMenuItem(bpmnEditor.bind(label1, new HorizontalControler(E4JBPMN, 2)));
+                JMenuItem menuItem1 = new JMenuItem(bpmnEditor.bind(label1, new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 2)));
                 fileMenu.add(menuItem1, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);
                 String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-                JMenuItem menuItem2 = new JMenuItem(bpmnEditor.bind(label2, new VerticalTraceController(1)));
+                JMenuItem menuItem2 = new JMenuItem(bpmnEditor.bind(label2, new VerticalTraceController(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 1)));
                 fileMenu.add(menuItem2, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);
                 String label = mxResources.get("useCaseMaker", null, "Generate Use Cases");
@@ -1294,7 +1303,6 @@ public class MainView extends javax.swing.JFrame {
     private void bpmnUCView() {
         try {
             if (useCasesViewBPMN == null) {
-                System.out.println("Aqui");
                 useCasesViewBPMN = new UseCasesViewBPMN(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar);
                 useCasesViewBPMN.setIconImage(iconJGOOSE);
                 useCasesViewBPMN.setExtendedState(MAXIMIZED_BOTH);
@@ -1307,16 +1315,10 @@ public class MainView extends javax.swing.JFrame {
             useCasesViewBPMN.setVisible(true);
             this.setVisible(false);
         } catch (Exception e) {
-            StringBuilder sb = new StringBuilder(e.toString());
-            for (StackTraceElement ste : e.getStackTrace()) {
-                sb.append("\n\tat ");
-                sb.append(ste);
-            }
-            String trace = sb.toString();
-            JOptionPane.showMessageDialog(null, trace);
+            JOptionPane.showMessageDialog(null, "No derivation BPMN to Use Cases was performed");
         }
     }
-    
+
     public void iStarUCView() {
         try {
             if (useCasesViewIStar == null) {
@@ -1332,23 +1334,10 @@ public class MainView extends javax.swing.JFrame {
             useCasesViewIStar.setVisible(true);
             this.setVisible(false);
         } catch (Exception e) {
-            StringBuilder sb = new StringBuilder(e.toString());
-            for (StackTraceElement ste : e.getStackTrace()) {
-                sb.append("\n\tat ");
-                sb.append(ste);
-            }
-            String trace = sb.toString();
-            JOptionPane.showMessageDialog(null, trace);
+            JOptionPane.showMessageDialog(null, "No derivation I* to Use Cases was performed");
         }
-        /*
-        if (useCasesView == null) {
-            useCasesView = new UseCasesViewIStar();
-            useCasesView.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        }
-        useCasesView.updateTabel();
-        useCasesView.setVisible(true);*/
     }
-    
+
     /**
      * @param args the command line arguments
      */

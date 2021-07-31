@@ -526,19 +526,14 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="btnMenuBPMN" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="btnMenuUC" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="btnUCIStarView" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="btnUCViewBpmnBlock" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="bntMenuTraceVertical" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="btnMenuiStar" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="btnMenuHome" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
-                      <Component id="btnMenuTraceHorizontal" min="-2" pref="60" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              </Group>
+              <Component id="btnMenuBPMN" min="-2" pref="60" max="-2" attributes="0"/>
+              <Component id="btnMenuUC" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
+              <Component id="btnUCIStarView" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
+              <Component id="bntMenuTraceVertical" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
+              <Component id="btnMenuiStar" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
+              <Component id="btnMenuHome" alignment="0" min="-2" pref="60" max="-2" attributes="0"/>
+              <Component id="btnMenuTraceHorizontal" min="-2" pref="60" max="-2" attributes="0"/>
+              <Component id="btnUCViewBpmn" min="-2" pref="60" max="-2" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -554,9 +549,9 @@
                   <Component id="btnMenuUC" min="-2" pref="60" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="btnUCIStarView" min="-2" pref="60" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="btnUCViewBpmnBlock" min="-2" pref="60" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                  <Component id="btnUCViewBpmn" min="-2" pref="60" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="bntMenuTraceVertical" min="-2" pref="60" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="btnMenuTraceHorizontal" min="-2" pref="60" max="-2" attributes="0"/>
@@ -658,18 +653,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUCIStarViewActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnUCViewBpmnBlock">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/icons/ICON-UC-BPMN.png"/>
-            </Property>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="null"/>
-            </Property>
-            <Property name="enabled" type="boolean" value="false"/>
-            <Property name="opaque" type="boolean" value="false"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JButton" name="bntMenuTraceVertical">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -705,6 +688,26 @@
             <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMenuTraceHorizontalMouseEntered"/>
             <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMenuTraceHorizontalMouseExited"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMenuTraceHorizontalActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnUCViewBpmn">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="a5" green="71" red="b" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/icons/ICON-UC-BPMN.png"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="opaque" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnUCViewBpmnMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnUCViewBpmnMouseExited"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUCViewBpmnActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

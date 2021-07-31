@@ -10,6 +10,7 @@ import br.unioeste.jgoose.controller.BPMNController;
 import br.unioeste.jgoose.controller.Controller;
 import br.unioeste.jgoose.controller.EditorWindowListener;
 import br.unioeste.jgoose.controller.HorizontalBPMNTraceController;
+import br.unioeste.jgoose.controller.HorizontalControler;
 import br.unioeste.jgoose.controller.HorizontalIStarTraceController;
 import br.unioeste.jgoose.controller.HorizontalUseCaseTraceController;
 import br.unioeste.jgoose.controller.ImportBPMNGraph;
@@ -21,7 +22,6 @@ import br.unioeste.jgoose.e4j.swing.BasicUseCasesEditor;
 import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.e4j.swing.menubar.EditorMenuBar;
 import br.unioeste.jgoose.model.TokensTraceability;
-import br.unioeste.jgoose.model.TracedAtorSistema;
 import br.unioeste.jgoose.model.TracedElement;
 import br.unioeste.jgoose.model.UCActor;
 import br.unioeste.jgoose.model.UCUseCase;
@@ -38,7 +38,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,11 +78,9 @@ import com.itextpdf.text.pdf.PdfPTable;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import static java.lang.String.valueOf;
+import javax.swing.Action;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
 
 /**
  *
@@ -98,28 +95,37 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     private ArrayList<String[]> elementTracedReport;
     private Actor selectedActor = null;
     private String selectedCase = "";
+
     private EditorJFrame e4jInstance = null;
     private EditorJFrame E4JiStar = null;
     private EditorJFrame E4JUseCases = null;
     private EditorJFrame E4JBPMN = null;
+    private UseCasesViewBPMN useCasesViewBPMN = null;
     private UseCasesViewIStar useCasesViewIStar = null;
-    private DefaultTableModel tabCasosDeUso = new DefaultTableModel();
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger("console");
+
     private final Image iconJGOOSE = Toolkit.getDefaultToolkit().getImage("./src/main/resources/icons/jgoose.gif");
     private BasicBPMNEditor bpmnEditor;
-    private int flagDelete;
     Font roboto;
 
     /**
      * Creates new form UseCasesView
      *
+     * @param type
      * @param E4JiStar
      * @param E4JBPMN
      * @param E4JUseCases
-     * @param useCasesView
+     * @param useCasesViewIStar
+     * @param useCasesViewBPMN
      */
-    public TraceabilityView1(int type) {
-        this.flagDelete = 2;
+    public TraceabilityView1(int type, EditorJFrame E4JiStar, EditorJFrame E4JBPMN, EditorJFrame E4JUseCases,
+            UseCasesViewIStar useCasesViewIStar, UseCasesViewBPMN useCasesViewBPMN) {
+
+        this.E4JBPMN = E4JBPMN;
+        this.E4JiStar = E4JiStar;
+        this.E4JUseCases = E4JUseCases;
+        this.useCasesViewIStar = useCasesViewIStar;
+        this.useCasesViewBPMN = useCasesViewBPMN;
+
         this.type = type;
         this.elementTracedReport = new ArrayList<>();
         initComponents();
@@ -131,6 +137,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setVisible(true);
         configTraceabilityView();
+        configSideButtons();
     }
 
     private void configTraceabilityView() {
@@ -155,6 +162,14 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 labelTypeTraceability.setText("Vertical Traceability");
                 lista = TraceIStarVertical.getLista();
                 break;
+        }
+    }
+
+    private void configSideButtons() {
+        if (type <= 3) {
+            btnMenuTraceHorizontal.setEnabled(false);
+        } else {
+            bntMenuTraceVertical.setEnabled(false);
         }
     }
 
@@ -256,9 +271,9 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         btnMenuBPMN = new javax.swing.JButton();
         btnMenuUC = new javax.swing.JButton();
         btnUCIStarView = new javax.swing.JButton();
-        btnUCViewBpmnBlock = new javax.swing.JButton();
         bntMenuTraceVertical = new javax.swing.JButton();
         btnMenuTraceHorizontal = new javax.swing.JButton();
+        btnUCViewBpmn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Use Cases");
@@ -649,11 +664,6 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
             }
         });
 
-        btnUCViewBpmnBlock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-BPMN.png"))); // NOI18N
-        btnUCViewBpmnBlock.setBorder(null);
-        btnUCViewBpmnBlock.setEnabled(false);
-        btnUCViewBpmnBlock.setOpaque(false);
-
         bntMenuTraceVertical.setBackground(new java.awt.Color(11, 113, 165));
         bntMenuTraceVertical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-VerticalTraceability.png"))); // NOI18N
         bntMenuTraceVertical.setBorder(null);
@@ -689,21 +699,37 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
             }
         });
 
+        btnUCViewBpmn.setBackground(new java.awt.Color(11, 113, 165));
+        btnUCViewBpmn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-BPMN.png"))); // NOI18N
+        btnUCViewBpmn.setBorder(null);
+        btnUCViewBpmn.setFocusable(false);
+        btnUCViewBpmn.setOpaque(false);
+        btnUCViewBpmn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnUCViewBpmnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnUCViewBpmnMouseExited(evt);
+            }
+        });
+        btnUCViewBpmn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUCViewBpmnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelMenuButtonsLayout = new javax.swing.GroupLayout(jPanelMenuButtons);
         jPanelMenuButtons.setLayout(jPanelMenuButtonsLayout);
         jPanelMenuButtonsLayout.setHorizontalGroup(
             jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMenuButtonsLayout.createSequentialGroup()
-                .addGroup(jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnMenuBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMenuUC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUCIStarView, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUCViewBpmnBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bntMenuTraceVertical, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMenuiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMenuHome, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMenuTraceHorizontal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0))
+            .addComponent(btnMenuBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMenuUC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnUCIStarView, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(bntMenuTraceVertical, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMenuiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMenuHome, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnMenuTraceHorizontal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnUCViewBpmn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanelMenuButtonsLayout.setVerticalGroup(
             jPanelMenuButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -718,9 +744,9 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 .addComponent(btnMenuUC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(btnUCIStarView, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(btnUCViewBpmnBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
+                .addGap(9, 9, 9)
+                .addComponent(btnUCViewBpmn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bntMenuTraceVertical, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(btnMenuTraceHorizontal, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -751,11 +777,14 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     }//GEN-LAST:event_jtfFilterActionPerformed
 
     private void btnMenuHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuHomeActionPerformed
-        dispose();
+        MainView mainView = new MainView(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN);
+        this.setVisible(false);
+        mainView.setVisible(true);
     }//GEN-LAST:event_btnMenuHomeActionPerformed
 
     private void btnMenuTraceHorizontalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuTraceHorizontalActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
+        HorizontalControler.openViewTraceabilityHorizontal();        
     }//GEN-LAST:event_btnMenuTraceHorizontalActionPerformed
 
     private void btnMenuiStarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuiStarMouseEntered
@@ -809,23 +838,31 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUCIStarViewMouseExited
 
     private void bntMenuTraceVerticalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntMenuTraceVerticalMouseEntered
-        setCursor(Cursor.HAND_CURSOR);
-        bntMenuTraceVertical.setBackground(new java.awt.Color(59, 141, 183));
+        if (type <= 3) {
+            setCursor(Cursor.HAND_CURSOR);
+            bntMenuTraceVertical.setBackground(new java.awt.Color(59, 141, 183));
+        }
     }//GEN-LAST:event_bntMenuTraceVerticalMouseEntered
 
     private void bntMenuTraceVerticalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bntMenuTraceVerticalMouseExited
-        setCursor(Cursor.DEFAULT_CURSOR);
-        bntMenuTraceVertical.setBackground(new java.awt.Color(11, 113, 165));
+        if (type <= 3) {
+            setCursor(Cursor.DEFAULT_CURSOR);
+            bntMenuTraceVertical.setBackground(new java.awt.Color(11, 113, 165));
+        }
     }//GEN-LAST:event_bntMenuTraceVerticalMouseExited
 
     private void btnMenuTraceHorizontalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuTraceHorizontalMouseEntered
-        setCursor(Cursor.HAND_CURSOR);
-        btnMenuTraceHorizontal.setBackground(new java.awt.Color(59, 141, 183));
+        if (type > 3) {
+            setCursor(Cursor.HAND_CURSOR);
+            btnMenuTraceHorizontal.setBackground(new java.awt.Color(59, 141, 183));
+        }
     }//GEN-LAST:event_btnMenuTraceHorizontalMouseEntered
 
     private void btnMenuTraceHorizontalMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuTraceHorizontalMouseExited
-        setCursor(Cursor.DEFAULT_CURSOR);
-        btnMenuTraceHorizontal.setBackground(new java.awt.Color(11, 113, 165));
+        if (type > 3) {
+            setCursor(Cursor.DEFAULT_CURSOR);
+            btnMenuTraceHorizontal.setBackground(new java.awt.Color(11, 113, 165));
+        }
     }//GEN-LAST:event_btnMenuTraceHorizontalMouseExited
 
     private void jButtonAddTracedElementMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAddTracedElementMouseEntered
@@ -892,6 +929,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUCIStarViewActionPerformed
 
     private void bntMenuTraceVerticalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntMenuTraceVerticalActionPerformed
+        this.setVisible(false);
         VerticalTraceController.openVerticalTraceabilityView();
     }//GEN-LAST:event_bntMenuTraceVerticalActionPerformed
 
@@ -1214,6 +1252,20 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         setCursor(Cursor.DEFAULT_CURSOR);
     }//GEN-LAST:event_buttonHelpMouseExited
 
+    private void btnUCViewBpmnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUCViewBpmnMouseEntered
+        setCursor(Cursor.HAND_CURSOR);
+        btnUCViewBpmn.setBackground(new java.awt.Color(11, 113, 165));
+    }//GEN-LAST:event_btnUCViewBpmnMouseEntered
+
+    private void btnUCViewBpmnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUCViewBpmnMouseExited
+        setCursor(Cursor.DEFAULT_CURSOR);
+        btnUCViewBpmn.setBackground(new java.awt.Color(59, 141, 183));
+    }//GEN-LAST:event_btnUCViewBpmnMouseExited
+
+    private void btnUCViewBpmnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCViewBpmnActionPerformed
+
+    }//GEN-LAST:event_btnUCViewBpmnActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelTracedElements;
     private javax.swing.JButton bntMenuTraceVertical;
@@ -1224,7 +1276,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
     private javax.swing.JButton btnMenuiStar;
     private javax.swing.JButton btnTraceability;
     private javax.swing.JButton btnUCIStarView;
-    private javax.swing.JButton btnUCViewBpmnBlock;
+    private javax.swing.JButton btnUCViewBpmn;
     private javax.swing.JButton buttonHelp;
     private javax.swing.JButton buttonSaveUseCases;
     private javax.swing.JComboBox<String> choiceMatrixTrace;
@@ -1929,11 +1981,11 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
             fileMenu.add(menuItem, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalIStarTraceController(E4JiStar)));
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 1)));
             fileMenu.add(menuItem1, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(2)));
+            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 2)));
             fileMenu.add(menuItem2, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
         }
@@ -1958,11 +2010,11 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 JMenuBar menubar = E4JBPMN.getJMenuBar();
                 JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
                 String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-                JMenuItem menuItem1 = new JMenuItem(bpmnEditor.bind(label1, new HorizontalBPMNTraceController(E4JBPMN)));
+                JMenuItem menuItem1 = new JMenuItem(bpmnEditor.bind(label1, new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 2)));
                 fileMenu.add(menuItem1, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);
                 String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-                JMenuItem menuItem2 = new JMenuItem(bpmnEditor.bind(label2, new VerticalTraceController(1)));
+                JMenuItem menuItem2 = new JMenuItem(bpmnEditor.bind(label2, new VerticalTraceController(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 1)));
                 fileMenu.add(menuItem2, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);
                 String label = mxResources.get("useCaseMaker", null, "Generate Use Cases");
@@ -1998,7 +2050,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
             JMenuBar menubar = E4JUseCases.getJMenuBar();
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalUseCaseTraceController(E4JUseCases)));
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 3)));
             fileMenu.add(menuItem1, 3);
         }
         E4JUseCases.setVisible(true);
