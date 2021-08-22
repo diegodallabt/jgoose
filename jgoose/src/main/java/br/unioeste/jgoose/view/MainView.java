@@ -153,14 +153,17 @@ public final class MainView extends javax.swing.JFrame {
         jPanel4buttonHorizontalTraceability = new javax.swing.JPanel();
         buttonHorizontalTraceability = new javax.swing.JButton();
         jPanelImages = new javax.swing.JPanel();
-        jLabelImage1 = new javax.swing.JLabel();
-        jLabelImage3 = new javax.swing.JLabel();
-        jLabelImage2 = new javax.swing.JLabel();
-        jLabelImg1 = new javax.swing.JLabel();
-        jLabelImg2 = new javax.swing.JLabel();
-        jLabelImg3 = new javax.swing.JLabel();
         jLabelSubTitleImg2 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        jPanel2 = new javax.swing.JPanel();
+        jLabelImage3 = new javax.swing.JLabel();
+        jLabelImg3 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabelImg2 = new javax.swing.JLabel();
+        jLabelImage2 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabelImage1 = new javax.swing.JLabel();
+        jLabelImg1 = new javax.swing.JLabel();
         jPanelFooter = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -171,7 +174,6 @@ public final class MainView extends javax.swing.JFrame {
         toolsOpenE4JBPMNEditor = new javax.swing.JMenuItem();
         toolsOpenE4JEditor = new javax.swing.JMenuItem();
         toolsOpenE4JUCEditor = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
         helpGuidelines = new javax.swing.JMenuItem();
         menuAbout = new javax.swing.JMenu();
@@ -335,7 +337,7 @@ public final class MainView extends javax.swing.JFrame {
         buttunMappingUseCases.setBackground(new java.awt.Color(255, 255, 255));
         buttunMappingUseCases.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttunMappingUseCases.setForeground(new java.awt.Color(15, 157, 229));
-        buttunMappingUseCases.setText("<html><center>\nUse Cases <br> ( i* )");
+        buttunMappingUseCases.setText("<html><center> Use Cases <br> from i* ");
         buttunMappingUseCases.setToolTipText("Use Cases UML from i*");
         buttunMappingUseCases.setBorder(null);
         buttunMappingUseCases.setBorderPainted(false);
@@ -377,7 +379,7 @@ public final class MainView extends javax.swing.JFrame {
         buttonBPMNToUseCases.setBackground(new java.awt.Color(255, 255, 255));
         buttonBPMNToUseCases.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonBPMNToUseCases.setForeground(new java.awt.Color(15, 157, 229));
-        buttonBPMNToUseCases.setText("<html><center>\nUse Cases <br>  BPMN\n");
+        buttonBPMNToUseCases.setText("<html><center> Use Cases <br> from BPMN ");
         buttonBPMNToUseCases.setToolTipText("Use Cases from BPMN");
         buttonBPMNToUseCases.setBorder(null);
         buttonBPMNToUseCases.setBorderPainted(false);
@@ -559,15 +561,44 @@ public final class MainView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabelImage1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img1-UndrawMind.png"))); // NOI18N
-        jLabelImage1.setIconTextGap(0);
-        jLabelImage1.setMinimumSize(new java.awt.Dimension(1, 1));
+        jLabelSubTitleImg2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jLabelSubTitleImg2.setForeground(new java.awt.Color(71, 92, 84));
+        jLabelSubTitleImg2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelSubTitleImg2.setText("BPMN for Use Cases or i* for Use Cases");
 
         jLabelImage3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelImage3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img3-UndrawSoftwareEngineer.png"))); // NOI18N
         jLabelImage3.setIconTextGap(0);
         jLabelImage3.setMinimumSize(new java.awt.Dimension(1, 1));
+
+        jLabelImg3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabelImg3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelImg3.setText("Requirements traceability ");
+        jLabelImg3.setToolTipText("");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelImg3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelImg3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jLabelImg2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabelImg2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelImg2.setText("Use Case discovering requeriments  ");
 
         jLabelImage2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelImage2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img2-UndrawAnalyze.png"))); // NOI18N
@@ -575,19 +606,51 @@ public final class MainView extends javax.swing.JFrame {
         jLabelImage2.setIconTextGap(0);
         jLabelImage2.setMinimumSize(new java.awt.Dimension(1, 1));
 
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
+            .addComponent(jLabelImg2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelImg2)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jLabelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jLabelImage1.setBackground(new java.awt.Color(204, 204, 204));
+        jLabelImage1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img1-UndrawMind.png"))); // NOI18N
+        jLabelImage1.setIconTextGap(0);
+        jLabelImage1.setMinimumSize(new java.awt.Dimension(1, 1));
+
         jLabelImg1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabelImg1.setText("Create diagrams in BMPN, i* and Use Case");
+        jLabelImg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelImg1.setText("Creating diagrams in BMPN, i* and Use Case");
 
-        jLabelImg2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabelImg2.setText("Discovery requeriments  ");
-
-        jLabelImg3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabelImg3.setText("Traceability your requeriments");
-        jLabelImg3.setToolTipText("");
-
-        jLabelSubTitleImg2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jLabelSubTitleImg2.setForeground(new java.awt.Color(71, 92, 84));
-        jLabelSubTitleImg2.setText("BPMN for Use Case or i* for Use Cases");
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelImg1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelImage1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelImg1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout jPanelImagesLayout = new javax.swing.GroupLayout(jPanelImages);
         jPanelImages.setLayout(jPanelImagesLayout);
@@ -595,50 +658,30 @@ public final class MainView extends javax.swing.JFrame {
             jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelImagesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelImagesLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(368, 368, 368))
-                    .addGroup(jPanelImagesLayout.createSequentialGroup()
-                        .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelImagesLayout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(jLabelImg1)
-                                .addGap(189, 189, 189)
-                                .addComponent(jLabelImg2)
-                                .addGap(222, 222, 222)
-                                .addComponent(jLabelImg3))
-                            .addGroup(jPanelImagesLayout.createSequentialGroup()
-                                .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelImagesLayout.createSequentialGroup()
-                                        .addComponent(jLabelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(71, 71, 71)
-                                        .addComponent(jLabelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelImagesLayout.createSequentialGroup()
-                                        .addComponent(jLabelSubTitleImg2)
-                                        .addGap(47, 47, 47)))
-                                .addGap(71, 71, 71)
-                                .addComponent(jLabelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(368, 368, 368))
+            .addGroup(jPanelImagesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabelSubTitleImg2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelImagesLayout.setVerticalGroup(
             jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelImagesLayout.createSequentialGroup()
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelImg1)
-                    .addComponent(jLabelImg2)
-                    .addComponent(jLabelImg3))
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelSubTitleImg2)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img4-LogoUnioesteLes.png"))); // NOI18N
@@ -748,14 +791,6 @@ public final class MainView extends javax.swing.JFrame {
             }
         });
         menuTools.add(toolsOpenE4JUCEditor);
-
-        jMenuItem1.setText("Tabelas");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        menuTools.add(jMenuItem1);
 
         menuBar.add(menuTools);
 
@@ -936,15 +971,6 @@ public final class MainView extends javax.swing.JFrame {
     private void fileOpenTelosFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileOpenTelosFileActionPerformed
         Controller.openTelosFile();
     }//GEN-LAST:event_fileOpenTelosFileActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        try {
-            this.showArtfactTables();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void menuAboutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseEntered
         menuAbout.setBackground(new java.awt.Color(59, 141, 183));
@@ -1387,8 +1413,10 @@ public final class MainView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelImg2;
     private javax.swing.JLabel jLabelImg3;
     private javax.swing.JLabel jLabelSubTitleImg2;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel4buttonBPMNToUseCases;
     private javax.swing.JPanel jPanel4buttonHorizontalTraceability;
     private javax.swing.JPanel jPanel4buttonOpenE4JBPMN;
