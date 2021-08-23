@@ -1438,4 +1438,8 @@ public final class MainView extends javax.swing.JFrame {
     private javax.swing.JMenuItem toolsOpenE4JUCEditor;
     // End of variables declaration//GEN-END:variables
 
+    public void setE4JiStar(EditorJFrame E4JiStar) {
+        this.E4JiStar = E4JiStar;
+    }
+
 }

@@ -37,7 +37,7 @@ public class ImportIStarGraph extends AbstractAction {
     private static Logger LOG = Logger.getLogger("console");
     //
     private static MainView mainView = new MainView();;
-    private JFrame e4jinstance;
+    private final EditorJFrame E4JiStar;
     private mxGraphComponent component;
     private mxGraph graph;
     private mxIGraphModel model;
@@ -51,8 +51,8 @@ public class ImportIStarGraph extends AbstractAction {
     private Map<mxCell, mxCell> deleteds = new HashMap<>();
     //
 
-    public ImportIStarGraph(EditorJFrame e4jInstace) {
-        this.e4jinstance = e4jInstace;
+    public ImportIStarGraph(EditorJFrame E4JiStar) {
+        this.E4JiStar = E4JiStar;
     }
 
     @Override
@@ -142,8 +142,9 @@ public class ImportIStarGraph extends AbstractAction {
         if (Controller.getSystemActor() != null) {
             Controller.mapUseCases();
             if(Controller.getFlagPreferences()){
+                mainView.setE4JiStar(E4JiStar);
                 mainView.iStarUCView();
-                this.e4jinstance.setVisible(false);
+                this.E4JiStar.setVisible(false);
             }
         } else {
             JOptionPane.showMessageDialog(null, "For Map Use Cases you need select an Actor as a System", "ERROR!", JOptionPane.ERROR_MESSAGE);

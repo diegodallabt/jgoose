@@ -146,18 +146,18 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
     public void updateTable() {
         tabCasosDeUso = new DefaultTableModel();
         tabelUseCases.setAutoResizeMode(MAXIMIZED_HORIZ);
-        tabCasosDeUso.addColumn("ID"); // 0
-        tabCasosDeUso.addColumn("Use Case");
-        tabCasosDeUso.addColumn("Info"); // 2
-        tabCasosDeUso.addColumn("Delete"); // 3       
+        tabCasosDeUso.addColumn(" ID"); // 0
+        tabCasosDeUso.addColumn(" Use Case");
+        tabCasosDeUso.addColumn(" Info"); // 2
+        tabCasosDeUso.addColumn(" Delete"); // 3
         //tabCasosDeUso.addColumn("Included"); //4
         //tabCasosDeUso.addColumn("Guideline"); // 5
         String vetCasosDeUso[] = new String[4];
         int cont = 1;
         // adiciona os dados dos casos de uso no modelo da tabela
         for (UseCase useCase : Controller.getallUseCases()) {
-            vetCasosDeUso[0] = String.valueOf(useCase.getId());
-            vetCasosDeUso[1] = useCase.getName();
+            vetCasosDeUso[0] = " " + String.valueOf(useCase.getId());
+            vetCasosDeUso[1] = " " + useCase.getName();
             vetCasosDeUso[2] = "";
             vetCasosDeUso[3] = "";
             tabCasosDeUso.addRow(vetCasosDeUso);
@@ -173,10 +173,13 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
         }*/
         tabelUseCases.setModel(tabCasosDeUso);
         // seta a largura das colunas da tabela
+        tabelUseCases.getColumnModel().getColumn(0).setMinWidth(40);
         tabelUseCases.getColumnModel().getColumn(0).setMaxWidth(40);
         tabelUseCases.getColumnModel().getColumn(1).setMinWidth(MAXIMIZED_HORIZ);
-        tabelUseCases.getColumnModel().getColumn(2).setMaxWidth(30);
-        tabelUseCases.getColumnModel().getColumn(3).setMaxWidth(30);
+        tabelUseCases.getColumnModel().getColumn(2).setMinWidth(70);
+        tabelUseCases.getColumnModel().getColumn(2).setMaxWidth(80);
+        tabelUseCases.getColumnModel().getColumn(3).setMinWidth(70);
+        tabelUseCases.getColumnModel().getColumn(3).setMaxWidth(80);
 
         tabelUseCases.getColumnModel().getColumn(2).setCellRenderer(new ButtonRenderer());
         tabelUseCases.getColumnModel().getColumn(2).setCellEditor(new ButtonEditor(new JTextField()));
@@ -424,7 +427,6 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
         btnMenuBPMN = new javax.swing.JButton();
         btnMenuUC = new javax.swing.JButton();
         btnUCIStarViewBlock = new javax.swing.JButton();
-        btnUCViewBpmn = new javax.swing.JButton();
         bntMenuTraceVertical = new javax.swing.JButton();
         btnMenuTraceHorizontal = new javax.swing.JButton();
 
@@ -458,8 +460,11 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
             }
         });
 
+        buttonGuidelines.setBackground(new java.awt.Color(255, 255, 255));
         buttonGuidelines.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         buttonGuidelines.setText("Guidelines");
+        buttonGuidelines.setBorder(null);
+        buttonGuidelines.setPreferredSize(new java.awt.Dimension(69, 28));
         buttonGuidelines.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 buttonGuidelinesMouseEntered(evt);
@@ -478,8 +483,11 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
         JLabelUseCasesFromBPMN.setForeground(new java.awt.Color(37, 172, 241));
         JLabelUseCasesFromBPMN.setText("Use Cases Mapped from i*");
 
+        buttonSaveUseCases.setBackground(new java.awt.Color(255, 255, 255));
         buttonSaveUseCases.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         buttonSaveUseCases.setText("Export all Requirements");
+        buttonSaveUseCases.setBorder(null);
+        buttonSaveUseCases.setPreferredSize(new java.awt.Dimension(153, 28));
         buttonSaveUseCases.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 buttonSaveUseCasesMouseEntered(evt);
@@ -548,8 +556,11 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
             .addComponent(labelSearchIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        buttonNFRs.setBackground(new java.awt.Color(255, 255, 255));
         buttonNFRs.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         buttonNFRs.setText("Show NFRs");
+        buttonNFRs.setBorder(null);
+        buttonNFRs.setPreferredSize(new java.awt.Dimension(77, 28));
         buttonNFRs.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 buttonNFRsMouseEntered(evt);
@@ -564,8 +575,11 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
             }
         });
 
+        buttonShowIsas.setBackground(new java.awt.Color(255, 255, 255));
         buttonShowIsas.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         buttonShowIsas.setText("Show Isa's");
+        buttonShowIsas.setBorder(null);
+        buttonShowIsas.setPreferredSize(new java.awt.Dimension(69, 28));
         buttonShowIsas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 buttonShowIsasMouseEntered(evt);
@@ -592,20 +606,20 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JLabelUseCasesFromBPMN))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addComponent(buttonNFRs, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
                         .addComponent(jButtonAddUseCase, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23)
                         .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                        .addComponent(buttonNFRs)
-                        .addGap(10, 10, 10)
-                        .addComponent(buttonShowIsas)
-                        .addGap(10, 10, 10)
-                        .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonGuidelines, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(buttonShowIsas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(buttonGuidelines, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelHeaderLayout.setVerticalGroup(
@@ -630,7 +644,7 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
                     .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(buttonGuidelines, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonNFRs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonNFRs, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(buttonShowIsas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -862,25 +876,6 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
         btnUCIStarViewBlock.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnUCIStarViewBlock.setEnabled(false);
 
-        btnUCViewBpmn.setBackground(new java.awt.Color(11, 113, 165));
-        btnUCViewBpmn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-BPMN.png"))); // NOI18N
-        btnUCViewBpmn.setBorder(null);
-        btnUCViewBpmn.setFocusable(false);
-        btnUCViewBpmn.setOpaque(false);
-        btnUCViewBpmn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnUCViewBpmnMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnUCViewBpmnMouseExited(evt);
-            }
-        });
-        btnUCViewBpmn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUCViewBpmnActionPerformed(evt);
-            }
-        });
-
         bntMenuTraceVertical.setBackground(new java.awt.Color(11, 113, 165));
         bntMenuTraceVertical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-VerticalTraceability.png"))); // NOI18N
         bntMenuTraceVertical.setBorder(null);
@@ -925,7 +920,6 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
                     .addComponent(btnMenuBPMN, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenuUC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUCIStarViewBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUCViewBpmn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bntMenuTraceVertical, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenuiStar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMenuHome, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -945,8 +939,6 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
                 .addComponent(btnMenuUC, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(btnUCIStarViewBlock, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(btnUCViewBpmn, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(bntMenuTraceVertical, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
@@ -1010,14 +1002,6 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
     private void btnMenuTraceHorizontalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuTraceHorizontalActionPerformed
         HorizontalControler.openViewTraceabilityHorizontal();
     }//GEN-LAST:event_btnMenuTraceHorizontalActionPerformed
-
-    private void btnUCViewBpmnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUCViewBpmnActionPerformed
-        try {
-            this.bpmnUCView();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_btnUCViewBpmnActionPerformed
 
     private void btnMenuiStarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuiStarMouseEntered
         setCursor(Cursor.HAND_CURSOR);
@@ -1101,17 +1085,21 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
 
     private void buttonSaveUseCasesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSaveUseCasesMouseEntered
         setCursor(Cursor.HAND_CURSOR);
+        buttonSaveUseCases.setBackground(new java.awt.Color(240, 240, 240));
     }//GEN-LAST:event_buttonSaveUseCasesMouseEntered
 
     private void buttonSaveUseCasesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonSaveUseCasesMouseExited
+        buttonSaveUseCases.setBackground(new java.awt.Color(255, 255, 255));
         setCursor(Cursor.DEFAULT_CURSOR);
     }//GEN-LAST:event_buttonSaveUseCasesMouseExited
 
     private void buttonGuidelinesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelinesMouseEntered
         setCursor(Cursor.HAND_CURSOR);
+        buttonGuidelines.setBackground(new java.awt.Color(240, 240, 240));
     }//GEN-LAST:event_buttonGuidelinesMouseEntered
 
     private void buttonGuidelinesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonGuidelinesMouseExited
+        buttonGuidelines.setBackground(new java.awt.Color(255, 255, 255));
         setCursor(Cursor.DEFAULT_CURSOR);
     }//GEN-LAST:event_buttonGuidelinesMouseExited
 
@@ -1156,11 +1144,13 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
     }//GEN-LAST:event_bntMenuTraceVerticalActionPerformed
 
     private void buttonNFRsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNFRsMouseEntered
-        // TODO add your handling code here:
+        setCursor(Cursor.HAND_CURSOR);
+        buttonNFRs.setBackground(new java.awt.Color(240, 240, 240));
     }//GEN-LAST:event_buttonNFRsMouseEntered
 
     private void buttonNFRsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonNFRsMouseExited
-        // TODO add your handling code here:
+        buttonNFRs.setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(Cursor.DEFAULT_CURSOR);        // TODO add your handling code here:
     }//GEN-LAST:event_buttonNFRsMouseExited
 
     private void buttonNFRsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonNFRsActionPerformed
@@ -1170,11 +1160,13 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonNFRsActionPerformed
 
     private void buttonShowIsasMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonShowIsasMouseEntered
-        // TODO add your handling code here:
+        setCursor(Cursor.HAND_CURSOR);
+        buttonShowIsas.setBackground(new java.awt.Color(240, 240, 240));
     }//GEN-LAST:event_buttonShowIsasMouseEntered
 
     private void buttonShowIsasMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonShowIsasMouseExited
-        // TODO add your handling code here:
+        buttonShowIsas.setBackground(new java.awt.Color(255, 255, 255));
+        setCursor(Cursor.DEFAULT_CURSOR);        // TODO add your handling code here:
     }//GEN-LAST:event_buttonShowIsasMouseExited
 
     private void buttonShowIsasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonShowIsasActionPerformed
@@ -1182,16 +1174,6 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
         ShowISAs info = new ShowISAs(mainView, true);
         info.setVisible(true);
     }//GEN-LAST:event_buttonShowIsasActionPerformed
-
-    private void btnUCViewBpmnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUCViewBpmnMouseEntered
-        setCursor(Cursor.HAND_CURSOR);
-        btnUCViewBpmn.setBackground(new java.awt.Color(59, 141, 183));
-    }//GEN-LAST:event_btnUCViewBpmnMouseEntered
-
-    private void btnUCViewBpmnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUCViewBpmnMouseExited
-        setCursor(Cursor.DEFAULT_CURSOR);
-        btnUCViewBpmn.setBackground(new java.awt.Color(11, 113, 165));
-    }//GEN-LAST:event_btnUCViewBpmnMouseExited
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelUseCasesFromBPMN;
@@ -1202,7 +1184,6 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
     private javax.swing.JButton btnMenuUC;
     private javax.swing.JButton btnMenuiStar;
     private javax.swing.JButton btnUCIStarViewBlock;
-    private javax.swing.JButton btnUCViewBpmn;
     private javax.swing.JButton buttonDiagram;
     private javax.swing.JButton buttonExportThisSpecification;
     private javax.swing.JButton buttonGuidelines;
