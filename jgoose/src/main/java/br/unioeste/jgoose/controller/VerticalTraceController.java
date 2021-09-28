@@ -7,9 +7,13 @@ package br.unioeste.jgoose.controller;
 
 import br.unioeste.jgoose.TraceabilityHorizontal.TraceBPMNVertical;
 import br.unioeste.jgoose.TraceabilityHorizontal.TraceIStarVertical;
+import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.model.TokensTraceability;
 import br.unioeste.jgoose.view.Matriz;
 import br.unioeste.jgoose.view.TraceabilityView;
+import br.unioeste.jgoose.view.TraceabilityView1;
+import br.unioeste.jgoose.view.UseCasesViewBPMN;
+import br.unioeste.jgoose.view.UseCasesViewIStar;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -24,8 +28,32 @@ import javax.swing.JOptionPane;
 public class VerticalTraceController extends AbstractAction {
 
     private static TraceBPMNVertical traceBPMNVertical;
+
     private static TraceIStarVertical traceIStarVertical;
     private static TokensTraceability tokensTraceability;
+    //private static TraceabilityView viewTraceability = null;
+    private static TraceabilityView1 viewTraceability = null;
+    public static Integer type = null;
+    public static int index = -1;
+
+    private static EditorJFrame E4JiStar = null;
+    private static EditorJFrame E4JUseCases = null;
+    private static EditorJFrame E4JBPMN = null;
+    private static UseCasesViewBPMN useCasesViewBPMN = null;
+    private static UseCasesViewIStar useCasesViewIStar = null;
+
+    public VerticalTraceController(EditorJFrame E4JiStar, EditorJFrame E4JBPMN, EditorJFrame E4JUseCases,
+            UseCasesViewIStar useCasesViewIStar, UseCasesViewBPMN useCasesViewBPMN, int i) {
+
+        this.E4JBPMN = E4JBPMN;
+        this.E4JiStar = E4JiStar;
+        this.E4JUseCases = E4JUseCases;
+        this.useCasesViewIStar = useCasesViewIStar;
+        this.useCasesViewBPMN = useCasesViewBPMN;
+
+        VerticalTraceController.type = i;
+        index = -1;
+    }
 
     public static Matriz propertiesMatriz(int indice) {
         String title;
@@ -211,14 +239,6 @@ public class VerticalTraceController extends AbstractAction {
         }
     }
 
-    private static TraceabilityView viewTraceability = null;
-
-    public static Integer type = null;
-
-    public VerticalTraceController(int i) {
-        VerticalTraceController.type = i;
-    }
-
     public static Integer getType() {
         return type;
     }
@@ -237,47 +257,67 @@ public class VerticalTraceController extends AbstractAction {
     }
 
     public static void openVerticalTraceabilityView() {
-        System.out.println("TYPE:"+type);
         if (type != null) {
+            System.out.println("TYPE: "+ type);
             switch (type) {
                 case 1://rastreabilidade vertical BPMN to UC
-                    System.out.println("FLAG");
-                    System.out.println(BPMNController.getFlagMapUseCases());
                     if (BPMNController.getFlagMapUseCases()) {
                         traceBPMNVertical = new TraceBPMNVertical();
                         traceBPMNVertical.TraceElementsBPMNVertical();
-
-                        if (viewTraceability == null) {
-                            viewTraceability = new TraceabilityView(4);
-                            viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                        }
-                        viewTraceability.updateTableVerticalBPMNtoUCTraceability();
-                        viewTraceability.setVisible(true);
+                        index = 4;
                     } else {
                         JOptionPane.showMessageDialog(null, "YOU NEED FIRST MAPPING BPMN to Use Cases");
                     }
-
                     break;
                 case 2://rastreabilidade vertical i* to UC 
                     if (Controller.getFlagMapUseCases()) {
                         traceIStarVertical = new TraceIStarVertical();
                         traceIStarVertical.TraceElementsIStarVertical();
-
-                        if (viewTraceability == null) {
-                            viewTraceability = new TraceabilityView(5);
-                            viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                        }
-                        viewTraceability.updateTableVerticalIStartoUCTraceability();
-                        viewTraceability.setVisible(true);
+                        index = 5;
                     } else {
                         JOptionPane.showMessageDialog(null, "YOU NEED FIRST MAPPING i* to Use Cases");
                     }
-
                     break;
             }
         } else {
             JOptionPane.showMessageDialog(null, "You need traceability vertical fisrt");
         }
+        setVisebleFalse();
+        openViewTraceabilityVertical();
     }
 
+    public static void openViewTraceabilityVertical() {
+        if (index != -1) {
+            if (viewTraceability == null) {
+                viewTraceability = new TraceabilityView1(index, E4JiStar, E4JBPMN, E4JUseCases,
+                        useCasesViewIStar, useCasesViewBPMN);
+                viewTraceability.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            }
+            switch (type) {
+                case 1: //rastreabilidade vertical BPMN to UC                    
+                    viewTraceability.updateTableVerticalBPMNtoUCTraceability();
+                    break;
+
+                case 2: //rastreabilidade vertical i* to UC
+                    viewTraceability.updateTableVerticalIStartoUCTraceability();
+                    break;
+            }
+            viewTraceability.atualizeType(index);
+            viewTraceability.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "You need Mapping Vertical first");
+        }
+    }
+
+    private static void setVisebleFalse() {
+        if (E4JBPMN != null) {
+            E4JBPMN.setVisible(false);
+        }
+        if (E4JiStar != null) {
+            E4JiStar.setVisible(false);
+        }
+        if (E4JUseCases != null) {
+            E4JUseCases.setVisible(false);
+        }
+    }
 }

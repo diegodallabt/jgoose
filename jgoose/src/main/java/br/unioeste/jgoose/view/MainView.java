@@ -5,10 +5,7 @@ import br.unioeste.jgoose.controller.Controller;
 import br.unioeste.jgoose.controller.EditorWindowListener;
 import br.unioeste.jgoose.controller.ImportBPMNGraph;
 import br.unioeste.jgoose.controller.ImportIStarGraph;
-import br.unioeste.jgoose.controller.HorizontalBPMNTraceController;
 import br.unioeste.jgoose.controller.HorizontalControler;
-import br.unioeste.jgoose.controller.HorizontalIStarTraceController;
-import br.unioeste.jgoose.controller.HorizontalUseCaseTraceController;
 import br.unioeste.jgoose.controller.VerticalTraceController;
 import br.unioeste.jgoose.e4j.swing.BasicBPMNEditor;
 import br.unioeste.jgoose.e4j.swing.BasicIStarEditor;
@@ -16,6 +13,7 @@ import br.unioeste.jgoose.e4j.swing.BasicUseCasesEditor;
 import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.e4j.swing.menubar.EditorMenuBar;
 import com.mxgraph.util.mxResources;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
@@ -27,6 +25,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import javax.swing.Action;
@@ -50,11 +49,12 @@ import org.apache.log4j.Logger;
  * @Alysson @Girotto
  * @Victor @Augusto Pozzan
  */
-public class MainView extends javax.swing.JFrame {
+public final class MainView extends javax.swing.JFrame {
 
     private TableArtifacts tableArtifacts = null;
     private UseCasesViewBPMN useCasesViewBPMN = null;
     private UseCasesViewIStar useCasesViewIStar = null;
+    private TraceabilityView1 traceabilityView = null;
     private static final Logger LOG = Logger.getLogger("console");
     private EditorJFrame E4JiStar = null;
     private EditorJFrame E4JUseCases = null;
@@ -67,8 +67,28 @@ public class MainView extends javax.swing.JFrame {
 
     /**
      * Creates new form MainView
+     *
+     * @param E4JiStar
+     * @param E4JBPMN
+     * @param useCasesViewIStar
+     * @param E4JUseCases
+     * @param useCasesViewBPMN
      */
+    public MainView(EditorJFrame E4JiStar, EditorJFrame E4JBPMN, EditorJFrame E4JUseCases,
+            UseCasesViewIStar useCasesViewIStar, UseCasesViewBPMN useCasesViewBPMN) {
+        this.E4JBPMN = E4JBPMN;
+        this.E4JiStar = E4JiStar;
+        this.E4JUseCases = E4JUseCases;
+        this.useCasesViewIStar = useCasesViewIStar;
+        this.useCasesViewBPMN = useCasesViewBPMN;
+        initMain();
+    }
+
     public MainView() {
+        initMain();
+    }
+
+    public void initMain() {
         initComponents();
         setLocationRelativeTo(null);
         setIconImage(iconJGOOSE);
@@ -102,7 +122,7 @@ public class MainView extends javax.swing.JFrame {
                 g.setColor(new java.awt.Color(11, 113, 165));
                 g.fillRect(0, 0, c.getWidth(), c.getHeight());
             }
-        });  
+        });
     }
 
     /**
@@ -133,14 +153,17 @@ public class MainView extends javax.swing.JFrame {
         jPanel4buttonHorizontalTraceability = new javax.swing.JPanel();
         buttonHorizontalTraceability = new javax.swing.JButton();
         jPanelImages = new javax.swing.JPanel();
-        jLabelImage1 = new javax.swing.JLabel();
-        jLabelImage3 = new javax.swing.JLabel();
-        jLabelImage2 = new javax.swing.JLabel();
-        jLabelImg1 = new javax.swing.JLabel();
-        jLabelImg2 = new javax.swing.JLabel();
-        jLabelImg3 = new javax.swing.JLabel();
         jLabelSubTitleImg2 = new javax.swing.JLabel();
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        jPanel2 = new javax.swing.JPanel();
+        jLabelImage3 = new javax.swing.JLabel();
+        jLabelImg3 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabelImg2 = new javax.swing.JLabel();
+        jLabelImage2 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabelImage1 = new javax.swing.JLabel();
+        jLabelImg1 = new javax.swing.JLabel();
         jPanelFooter = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -151,10 +174,8 @@ public class MainView extends javax.swing.JFrame {
         toolsOpenE4JBPMNEditor = new javax.swing.JMenuItem();
         toolsOpenE4JEditor = new javax.swing.JMenuItem();
         toolsOpenE4JUCEditor = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
         helpGuidelines = new javax.swing.JMenuItem();
-        helpAbout = new javax.swing.JMenuItem();
         menuAbout = new javax.swing.JMenu();
         menuLes = new javax.swing.JMenu();
 
@@ -316,7 +337,7 @@ public class MainView extends javax.swing.JFrame {
         buttunMappingUseCases.setBackground(new java.awt.Color(255, 255, 255));
         buttunMappingUseCases.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttunMappingUseCases.setForeground(new java.awt.Color(15, 157, 229));
-        buttunMappingUseCases.setText("<html><center>\nUse Cases <br> ( i* )");
+        buttunMappingUseCases.setText("<html><center> Use Cases <br> from i* ");
         buttunMappingUseCases.setToolTipText("Use Cases UML from i*");
         buttunMappingUseCases.setBorder(null);
         buttunMappingUseCases.setBorderPainted(false);
@@ -358,7 +379,7 @@ public class MainView extends javax.swing.JFrame {
         buttonBPMNToUseCases.setBackground(new java.awt.Color(255, 255, 255));
         buttonBPMNToUseCases.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonBPMNToUseCases.setForeground(new java.awt.Color(15, 157, 229));
-        buttonBPMNToUseCases.setText("<html><center>\nUse Cases <br>  BPMN\n");
+        buttonBPMNToUseCases.setText("<html><center> Use Cases <br> from BPMN ");
         buttonBPMNToUseCases.setToolTipText("Use Cases from BPMN");
         buttonBPMNToUseCases.setBorder(null);
         buttonBPMNToUseCases.setBorderPainted(false);
@@ -540,15 +561,44 @@ public class MainView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabelImage1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img1-UndrawMind.png"))); // NOI18N
-        jLabelImage1.setIconTextGap(0);
-        jLabelImage1.setMinimumSize(new java.awt.Dimension(1, 1));
+        jLabelSubTitleImg2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
+        jLabelSubTitleImg2.setForeground(new java.awt.Color(71, 92, 84));
+        jLabelSubTitleImg2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelSubTitleImg2.setText("BPMN for Use Cases or i* for Use Cases");
 
         jLabelImage3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelImage3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img3-UndrawSoftwareEngineer.png"))); // NOI18N
         jLabelImage3.setIconTextGap(0);
         jLabelImage3.setMinimumSize(new java.awt.Dimension(1, 1));
+
+        jLabelImg3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabelImg3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelImg3.setText("Requirements traceability ");
+        jLabelImg3.setToolTipText("");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelImg3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelImg3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jLabelImg2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        jLabelImg2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelImg2.setText("Use Case discovering requeriments  ");
 
         jLabelImage2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelImage2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img2-UndrawAnalyze.png"))); // NOI18N
@@ -556,19 +606,51 @@ public class MainView extends javax.swing.JFrame {
         jLabelImage2.setIconTextGap(0);
         jLabelImage2.setMinimumSize(new java.awt.Dimension(1, 1));
 
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addComponent(jLabelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26))
+            .addComponent(jLabelImg2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelImg2)
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addComponent(jLabelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        jLabelImage1.setBackground(new java.awt.Color(204, 204, 204));
+        jLabelImage1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelImage1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img1-UndrawMind.png"))); // NOI18N
+        jLabelImage1.setIconTextGap(0);
+        jLabelImage1.setMinimumSize(new java.awt.Dimension(1, 1));
+
         jLabelImg1.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabelImg1.setText("Create diagrams in BMPN, i* and Use Case");
+        jLabelImg1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelImg1.setText("Creating diagrams in BMPN, i* and Use Case");
 
-        jLabelImg2.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabelImg2.setText("Discovery requeriments  ");
-
-        jLabelImg3.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        jLabelImg3.setText("Traceability your requeriments");
-        jLabelImg3.setToolTipText("");
-
-        jLabelSubTitleImg2.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        jLabelSubTitleImg2.setForeground(new java.awt.Color(71, 92, 84));
-        jLabelSubTitleImg2.setText("BPMN for Use Case or i* for Use Cases");
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabelImg1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelImage1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabelImg1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
         javax.swing.GroupLayout jPanelImagesLayout = new javax.swing.GroupLayout(jPanelImages);
         jPanelImages.setLayout(jPanelImagesLayout);
@@ -576,50 +658,30 @@ public class MainView extends javax.swing.JFrame {
             jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelImagesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelImagesLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(368, 368, 368))
-                    .addGroup(jPanelImagesLayout.createSequentialGroup()
-                        .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelImagesLayout.createSequentialGroup()
-                                .addGap(21, 21, 21)
-                                .addComponent(jLabelImg1)
-                                .addGap(189, 189, 189)
-                                .addComponent(jLabelImg2)
-                                .addGap(222, 222, 222)
-                                .addComponent(jLabelImg3))
-                            .addGroup(jPanelImagesLayout.createSequentialGroup()
-                                .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelImagesLayout.createSequentialGroup()
-                                        .addComponent(jLabelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(71, 71, 71)
-                                        .addComponent(jLabelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelImagesLayout.createSequentialGroup()
-                                        .addComponent(jLabelSubTitleImg2)
-                                        .addGap(47, 47, 47)))
-                                .addGap(71, 71, 71)
-                                .addComponent(jLabelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(368, 368, 368))
+            .addGroup(jPanelImagesLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabelSubTitleImg2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelImagesLayout.setVerticalGroup(
             jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelImagesLayout.createSequentialGroup()
                 .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelImg1)
-                    .addComponent(jLabelImg2)
-                    .addComponent(jLabelImg3))
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelImagesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabelImage2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelImage3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelSubTitleImg2)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/img4-LogoUnioesteLes.png"))); // NOI18N
@@ -730,14 +792,6 @@ public class MainView extends javax.swing.JFrame {
         });
         menuTools.add(toolsOpenE4JUCEditor);
 
-        jMenuItem1.setText("Tabelas");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        menuTools.add(jMenuItem1);
-
         menuBar.add(menuTools);
 
         menuHelp.setBackground(new java.awt.Color(11, 113, 165));
@@ -766,16 +820,6 @@ public class MainView extends javax.swing.JFrame {
         });
         menuHelp.add(helpGuidelines);
 
-        helpAbout.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
-        helpAbout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/info_16x16.png"))); // NOI18N
-        helpAbout.setText("About");
-        helpAbout.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                helpAboutActionPerformed(evt);
-            }
-        });
-        menuHelp.add(helpAbout);
-
         menuBar.add(menuHelp);
 
         menuAbout.setBackground(new java.awt.Color(11, 113, 165));
@@ -785,6 +829,9 @@ public class MainView extends javax.swing.JFrame {
         menuAbout.setMargin(new java.awt.Insets(0, 20, 0, 20));
         menuAbout.setOpaque(true);
         menuAbout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuAboutMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 menuAboutMouseEntered(evt);
             }
@@ -801,6 +848,9 @@ public class MainView extends javax.swing.JFrame {
         menuLes.setMargin(new java.awt.Insets(0, 20, 0, 20));
         menuLes.setOpaque(true);
         menuLes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuLesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 menuLesMouseEntered(evt);
             }
@@ -839,28 +889,21 @@ public class MainView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonHorizontalTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonHorizontalTraceabilityActionPerformed
-        HorizontalControler.openViewTraceabilityHorizontal();
-       /* try {
-            this.showTraceability();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        } */
+        int hasTraceability = HorizontalControler.index;
+        if (hasTraceability == -1) {
+            JOptionPane.showMessageDialog(null, "No horizontal traceability was done");
+        } else {
+            this.setVisible(false);
+            HorizontalControler.openViewTraceabilityHorizontal();
+        }
     }//GEN-LAST:event_buttonHorizontalTraceabilityActionPerformed
 
     private void buttonBPMNToUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBPMNToUseCasesActionPerformed
-        try {
-            this.bpmnUCView();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.bpmnUCView();
     }//GEN-LAST:event_buttonBPMNToUseCasesActionPerformed
 
     private void buttunMappingUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttunMappingUseCasesActionPerformed
-        try{
-            this.iStarUCView();
-        } catch (HeadlessException ex){
-             java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.iStarUCView();
     }//GEN-LAST:event_buttunMappingUseCasesActionPerformed
 
     private void buttonOpenE4JUseCasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JUseCasesActionPerformed
@@ -886,10 +929,6 @@ public class MainView extends javax.swing.JFrame {
     private void menuBarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_menuBarFocusGained
         // TODO add your handling code here:
     }//GEN-LAST:event_menuBarFocusGained
-
-    private void helpAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpAboutActionPerformed
-        this.showAboutDialog();
-    }//GEN-LAST:event_helpAboutActionPerformed
 
     private void helpGuidelinesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpGuidelinesActionPerformed
         try {
@@ -933,15 +972,6 @@ public class MainView extends javax.swing.JFrame {
         Controller.openTelosFile();
     }//GEN-LAST:event_fileOpenTelosFileActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        try {
-            this.showArtfactTables();
-        } catch (HeadlessException ex) {
-            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
     private void menuAboutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseEntered
         menuAbout.setBackground(new java.awt.Color(59, 141, 183));
     }//GEN-LAST:event_menuAboutMouseEntered
@@ -983,7 +1013,13 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_menuLesMouseExited
 
     private void buttonVerticalTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVerticalTraceabilityActionPerformed
-        VerticalTraceController.openVerticalTraceabilityView();
+        int hasTraceability = VerticalTraceController.index;
+        if (hasTraceability == -1) {
+            JOptionPane.showMessageDialog(null, "No vertical traceability was done");
+        } else {
+            this.setVisible(false);
+            VerticalTraceController.openVerticalTraceabilityView();
+        }
     }//GEN-LAST:event_buttonVerticalTraceabilityActionPerformed
 
     private void buttonOpenE4JiStarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenE4JiStarActionPerformed
@@ -1052,6 +1088,30 @@ public class MainView extends javax.swing.JFrame {
         buttonHorizontalTraceability.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_buttonHorizontalTraceabilityMouseExited
 
+    private void menuLesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuLesMouseClicked
+        URI lesURI;
+        try {
+            lesURI = new URI("https://www.inf.unioeste.br/les/index.php/listamembros");
+            open(lesURI);
+        } catch (URISyntaxException ex) {
+            java.util.logging.Logger.getLogger(MainView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_menuLesMouseClicked
+
+    private void menuAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAboutMouseClicked
+        this.showAboutDialog();
+    }//GEN-LAST:event_menuAboutMouseClicked
+
+    private static void open(URI uri) {
+        if (Desktop.isDesktopSupported()) {
+            try {
+                Desktop.getDesktop().browse(uri);
+            } catch (IOException e) {
+                /* TODO: error handling */ }
+        } else {
+            /* TODO: error handling */ }
+    }
+
     /**
      * Abre uma janela GuidelinesDialogView
      */
@@ -1105,22 +1165,14 @@ public class MainView extends javax.swing.JFrame {
             fileMenu.add(menuItem, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalControler(E4JiStar, 1)));
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 1)));
             fileMenu.add(menuItem1, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(2)));
+            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 2)));
             fileMenu.add(menuItem2, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
 
-            /*String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new HorizontalIStarTraceController(E4JiStar)));
-            fileMenu.add(menuItem2, 3);
-            fileMenu.add(new JPopupMenu.Separator(), 4);*/
-            //diagramMenu.addSeparator();
-            //label = mxResources.get("iStarMLMaker", null, "Gerar iarML");
-            // menu.add(editor.bind(label, new GenerateIStarMLAction()));
-            //menubar.add(diagramMenu);
         }
         Controller.setMainView(this);
         E4JiStar.setVisible(true);
@@ -1144,7 +1196,7 @@ public class MainView extends javax.swing.JFrame {
             JMenuBar menubar = E4JUseCases.getJMenuBar();
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JUseCases, 3)));
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 3)));
             fileMenu.add(menuItem1, 3);
         }
         Controller.setMainView(this);
@@ -1173,11 +1225,11 @@ public class MainView extends javax.swing.JFrame {
                 JMenuBar menubar = E4JBPMN.getJMenuBar();
                 JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
                 String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
-                JMenuItem menuItem1 = new JMenuItem(bpmnEditor.bind(label1, new HorizontalControler(E4JBPMN, 2)));
+                JMenuItem menuItem1 = new JMenuItem(bpmnEditor.bind(label1, new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 2)));
                 fileMenu.add(menuItem1, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);
                 String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
-                JMenuItem menuItem2 = new JMenuItem(bpmnEditor.bind(label2, new VerticalTraceController(1)));
+                JMenuItem menuItem2 = new JMenuItem(bpmnEditor.bind(label2, new VerticalTraceController(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 1)));
                 fileMenu.add(menuItem2, 3);
                 fileMenu.add(new JPopupMenu.Separator(), 4);
                 String label = mxResources.get("useCaseMaker", null, "Generate Use Cases");
@@ -1269,7 +1321,6 @@ public class MainView extends javax.swing.JFrame {
     private void bpmnUCView() {
         try {
             if (useCasesViewBPMN == null) {
-                System.out.println("Aqui");
                 useCasesViewBPMN = new UseCasesViewBPMN(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar);
                 useCasesViewBPMN.setIconImage(iconJGOOSE);
                 useCasesViewBPMN.setExtendedState(MAXIMIZED_BOTH);
@@ -1282,16 +1333,10 @@ public class MainView extends javax.swing.JFrame {
             useCasesViewBPMN.setVisible(true);
             this.setVisible(false);
         } catch (Exception e) {
-            StringBuilder sb = new StringBuilder(e.toString());
-            for (StackTraceElement ste : e.getStackTrace()) {
-                sb.append("\n\tat ");
-                sb.append(ste);
-            }
-            String trace = sb.toString();
-            JOptionPane.showMessageDialog(null, trace);
+            JOptionPane.showMessageDialog(null, "No derivation BPMN to Use Cases was performed");
         }
     }
-    
+
     public void iStarUCView() {
         try {
             if (useCasesViewIStar == null) {
@@ -1307,23 +1352,10 @@ public class MainView extends javax.swing.JFrame {
             useCasesViewIStar.setVisible(true);
             this.setVisible(false);
         } catch (Exception e) {
-            StringBuilder sb = new StringBuilder(e.toString());
-            for (StackTraceElement ste : e.getStackTrace()) {
-                sb.append("\n\tat ");
-                sb.append(ste);
-            }
-            String trace = sb.toString();
-            JOptionPane.showMessageDialog(null, trace);
+            JOptionPane.showMessageDialog(null, "No derivation I* to Use Cases was performed");
         }
-        /*
-        if (useCasesView == null) {
-            useCasesView = new UseCasesViewIStar();
-            useCasesView.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-        }
-        useCasesView.updateTabel();
-        useCasesView.setVisible(true);*/
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -1369,7 +1401,6 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton buttunMappingUseCases;
     private javax.swing.JMenuItem fileOpenTelosFile;
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JMenuItem helpAbout;
     private javax.swing.JMenuItem helpGuidelines;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -1382,8 +1413,10 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelImg2;
     private javax.swing.JLabel jLabelImg3;
     private javax.swing.JLabel jLabelSubTitleImg2;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel4buttonBPMNToUseCases;
     private javax.swing.JPanel jPanel4buttonHorizontalTraceability;
     private javax.swing.JPanel jPanel4buttonOpenE4JBPMN;
@@ -1404,5 +1437,9 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JMenuItem toolsOpenE4JEditor;
     private javax.swing.JMenuItem toolsOpenE4JUCEditor;
     // End of variables declaration//GEN-END:variables
+
+    public void setE4JiStar(EditorJFrame E4JiStar) { 
+        this.E4JiStar = E4JiStar;
+    }
 
 }

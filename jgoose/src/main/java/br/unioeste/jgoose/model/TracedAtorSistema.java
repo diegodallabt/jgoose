@@ -25,12 +25,12 @@ public class TracedAtorSistema extends TracedElement{
     private static int sequence = 0;
   
     public TracedAtorSistema(String code, String label) {
-        this.listConcflicts = new ArrayList<>();
+         this.listConcflicts = new ArrayList<>();
         this.code = code;
         this.label = label;
         this.id = sequence++;
         this.abreviacao = "[AS "+id+"]";
-    } 
+    }
     
     public TracedAtorSistema(){
         this.listConcflicts = new ArrayList<>();
@@ -41,7 +41,7 @@ public class TracedAtorSistema extends TracedElement{
         this.model = null;
         this.abreviacao = "[AS "+id+"]";
     }
-  
+
     @Override
     public Integer getId(){
         return id;
