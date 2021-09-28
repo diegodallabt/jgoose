@@ -1015,7 +1015,7 @@ public final class MainView extends javax.swing.JFrame {
     private void buttonVerticalTraceabilityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonVerticalTraceabilityActionPerformed
         int hasTraceability = VerticalTraceController.index;
         if (hasTraceability == -1) {
-            JOptionPane.showMessageDialog(null, "No horizontal traceability was done");
+            JOptionPane.showMessageDialog(null, "No vertical traceability was done");
         } else {
             this.setVisible(false);
             VerticalTraceController.openVerticalTraceabilityView();
@@ -1438,7 +1438,7 @@ public final class MainView extends javax.swing.JFrame {
     private javax.swing.JMenuItem toolsOpenE4JUCEditor;
     // End of variables declaration//GEN-END:variables
 
-    public void setE4JiStar(EditorJFrame E4JiStar) {
+    public void setE4JiStar(EditorJFrame E4JiStar) { 
         this.E4JiStar = E4JiStar;
     }
 

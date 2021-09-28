@@ -485,7 +485,7 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
 
         buttonSaveUseCases.setBackground(new java.awt.Color(255, 255, 255));
         buttonSaveUseCases.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        buttonSaveUseCases.setText("Export all Requirements");
+        buttonSaveUseCases.setText("Export all Use Cases descriptions");
         buttonSaveUseCases.setBorder(null);
         buttonSaveUseCases.setPreferredSize(new java.awt.Dimension(153, 28));
         buttonSaveUseCases.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -505,7 +505,7 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
         jButtonAddUseCase.setBackground(new java.awt.Color(15, 157, 229));
         jButtonAddUseCase.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
         jButtonAddUseCase.setForeground(new java.awt.Color(250, 250, 250));
-        jButtonAddUseCase.setText("Add Use Cases");
+        jButtonAddUseCase.setText("Add Use Case");
         jButtonAddUseCase.setBorder(null);
         jButtonAddUseCase.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -606,19 +606,19 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JLabelUseCasesFromBPMN))
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(buttonNFRs, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
                         .addComponent(jButtonAddUseCase, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23)
                         .addComponent(buttonDiagram, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                        .addComponent(buttonShowIsas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(buttonShowIsas, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                         .addComponent(buttonGuidelines, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -1000,7 +1000,7 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuHomeActionPerformed
 
     private void btnMenuTraceHorizontalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuTraceHorizontalActionPerformed
-        HorizontalControler.openViewTraceabilityHorizontal();
+            HorizontalControler.openViewTraceabilityHorizontal();
     }//GEN-LAST:event_btnMenuTraceHorizontalActionPerformed
 
     private void btnMenuiStarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMenuiStarMouseEntered

@@ -217,6 +217,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         buttonSaveUseCases = new javax.swing.JButton();
         buttonHelp = new javax.swing.JButton();
         btnTraceability = new javax.swing.JButton();
+        JLabelTracedElements1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableTraceability = new javax.swing.JTable(){
@@ -313,7 +314,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         buttonSaveUseCases.setFont(new java.awt.Font("Roboto", 1, 14));
         buttonSaveUseCases.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/pdf.png"))); // NOI18N
         buttonSaveUseCases.setText("Save PDF ");
-        buttonSaveUseCases.setToolTipText("Save PDF ");
+        buttonSaveUseCases.setToolTipText("Save matrix in PDF ");
         buttonSaveUseCases.setBorder(null);
         buttonSaveUseCases.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -369,6 +370,10 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
             }
         });
 
+        JLabelTracedElements1.setFont(new java.awt.Font("Roboto", 0, 20));
+        JLabelTracedElements1.setForeground(new java.awt.Color(85, 190, 244));
+        JLabelTracedElements1.setText("Choose a Matrix:");
+
         javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
         jPanelHeader.setLayout(jPanelHeaderLayout);
         jPanelHeaderLayout.setHorizontalGroup(
@@ -378,38 +383,36 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelHeaderLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(choiceMatrixTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(choiceMatrixTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(labelTypeTraceability)
+                            .addComponent(JLabelTracedElements1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 188, Short.MAX_VALUE)
                 .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                    .addGap(186, 186, 186)
-                    .addComponent(labelTypeTraceability)
-                    .addContainerGap(753, Short.MAX_VALUE)))
         );
         jPanelHeaderLayout.setVerticalGroup(
             jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelHeaderLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(choiceMatrixTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                        .addComponent(labelTypeTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JLabelTracedElements1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(choiceMatrixTrace, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14)
                 .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addGroup(jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                    .addGap(30, 30, 30)
-                    .addComponent(labelTypeTraceability, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(129, Short.MAX_VALUE)))
         );
 
         choiceMatrixTrace.getEditor().getEditorComponent().setBackground(Color.YELLOW);
@@ -580,6 +583,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
         btnMenuHome.setBackground(new java.awt.Color(11, 113, 165));
         btnMenuHome.setForeground(new java.awt.Color(11, 113, 165));
         btnMenuHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-Home.png"))); // NOI18N
+        btnMenuHome.setToolTipText("Home");
         btnMenuHome.setBorderPainted(false);
         btnMenuHome.setFocusPainted(false);
         btnMenuHome.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -598,6 +602,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
 
         btnMenuiStar.setBackground(new java.awt.Color(11, 113, 165));
         btnMenuiStar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-istar.png"))); // NOI18N
+        btnMenuiStar.setToolTipText("Editor i* ");
         btnMenuiStar.setBorder(null);
         btnMenuiStar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -615,6 +620,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
 
         btnMenuBPMN.setBackground(new java.awt.Color(11, 113, 165));
         btnMenuBPMN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-BPMN.png"))); // NOI18N
+        btnMenuBPMN.setToolTipText("Editor BPMN");
         btnMenuBPMN.setBorder(null);
         btnMenuBPMN.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -632,6 +638,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
 
         btnMenuUC.setBackground(new java.awt.Color(11, 113, 165));
         btnMenuUC.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UseCase.png"))); // NOI18N
+        btnMenuUC.setToolTipText("Editor Use Case");
         btnMenuUC.setBorder(null);
         btnMenuUC.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -666,6 +673,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
 
         bntMenuTraceVertical.setBackground(new java.awt.Color(11, 113, 165));
         bntMenuTraceVertical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-VerticalTraceability.png"))); // NOI18N
+        bntMenuTraceVertical.setToolTipText("Vertical Traceability");
         bntMenuTraceVertical.setBorder(null);
         bntMenuTraceVertical.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -683,7 +691,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
 
         btnMenuTraceHorizontal.setBackground(new java.awt.Color(11, 113, 165));
         btnMenuTraceHorizontal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-HorizontalTraceability.png"))); // NOI18N
-        btnMenuTraceHorizontal.setToolTipText("");
+        btnMenuTraceHorizontal.setToolTipText("Horizontal Traceability");
         btnMenuTraceHorizontal.setBorder(null);
         btnMenuTraceHorizontal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -1268,6 +1276,7 @@ public final class TraceabilityView1 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel JLabelTracedElements;
+    private javax.swing.JLabel JLabelTracedElements1;
     private javax.swing.JButton bntMenuTraceVertical;
     private javax.swing.JButton btnMenuBPMN;
     private javax.swing.JButton btnMenuHome;

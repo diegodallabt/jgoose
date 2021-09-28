@@ -258,6 +258,7 @@ public class VerticalTraceController extends AbstractAction {
 
     public static void openVerticalTraceabilityView() {
         if (type != null) {
+            System.out.println("TYPE: "+ type);
             switch (type) {
                 case 1://rastreabilidade vertical BPMN to UC
                     if (BPMNController.getFlagMapUseCases()) {
@@ -304,7 +305,7 @@ public class VerticalTraceController extends AbstractAction {
             viewTraceability.atualizeType(index);
             viewTraceability.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "You need Mapping Horizontal first");
+            JOptionPane.showMessageDialog(null, "You need Mapping Vertical first");
         }
     }
 

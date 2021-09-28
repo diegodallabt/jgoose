@@ -70,16 +70,12 @@ public class HorizontalControler extends AbstractAction {
             case 1: // I* Horizontal Trace
                 horizontalIStarTraceController = new HorizontalIStarTraceController(E4J);
                 horizontalIStarTraceController.actionPerformed(e);
-                traceIStarHorizontal = new TraceIStarHorizontal();
-                traceIStarHorizontal.TraceElementsIStarHorizontal();
                 index = 3;
                 break;
 
             case 2: // BPMN Horizontal Trace
                 horizontalBPMNTraceController = new HorizontalBPMNTraceController(E4J);
                 horizontalBPMNTraceController.actionPerformed(e);
-                traceBPMNHorizontal = new TraceBPMNHorizontal();
-                traceBPMNHorizontal.TraceElementsBPMNHorizontal();
                 index = 1;
                 break;
 
@@ -101,7 +97,9 @@ public class HorizontalControler extends AbstractAction {
     }
 
     public static void openViewTraceabilityHorizontal() {
-        if (index != -1) {
+        System.out.println("INDEX: "+index);
+        System.out.println("TYPE: "+type);
+        //if (index != -1) {
             if (viewTraceability1 == null) {
                 viewTraceability1 = new TraceabilityView1(index, E4JiStar, E4JBPMN, E4JUseCases,
                         useCasesViewIStar, useCasesViewBPMN);
@@ -109,10 +107,14 @@ public class HorizontalControler extends AbstractAction {
             }
             switch (type) {
                 case 1: //update i* trace Horizontal
+                    traceIStarHorizontal = new TraceIStarHorizontal();
+                    traceIStarHorizontal.TraceElementsIStarHorizontal();
                     viewTraceability1.updateTableIStarHorizontalTraceability();
                     break;
 
                 case 2: //update BPMN trace Horizontal
+                    traceBPMNHorizontal = new TraceBPMNHorizontal();
+                    traceBPMNHorizontal.TraceElementsBPMNHorizontal();
                     viewTraceability1.updateTableBPMNHorizontalTraceability();
                     break;
 
@@ -122,9 +124,9 @@ public class HorizontalControler extends AbstractAction {
             }
             viewTraceability1.atualizeType(index);
             viewTraceability1.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "You need Mapping Horizontal first");
-        }
+       // } else {
+       //     JOptionPane.showMessageDialog(null, "You need Mapping Horizontal first");
+       // }
     }
 
     private static void setVisebleFalse() {
