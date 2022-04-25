@@ -1,5 +1,4 @@
-# JGOOSE
-JGOOSE tool
+# JGOOSE CONTRIBUTING 
 ## <a name="commit"></a> Boas práticas para mensagem de commit
 
 Mensagens de commit devem ser **legíveis** e de fácil entendimento. Assim as mensagens de para commit de qualque branch na JGOOSE devem seguir um **padrão**.
@@ -21,7 +20,6 @@ A mensagem não deve ser maior que 100 caracteres! Isso permite que a mensagem s
 Deve ser um dos seguintes:
 
 * **build**: Mudanças que afetam o sistema de build ou dependências externas (Exemplo: maven)
-* **ci**: Mudanças que afetam as configurações do CI (Exemplo: circle)
 * **docs**: Mudanças na documentação (Exemplos: novos diagramas de classe, pacotes)
 * **feat**: Uma nova feature (Exemplo: nova funcionalidade)
 * **fix**: Corrijido um bug 
@@ -29,7 +27,6 @@ Deve ser um dos seguintes:
 * **refactor**: Uma mudança que não corrije um bug ou adiciona uma feature
 * **style**: Mudanças que não afetam a semântica e a sintaxe do código (espaços, formtação, ponto e vírgulas, etc)
 * **test**: Adicionado um teste ou corrijido um existente
-* **infra**: Mudanças configuração exclusiva de infra estrutura
 
 Caso exista um sobreposição de tipos, use aquele predominante. Para evitar isso, tente separa os commit de forma que cada um só faça uma coisa (_Single Responsability Principle).
 
@@ -59,7 +56,7 @@ O assunto contém uma descrição sussinta da mudança:
 * Não começe com letra maíscula
 * Não use um ponto (.) no fim
 
-##Exemplos de commit
+## Exemplos de commit
 ```
 feat(bpmn): button to get active pools
 ```
