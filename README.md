@@ -1,7 +1,10 @@
 # JGOOSE
 JGOOSE tool
 How to compile JGOOSE 
-1 - log 2- istar 3- E4J 4- JGOOSE
+1 - log 
+2 - istar 
+3 - E4J 
+4 - JGOOSE
 
 
 Breve descrição sobre cada projeto
