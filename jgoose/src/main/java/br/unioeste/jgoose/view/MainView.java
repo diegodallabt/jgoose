@@ -1195,6 +1195,10 @@ public final class MainView extends javax.swing.JFrame {
             BasicUseCasesEditor editor = (BasicUseCasesEditor) E4JUseCases.getEditor();
             JMenuBar menubar = E4JUseCases.getJMenuBar();
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
+            String label = mxResources.get("istarMaker", null, "Generate iStar");
+            JMenuItem menuItem = new JMenuItem(editor.bind(label, new ImportIStarGraph(E4JiStar)));
+            fileMenu.add(menuItem, 3);
+            fileMenu.add(new JPopupMenu.Separator(), 4);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
             JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 3)));
             fileMenu.add(menuItem1, 3);

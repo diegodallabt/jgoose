@@ -9,7 +9,7 @@ package br.unioeste.jgoose.view;
  *
  * @author Victor Augusto Pozzan
  */
-public class MoreInfoUCFromIStar extends javax.swing.JDialog {
+public class MoreInfoUCFromIstar extends javax.swing.JDialog {
 
     /**
      * Creates new form MoreInfoUC
@@ -17,7 +17,7 @@ public class MoreInfoUCFromIStar extends javax.swing.JDialog {
      * @param modal
      * @param vetorInfo
      */
-    public MoreInfoUCFromIStar(java.awt.Frame parent, boolean modal, String[] vetorInfo) {
+    public MoreInfoUCFromIstar(java.awt.Frame parent, boolean modal, String[] vetorInfo) {
         super(parent, modal);
 
 

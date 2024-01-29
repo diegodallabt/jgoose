@@ -120,6 +120,7 @@ import java.util.ArrayList;
      * @param name the name to set
      */
     public void setName(String name) {
+        System.out.println(name);
         this.name = name;
     }
 }

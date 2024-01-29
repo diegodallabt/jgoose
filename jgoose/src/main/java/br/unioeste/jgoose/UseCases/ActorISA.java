@@ -33,6 +33,7 @@ public class ActorISA {
     }
 
     public void setName(String name) {
+        
         this.name = name;
     }
 
