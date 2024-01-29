@@ -552,7 +552,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonSaveUseCases, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonGuidelines, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -641,8 +641,6 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         tabelUseCases.setSelectionForeground(new java.awt.Color(37, 172, 241));
         tabelUseCases.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelUseCases.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tabelUseCases.setShowHorizontalLines(false);
-        tabelUseCases.setShowVerticalLines(false);
         tabelUseCases.setUpdateSelectionOnSort(false);
         tabelUseCases.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelUseCases.getTableHeader().setReorderingAllowed(false);
@@ -695,7 +693,7 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
             jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBackgroundLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jPanelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelBackgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -795,7 +793,6 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         btnUCViewBpmnBlock.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-UC-BPMN.png"))); // NOI18N
         btnUCViewBpmnBlock.setBorder(null);
         btnUCViewBpmnBlock.setEnabled(false);
-        btnUCViewBpmnBlock.setOpaque(false);
 
         bntMenuTraceVertical.setBackground(new java.awt.Color(11, 113, 165));
         bntMenuTraceVertical.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/ICON-VerticalTraceability.png"))); // NOI18N

@@ -1734,7 +1734,7 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
                 //SHOW US SOME MESSAGE
                 String vetCasosDeUso[] = findElementAndInfos(row);
                 MainView mainView = new MainView();
-                MoreInfoUCFromIStar info = new MoreInfoUCFromIStar(mainView, true, vetCasosDeUso);
+                MoreInfoUCFromIstar info = new MoreInfoUCFromIstar(mainView, true, vetCasosDeUso);
                 info.setVisible(true);
             }
             //SET IT TO FALSE NOW THAT ITS CLICKED
