@@ -47,6 +47,7 @@ public class ImportIStarGraph extends AbstractAction {
     private Map<mxCell, Object> mapped = new HashMap<>();
     //
     private TokensOpenOME jgoose = Controller.getOme();
+    
     //
     private Map<mxCell, mxCell> deleteds = new HashMap<>();
     //
@@ -62,10 +63,12 @@ public class ImportIStarGraph extends AbstractAction {
         // clear all previous action performed
         vertex.clear();
         edges.clear();
-
+       
         jgoose = new TokensOpenOME();
+        System.out.println(jgoose);
+         
         Controller.setOme(jgoose);
-
+        System.out.println(jgoose.getActors());
         Object source = e.getSource();
 
         if (source instanceof mxGraphComponent) {
@@ -197,12 +200,13 @@ public class ImportIStarGraph extends AbstractAction {
         }
 
         String tagName = element.getTagName();
+        System.out.println(tagName);
         String type = element.getAttribute("type");
         if (tagName == null || type == null) {
             LOG.debug("tagname and type is null.");
             return null;
         }
-
+        System.out.println("2: " + jgoose.getActors());
         // aliases to jgoose structure
         // elements (vertex)
         ArrayList<IStarActorElement> actors = jgoose.getActors();

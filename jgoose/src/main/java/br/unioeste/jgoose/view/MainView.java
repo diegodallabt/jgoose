@@ -1,11 +1,13 @@
 package br.unioeste.jgoose.view;
 
+import br.unioeste.jgoose.UCToIStar.MappingUCToIStar;
 import br.unioeste.jgoose.controller.BPMNController;
 import br.unioeste.jgoose.controller.Controller;
 import br.unioeste.jgoose.controller.EditorWindowListener;
 import br.unioeste.jgoose.controller.ImportBPMNGraph;
 import br.unioeste.jgoose.controller.ImportIStarGraph;
 import br.unioeste.jgoose.controller.HorizontalControler;
+import br.unioeste.jgoose.controller.ImportUseCaseGraph;
 import br.unioeste.jgoose.controller.VerticalTraceController;
 import br.unioeste.jgoose.e4j.swing.BasicBPMNEditor;
 import br.unioeste.jgoose.e4j.swing.BasicIStarEditor;
@@ -206,10 +208,9 @@ public final class MainView extends javax.swing.JFrame {
         jPanel4buttonOpenE4JiStar.setMinimumSize(new java.awt.Dimension(126, 114));
         jPanel4buttonOpenE4JiStar.setPreferredSize(new java.awt.Dimension(126, 114));
 
-        buttonOpenE4JiStar.setBackground(new java.awt.Color(255, 255, 255));
         buttonOpenE4JiStar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonOpenE4JiStar.setForeground(new java.awt.Color(15, 157, 229));
-        buttonOpenE4JiStar.setText("<html><center>\ni* <br> Editor\n");
+        buttonOpenE4JiStar.setText("<html><center> i* <br> Editor ");
         buttonOpenE4JiStar.setToolTipText("Open i* Editor");
         buttonOpenE4JiStar.setBorder(null);
         buttonOpenE4JiStar.setBorderPainted(false);
@@ -250,7 +251,6 @@ public final class MainView extends javax.swing.JFrame {
         jPanel4buttonOpenE4JBPMN.setMaximumSize(new java.awt.Dimension(126, 114));
         jPanel4buttonOpenE4JBPMN.setMinimumSize(new java.awt.Dimension(126, 114));
 
-        buttonOpenE4JBPMN.setBackground(new java.awt.Color(255, 255, 255));
         buttonOpenE4JBPMN.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonOpenE4JBPMN.setForeground(new java.awt.Color(15, 157, 229));
         buttonOpenE4JBPMN.setText("<html><center> BPMN <br> Editor");
@@ -292,7 +292,6 @@ public final class MainView extends javax.swing.JFrame {
         jPanel4buttonOpenE4JUseCases.setMinimumSize(new java.awt.Dimension(126, 114));
         jPanel4buttonOpenE4JUseCases.setPreferredSize(new java.awt.Dimension(126, 114));
 
-        buttonOpenE4JUseCases.setBackground(new java.awt.Color(255, 255, 255));
         buttonOpenE4JUseCases.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonOpenE4JUseCases.setForeground(new java.awt.Color(15, 157, 229));
         buttonOpenE4JUseCases.setText("<html><center> Use Cases <br> Editor ");
@@ -334,7 +333,6 @@ public final class MainView extends javax.swing.JFrame {
         jPanel4buttunMappingUseCases.setMinimumSize(new java.awt.Dimension(126, 114));
         jPanel4buttunMappingUseCases.setPreferredSize(new java.awt.Dimension(126, 114));
 
-        buttunMappingUseCases.setBackground(new java.awt.Color(255, 255, 255));
         buttunMappingUseCases.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttunMappingUseCases.setForeground(new java.awt.Color(15, 157, 229));
         buttunMappingUseCases.setText("<html><center> Use Cases <br> from i* ");
@@ -376,7 +374,6 @@ public final class MainView extends javax.swing.JFrame {
         jPanel4buttonBPMNToUseCases.setMinimumSize(new java.awt.Dimension(126, 114));
         jPanel4buttonBPMNToUseCases.setPreferredSize(new java.awt.Dimension(126, 114));
 
-        buttonBPMNToUseCases.setBackground(new java.awt.Color(255, 255, 255));
         buttonBPMNToUseCases.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonBPMNToUseCases.setForeground(new java.awt.Color(15, 157, 229));
         buttonBPMNToUseCases.setText("<html><center> Use Cases <br> from BPMN ");
@@ -418,7 +415,6 @@ public final class MainView extends javax.swing.JFrame {
         jPanel4buttonVerticalTraceability.setMinimumSize(new java.awt.Dimension(126, 114));
         jPanel4buttonVerticalTraceability.setPreferredSize(new java.awt.Dimension(126, 114));
 
-        buttonVerticalTraceability.setBackground(new java.awt.Color(255, 255, 255));
         buttonVerticalTraceability.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonVerticalTraceability.setForeground(new java.awt.Color(15, 157, 229));
         buttonVerticalTraceability.setText("<html><center> Vertical <br>  Traceability");
@@ -459,7 +455,6 @@ public final class MainView extends javax.swing.JFrame {
         jPanel4buttonHorizontalTraceability.setMinimumSize(new java.awt.Dimension(126, 114));
         jPanel4buttonHorizontalTraceability.setPreferredSize(new java.awt.Dimension(126, 114));
 
-        buttonHorizontalTraceability.setBackground(new java.awt.Color(255, 255, 255));
         buttonHorizontalTraceability.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         buttonHorizontalTraceability.setForeground(new java.awt.Color(15, 157, 229));
         buttonHorizontalTraceability.setText("<html><center> Horizontal <br>  Traceability");
@@ -1196,7 +1191,7 @@ public final class MainView extends javax.swing.JFrame {
             JMenuBar menubar = E4JUseCases.getJMenuBar();
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
             String label = mxResources.get("istarMaker", null, "Generate iStar");
-            JMenuItem menuItem = new JMenuItem(editor.bind(label, new ImportIStarGraph(E4JiStar)));
+            JMenuItem menuItem = new JMenuItem(editor.bind(label, new ImportUseCaseGraph(E4JUseCases)));
             fileMenu.add(menuItem, 3);
             fileMenu.add(new JPopupMenu.Separator(), 4);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
@@ -1444,6 +1439,10 @@ public final class MainView extends javax.swing.JFrame {
 
     public void setE4JiStar(EditorJFrame E4JiStar) { 
         this.E4JiStar = E4JiStar;
+    }
+    
+    public void setE4JUseCases(EditorJFrame E4JUseCases) { 
+        this.E4JUseCases = E4JUseCases;
     }
 
 }

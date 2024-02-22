@@ -6,113 +6,165 @@
 
 package br.unioeste.jgoose.UCToIStar;
 
+import br.unioeste.jgoose.UseCases.Actor;
 import br.unioeste.jgoose.controller.Controller;
+import br.unioeste.jgoose.controller.EditorWindowListener;
+import br.unioeste.jgoose.controller.HorizontalControler;
+import br.unioeste.jgoose.controller.ImportIStarGraph;
 import java.util.ArrayList;
 import br.unioeste.jgoose.controller.UCController;
+import br.unioeste.jgoose.controller.VerticalTraceController;
+import br.unioeste.jgoose.e4j.swing.BasicIStarEditor;
+import br.unioeste.jgoose.e4j.swing.EditorJFrame;
+import br.unioeste.jgoose.e4j.swing.menubar.EditorMenuBar;
 import br.unioeste.jgoose.model.IStarActorElement;
+import br.unioeste.jgoose.model.IStarElement;
+import br.unioeste.jgoose.model.TokensUseCase;
 import br.unioeste.jgoose.model.UCActor;
+import br.unioeste.jgoose.model.UCElement;
+import br.unioeste.jgoose.model.UCLink;
 import br.unioeste.jgoose.model.UCUseCase;
+import br.unioeste.jgoose.view.MainView;
+import com.mxgraph.util.mxResources;
+import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.awt.HeadlessException;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
  *
  * @author Diego Dalla Bernardina Thedoldi
  */
 
-class IStarActor {
-    final private String cod;
-    private String name;
 
-    public IStarActor(String cod, String name) {
-        this.cod = cod;
-        this.name = name;
-    }
+public class MappingUCToIStar  {
+    final private static List<IStarActorElement> istarActors = new ArrayList<>();
     
-    public void setName(String name) {
-        this.name = name;
+
+    public MappingUCToIStar(){
+       istarActors.clear();
+       this.startMapping();
     }
 
-    public String getCod() {
-        return cod;
-    }
+     public void startMapping() {
+        
+        ArrayList<UCActor> actors = (ArrayList) UCController.getTokensUC().getActorUC();
+        ArrayList<UCUseCase> useCases = (ArrayList) UCController.getTokensUC().getUseCase();
+        ArrayList<UCLink> link = (ArrayList) UCController.getTokensUC().getLink();
+        
+        
 
-    public String getName() {
-        return name;
-    }
-}
+        System.out.println("LISTA DE ATORES:");
+        System.out.println(actors);
+        
+        System.out.println("LISTA DE ATORES:");
+        System.out.println(useCases);
 
-public class MappingUCToIStar {
-    final private static List<IStarActor> istarActors = new ArrayList<>();
-
-    public static void main(String[] args) {
-        List<UCActor> useCaseActors = UCController.getTokensUC().getActorUC();
-        List<UCUseCase> useCases = UCController.getTokensUC().getUseCase();
-
+        System.out.println("LISTA DE LINKS");
+        System.out.println(link);
+        
+        for (UCLink links : link) {
+            System.out.println(links.getFrom() );
+            UCElement to = links.getTo();
+            
+            
+            
+           
+            System.out.println(to.getCode());
+            System.out.println(to.getLabel());
+            
+        }
+        
         // Mapeamento de atores primários
-        for (UCUseCase useCase : useCases) {
-            UCActor primaryActor = useCase.getPrimaryActor();
-            mapToIStarActors(primaryActor);
+        for (UCActor actor : actors) {
+            IStarActorElement istarActor = new IStarActorElement();
+            
+            
+           
+            
+            istarActor.setChildren(objective.getCod());
+            
+            
+            istarActors.add(istarActor);
         }
 
         // Prints de teste
         System.out.println("Atores no Caso de Uso:");
-        for (UCActor useCaseActor : useCaseActors) {
+        for (UCActor useCaseActor : actors) {
             System.out.println(useCaseActor.getCode() + " - " + useCaseActor.getName());
         }
 
         System.out.println("\nAtores no Modelo I*:");
-        for (IStarActor istarActor : istarActors) {
+        for (IStarActorElement istarActor : istarActors) {
             System.out.println(istarActor.getCod() + " - " + istarActor.getName());
         }
     }
     
-    // RGC 1: Alteração de nome no diagrama de caso de uso deve ser refletida no modelo iStar
-    public static void updateActorName(UCActor actor, String newName) {
-        // Atualiza o nome do ator no caso de uso
-        actor.setName(newName);
-
-        // Encontra o ator correspondente no modelo iStar e atualiza o nome
-        for (IStarActor istarActor : istarActors) {
-            if (istarActor.getCod().equals(actor.getCode())) {
-                istarActor.setName(newName);
-                break;
+    // RGC 2: Mapear atores primários para atores genéricos no modelo iStar
+    private static void mappingPrimaryActors(UCActor primaryActor) {
+        /*if (primaryActor.getUseCases().isEmpty()) {
+            throw new RuntimeException("O ator primário deve estar conectado a pelo menos um caso de uso.");
+        }*/
+        
+        if (primaryActor.getFather() == null && primaryActor.getChildren().isEmpty()) {
+            throw new RuntimeException("O ator primário deve possuir ao menos uma associação ou uma relação de especialização com outro ator.");
+        }
+        
+        Set<UCUseCase> uniqueUseCases = new HashSet<>(primaryActor.getUseCases());
+        if (uniqueUseCases.size() != primaryActor.getUseCases().size()) {
+            throw new RuntimeException("Um ator pode ter no máximo uma associação com um caso de uso.");
+        }
+        
+        for (UCLink link : primaryActor.getLinksFrom()) {
+            if (link.getType().equals(UCLink.ASSOCIATION) && link.getTo() instanceof UCActor) {
+                throw new RuntimeException("Um ator primário não pode se ligar diretamente a outro ator via associação.");
             }
         }
-    }
 
-    // RGC 2: Mapear atores primários para atores genéricos no modelo iStar
-    private static void mapToIStarActors(UCActor primaryActor) {
-        IStarActor istarActor = new IStarActor(primaryActor.getCode(), primaryActor.getName());
-        istarActors.add(istarActor);
-    }
+        for (UCLink link : primaryActor.getLinksTo()) {
+            if (link.getType().equals(UCLink.ASSOCIATION) && link.getFrom() instanceof UCActor) {
+                throw new RuntimeException("Um ator primário não pode se ligar diretamente a outro ator via associação.");
+            }
+        }
 
-    // RGC 3: O limite do sistema de um caso de uso será mapeado como o ator sistema do modelo iStar
-    public static void mapSystemBoundaryToIStarActor() {
-        int indexActor = Controller.getOme().searchActorCod(Controller.getSystemActor());
+        IStarActorElement istarActor = new IStarActorElement();
+        istarActor.setCod(primaryActor.getCode());
+        istarActor.setName(primaryActor.getName());
         
-        IStarActorElement systemActor = Controller.getOme().getActor(indexActor);
-
-        Controller.setSystemActor(systemActor.getCod());
-        IStarActor istarActor = new IStarActor(systemActor.getCod(), systemActor.getName());
+        for (UCUseCase useCase : primaryActor.getUseCases()) {
+            IStarElement objective = new IStarElement();
+            objective.setCod(useCase.getCode());
+            objective.setName(useCase.getName());
+            
+            istarActor.setChildren(objective.getCod());
+        }
+        
+        
+        for (IStarActorElement otherActor : istarActors) {
+            if (otherActor.getName().equals(istarActor.getName())) {
+                throw new RuntimeException("O elemento ator do diagrama de caso de uso deve ter um nome único no diagrama.");
+            }
+        }
+        
         istarActors.add(istarActor);
     }
-
+    
 }
 
 /*
-    VERSÃO ANTIGA DA RGC 2
-    
-    private static List<IStarActor> mapToIStarActors(List<UCActor> useCaseActors) {
-        List<IStarActor> istarActors = new ArrayList<>();
-
-        for (UCActor useCaseActor : useCaseActors) {
-            IStarActor istarActor = new IStarActor(useCaseActor.getCode(), useCaseActor.getName() + "_Mapeado");
-            istarActors.add(istarActor);
-        }
-
-        return istarActors;
-    }
-
     VERSÃO ANTIGA DA RGC 3
 
     public static void mapSystemBoundaryToIStarActor(SystemBoundary systemBoundary) {

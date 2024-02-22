@@ -27,8 +27,6 @@ import javax.swing.JOptionPane;
  * @author Victor Augusto Pozzan
  */
 public class Controller {
-
-    private static TokensUseCase tokensUC;
     private static MainView mainView = new MainView();
     private static TokensOpenOME ome;
     private static String systemActor = null;

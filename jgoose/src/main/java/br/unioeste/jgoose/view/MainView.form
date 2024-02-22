@@ -433,16 +433,13 @@
               <SubComponents>
                 <Component class="javax.swing.JButton" name="buttonOpenE4JiStar">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto" size="14" style="1"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="e5" green="9d" red="f" type="rgb"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt;&#xa;i* &lt;br&gt; Editor&#xa;"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;center&gt; i* &lt;br&gt; Editor "/>
                     <Property name="toolTipText" type="java.lang.String" value="Open i* Editor"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
@@ -501,9 +498,6 @@
               <SubComponents>
                 <Component class="javax.swing.JButton" name="buttonOpenE4JBPMN">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto" size="14" style="1"/>
                     </Property>
@@ -571,9 +565,6 @@
               <SubComponents>
                 <Component class="javax.swing.JButton" name="buttonOpenE4JUseCases">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto" size="14" style="1"/>
                     </Property>
@@ -637,9 +628,6 @@
               <SubComponents>
                 <Component class="javax.swing.JButton" name="buttunMappingUseCases">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto" size="14" style="1"/>
                     </Property>
@@ -703,9 +691,6 @@
               <SubComponents>
                 <Component class="javax.swing.JButton" name="buttonBPMNToUseCases">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto" size="14" style="1"/>
                     </Property>
@@ -769,9 +754,6 @@
               <SubComponents>
                 <Component class="javax.swing.JButton" name="buttonVerticalTraceability">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto" size="14" style="1"/>
                     </Property>
@@ -834,9 +816,6 @@
               <SubComponents>
                 <Component class="javax.swing.JButton" name="buttonHorizontalTraceability">
                   <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto" size="14" style="1"/>
                     </Property>

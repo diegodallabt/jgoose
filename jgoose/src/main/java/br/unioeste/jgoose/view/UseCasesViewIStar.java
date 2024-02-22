@@ -1,5 +1,6 @@
 package br.unioeste.jgoose.view;
 
+import br.unioeste.jgoose.UCToIStar.MappingUCToIStar;
 import br.unioeste.jgoose.view.MainView;
 import br.unioeste.jgoose.UseCases.Actor;
 import br.unioeste.jgoose.UseCases.ActorISA;
@@ -1220,6 +1221,9 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
             BasicUseCasesEditor editor = (BasicUseCasesEditor) e4jInstance.getEditor();
             JMenuBar menubar = e4jInstance.getJMenuBar();
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
+            String label = mxResources.get("istarMaker", null, "Generate iStar");
+            JMenuItem menuItem = new JMenuItem(editor.bind(label, new MappingUCToIStar()));
+            fileMenu.add(menuItem, 3);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
             JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, this, useCasesViewBPMN, 3)));
             fileMenu.add(menuItem1, 3);
@@ -1236,6 +1240,7 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
     // Gera e exibe o diagrama de Casos de Uso UML com base nas informações obtidas
     private mxGraph generateDiagram() throws IOException {
         ArrayList<Actor> useCases = Controller.getUseCases();
+       
         ArrayList<ActorISA> isas = Controller.getIsas();
         // comeca a atualizar o grafo
         mxGraph graph = ((BasicUseCasesEditor)e4jInstance.getEditor()).getGraphComponent().getGraph();

@@ -117,6 +117,9 @@ public class ImporStencilAction extends AbstractAction {
                     w = 120;
                     h = 60;
                     break;
+                case "system boundary":
+                    value = IStarUtils.createActorUseCase();
+                    break;
                 default:
                     break;
             }
