@@ -8,6 +8,7 @@ package br.unioeste.jgoose.UCToIStar;
 
 import br.unioeste.jgoose.UseCases.Actor;
 import br.unioeste.jgoose.controller.Controller;
+import br.unioeste.jgoose.model.TokensOpenOME;
 import br.unioeste.jgoose.controller.EditorWindowListener;
 import br.unioeste.jgoose.controller.HorizontalControler;
 import br.unioeste.jgoose.controller.ImportIStarGraph;
@@ -51,8 +52,8 @@ import javax.swing.JPopupMenu;
 
 
 public class MappingUCToIStar  {
-    final private static List<IStarActorElement> istarActors = new ArrayList<>();
-    
+    final private static ArrayList<IStarActorElement> istarActors = new ArrayList<>();
+    private TokensOpenOME tokensIStar = Controller.getOme();
 
     public MappingUCToIStar(){
        istarActors.clear();
@@ -70,7 +71,7 @@ public class MappingUCToIStar  {
         System.out.println("LISTA DE ATORES:");
         System.out.println(actors);
         
-        System.out.println("LISTA DE ATORES:");
+        System.out.println("LISTA DE CASOS DE USO:");
         System.out.println(useCases);
 
         System.out.println("LISTA DE LINKS");
@@ -91,14 +92,21 @@ public class MappingUCToIStar  {
         // Mapeamento de atores primários
         for (UCActor actor : actors) {
             IStarActorElement istarActor = new IStarActorElement();
+            istarActor.setCod(actor.getCode());
+            istarActor.setName(actor.getName());  
             
-            
-           
-            
-            istarActor.setChildren(objective.getCod());
             
             
             istarActors.add(istarActor);
+            
+            tokensIStar = new TokensOpenOME();
+            
+            Controller.setOme(tokensIStar);
+
+            tokensIStar.setActors(istarActors);
+
+            System.out.println("Atores mapeados");
+            System.out.println(tokensIStar.getActors());
         }
 
         // Prints de teste
@@ -139,7 +147,8 @@ public class MappingUCToIStar  {
                 throw new RuntimeException("Um ator primário não pode se ligar diretamente a outro ator via associação.");
             }
         }
-
+        
+        
         IStarActorElement istarActor = new IStarActorElement();
         istarActor.setCod(primaryActor.getCode());
         istarActor.setName(primaryActor.getName());
@@ -160,7 +169,11 @@ public class MappingUCToIStar  {
         }
         
         istarActors.add(istarActor);
+        
+        
+        
     }
+   
     
 }
 

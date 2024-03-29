@@ -1,6 +1,11 @@
 package br.unioeste.jgoose.view;
 
 import br.unioeste.jgoose.UCToIStar.MappingUCToIStar;
+import br.unioeste.jgoose.UseCases.Actor;
+import br.unioeste.jgoose.UseCases.ActorISA;
+import br.unioeste.jgoose.UseCases.Extend;
+import br.unioeste.jgoose.UseCases.Step;
+import br.unioeste.jgoose.UseCases.UseCase;
 import br.unioeste.jgoose.controller.BPMNController;
 import br.unioeste.jgoose.controller.Controller;
 import br.unioeste.jgoose.controller.EditorWindowListener;
@@ -9,12 +14,21 @@ import br.unioeste.jgoose.controller.ImportIStarGraph;
 import br.unioeste.jgoose.controller.HorizontalControler;
 import br.unioeste.jgoose.controller.ImportUseCaseGraph;
 import br.unioeste.jgoose.controller.VerticalTraceController;
+import br.unioeste.jgoose.e4j.filters.ShapeFilenameFilter;
 import br.unioeste.jgoose.e4j.swing.BasicBPMNEditor;
 import br.unioeste.jgoose.e4j.swing.BasicIStarEditor;
 import br.unioeste.jgoose.e4j.swing.BasicUseCasesEditor;
 import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.e4j.swing.menubar.EditorMenuBar;
+import br.unioeste.jgoose.model.IStarActorElement;
+import br.unioeste.jgoose.model.TokensOpenOME;
+import br.unioeste.jgoose.util.IStarUtils;
+import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxGeometry;
+import com.mxgraph.shape.mxStencilShape;
 import com.mxgraph.util.mxResources;
+import com.mxgraph.util.mxUtils;
+import com.mxgraph.view.mxGraph;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.FontFormatException;
@@ -24,11 +38,14 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -44,6 +61,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.basic.BasicMenuBarUI;
 import javax.swing.text.BadLocationException;
 import org.apache.log4j.Logger;
+import org.w3c.dom.Element;
 
 /**
  *
@@ -1172,6 +1190,99 @@ public final class MainView extends javax.swing.JFrame {
         Controller.setMainView(this);
         E4JiStar.setVisible(true);
         this.setVisible(false);
+    }
+    
+    public void showE4JiStarMappedFromUC() throws HeadlessException, IOException {
+        if (E4JiStar == null) {
+            E4JiStar = new EditorJFrame(0);
+            E4JiStar.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            E4JiStar.setIconImage(iconJGOOSE);
+            E4JiStar.setExtendedState(MAXIMIZED_BOTH);
+            EditorWindowListener windowListener = new EditorWindowListener(this, E4JiStar);
+            this.addWindowListener(windowListener);
+            E4JiStar.addWindowListener(windowListener);
+            this.addWindowListener(windowListener);
+            BasicIStarEditor editor = (BasicIStarEditor) E4JiStar.getEditor();
+            JMenuBar menubar = E4JiStar.getJMenuBar();
+            // get diagram menu ba
+            JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
+            // alias label = l
+            String label = mxResources.get("useCaseMaker", null, "Generate Use Cases");
+            JMenuItem menuItem = new JMenuItem(editor.bind(label, new ImportIStarGraph(E4JiStar)));
+            fileMenu.add(menuItem, 3);
+            fileMenu.add(new JPopupMenu.Separator(), 4);
+            String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
+            JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 1)));
+            fileMenu.add(menuItem1, 3);
+            fileMenu.add(new JPopupMenu.Separator(), 4);
+            String label2 = mxResources.get("traceabilityMaker", null, "Vertical Traceability");
+            JMenuItem menuItem2 = new JMenuItem(editor.bind(label2, new VerticalTraceController(E4JiStar, E4JBPMN, E4JUseCases, useCasesViewIStar, useCasesViewBPMN, 2)));
+            fileMenu.add(menuItem2, 3);
+            fileMenu.add(new JPopupMenu.Separator(), 4);
+
+        }
+        
+        
+        mxGraph graph = generateIStarFromUCDiagram();
+        
+        Controller.setMainView(this);
+        E4JiStar.setVisible(true);
+        this.setVisible(false);
+    }
+    
+    private mxGraph generateIStarFromUCDiagram() throws IOException {
+        ArrayList<IStarActorElement> actorsMapped = Controller.getOme().getActors();
+        
+        System.out.println("Printar mapeado");
+        System.out.println(actorsMapped);
+        
+        
+        // comeca a atualizar o grafo
+        mxGraph graph = ((BasicIStarEditor)E4JiStar.getEditor()).getGraphComponent().getGraph();
+        graph.removeCells(graph.getChildVertices(graph.getDefaultParent()));
+        graph.removeCells(graph.getChildEdges(graph.getDefaultParent()));
+        graph.getModel().beginUpdate();
+        Element value;
+        File shapesFolder = new File("resources/shapes/elements/");
+        File[] files = shapesFolder.listFiles(ShapeFilenameFilter.instance);
+        String nodeXml = mxUtils.readFile(files[0].getAbsolutePath());
+        mxStencilShape newShape = new mxStencilShape(nodeXml);
+        String styleActor = "shape=" + newShape.getName() + ";";
+        nodeXml = mxUtils.readFile(files[1].getAbsolutePath());
+        newShape = new mxStencilShape(nodeXml);
+        String styleCase = "shape=" + newShape.getName() + ";";
+        mxGeometry geo;
+        // HashMaps para quardar as celular dos atores e casos de uso
+        HashMap<String, mxCell> actors = new HashMap<>();
+        mxCell aresta;
+        mxCell ext;
+        // variaveis para controlar as posicoes X e Y dos elementos no diagrama
+        int yActor = 110;
+        int yCase = 30;
+        int xCase = 400;
+        String cod;
+        /*
+         * Adicionar ao diagrama todos os atores com seus respectivos
+         * casos de uso e arestas.
+         */
+        for (IStarActorElement actor : actorsMapped) {
+            // cria ator e sua geometria e estilo
+            value = IStarUtils.createActor();
+            value.setAttribute("label", actor.getName());
+            geo = new mxGeometry(50, yActor, 80, 80);
+            geo.setX(50);
+            geo.setY(yActor);
+            mxCell cell = new mxCell(value, geo, styleActor);
+            cell.setVertex(true);
+            System.out.println("" + cell.getStyle());
+            actors.put(actor.getCod(), cell);
+            graph.addCell(cell);
+           
+            yActor = yCase + 100;
+        }
+       
+        graph.getModel().endUpdate();
+        return graph;
     }
 
     /**

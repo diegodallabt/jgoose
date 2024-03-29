@@ -196,6 +196,8 @@ public class Controller {
         SelectActorSystem atorsistemaView = new SelectActorSystem(mainView, true);
         atorsistemaView.setVisible(true);
     }
+    
+    
 
     public static boolean getFlagMapUseCases() {
         return flagMapUseCases;

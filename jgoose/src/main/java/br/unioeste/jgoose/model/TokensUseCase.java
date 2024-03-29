@@ -35,6 +35,10 @@ public class TokensUseCase {
     public List<UCActor> getActorUC() {
         return actorUC;
     }
+    
+    public UCActor getActor(int i) {
+        return (UCActor) actorUC.get(i);
+    }
 
     public List<UCLink> getLink() {
         return link;

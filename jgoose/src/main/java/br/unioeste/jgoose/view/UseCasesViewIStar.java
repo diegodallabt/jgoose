@@ -1222,7 +1222,7 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
             JMenuBar menubar = e4jInstance.getJMenuBar();
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
             String label = mxResources.get("istarMaker", null, "Generate iStar");
-            JMenuItem menuItem = new JMenuItem(editor.bind(label, new MappingUCToIStar()));
+            JMenuItem menuItem = new JMenuItem(editor.bind(label, (Action) new MappingUCToIStar()));
             fileMenu.add(menuItem, 3);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
             JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, this, useCasesViewBPMN, 3)));

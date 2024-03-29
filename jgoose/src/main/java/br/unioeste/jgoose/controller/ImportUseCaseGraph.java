@@ -15,6 +15,7 @@ import br.unioeste.jgoose.model.UCElement;
 import br.unioeste.jgoose.model.UCLink;
 import br.unioeste.jgoose.model.UCUseCase;
 import br.unioeste.jgoose.view.MainView;
+import br.unioeste.jgoose.view.SelectActorPrimary;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
@@ -101,12 +102,12 @@ public class ImportUseCaseGraph extends AbstractAction {
 
         }
         try {
-            
-            
+            showActorPrimarySelectionView();
             new MappingUCToIStar();
             
             mainView.setE4JUseCases(E4JUseCases);
-            mainView.showE4JiStar();
+            mainView.showE4JiStarMappedFromUC();
+            
             this.E4JUseCases.setVisible(false);
         } catch (HeadlessException ex) {
             
@@ -285,6 +286,11 @@ public class ImportUseCaseGraph extends AbstractAction {
         }
         return result;
     
+    }
+    
+    public static void showActorPrimarySelectionView() {
+        SelectActorPrimary atorPrimarioView = new SelectActorPrimary(mainView, true);
+        atorPrimarioView.setVisible(true);
     }
 } 
         
