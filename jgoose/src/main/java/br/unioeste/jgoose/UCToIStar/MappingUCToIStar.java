@@ -53,6 +53,7 @@ import javax.swing.JPopupMenu;
 
 public class MappingUCToIStar  {
     final private static ArrayList<IStarActorElement> istarActors = new ArrayList<>();
+    final private static ArrayList<IStarElement> istarElements = new ArrayList<>();
     private TokensOpenOME tokensIStar = Controller.getOme();
 
     public MappingUCToIStar(){
@@ -80,9 +81,6 @@ public class MappingUCToIStar  {
         for (UCLink links : link) {
             System.out.println(links.getFrom() );
             UCElement to = links.getTo();
-            
-            
-            
            
             System.out.println(to.getCode());
             System.out.println(to.getLabel());
@@ -93,9 +91,15 @@ public class MappingUCToIStar  {
         for (UCActor actor : actors) {
             IStarActorElement istarActor = new IStarActorElement();
             istarActor.setCod(actor.getCode());
-            istarActor.setName(actor.getName());  
+            istarActor.setName(actor.getName());
             
-            
+            for (UCUseCase useCase : actor.getUseCases()){
+                IStarElement dependency = new IStarElement();
+                dependency.setCod(useCase.getCode());
+                dependency.setName(useCase.getCode());
+                
+                istarActor.setDependency(dependency);
+            }
             
             istarActors.add(istarActor);
             
@@ -107,6 +111,24 @@ public class MappingUCToIStar  {
 
             System.out.println("Atores mapeados");
             System.out.println(tokensIStar.getActors());
+        }
+        
+        // Mapeia casos de uso
+        for(UCUseCase useCase : useCases){
+            IStarElement istarElement = new IStarElement();
+            istarElement.setCod(useCase.getCode());
+            istarElement.setName(useCase.getName());
+            
+            istarElements.add(istarElement);
+            
+            tokensIStar = new TokensOpenOME();
+            
+            Controller.setOme(tokensIStar);
+
+            tokensIStar.setGoals(istarElements);
+            
+            System.out.println("Goals mapeados");
+            System.out.println(tokensIStar.getGoals());
         }
 
         // Prints de teste
@@ -153,12 +175,16 @@ public class MappingUCToIStar  {
         istarActor.setCod(primaryActor.getCode());
         istarActor.setName(primaryActor.getName());
         
+        IStarElement istarObjective = new IStarElement();
+        
         for (UCUseCase useCase : primaryActor.getUseCases()) {
             IStarElement objective = new IStarElement();
             objective.setCod(useCase.getCode());
             objective.setName(useCase.getName());
             
             istarActor.setChildren(objective.getCod());
+            
+            
         }
         
         

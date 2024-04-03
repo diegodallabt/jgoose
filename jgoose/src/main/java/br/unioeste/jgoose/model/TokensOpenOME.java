@@ -742,6 +742,13 @@ public class TokensOpenOME {
     public void setActors(ArrayList actors) {
         this.actors = actors;
     }
+    
+    /**
+     * @param goals The goals to set.
+     */
+    public void setGoals(ArrayList goals){
+        this.goals = goals;
+    }
 
     /**
      * @return Returns the agents.

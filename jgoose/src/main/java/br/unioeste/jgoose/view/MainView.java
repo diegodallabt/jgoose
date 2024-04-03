@@ -21,6 +21,7 @@ import br.unioeste.jgoose.e4j.swing.BasicUseCasesEditor;
 import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.e4j.swing.menubar.EditorMenuBar;
 import br.unioeste.jgoose.model.IStarActorElement;
+import br.unioeste.jgoose.model.IStarElement;
 import br.unioeste.jgoose.model.TokensOpenOME;
 import br.unioeste.jgoose.util.IStarUtils;
 import com.mxgraph.model.mxCell;
@@ -1254,6 +1255,7 @@ public final class MainView extends javax.swing.JFrame {
         mxGeometry geo;
         // HashMaps para quardar as celular dos atores e casos de uso
         HashMap<String, mxCell> actors = new HashMap<>();
+        HashMap<String, mxCell> dependencies = new HashMap<>();
         mxCell aresta;
         mxCell ext;
         // variaveis para controlar as posicoes X e Y dos elementos no diagrama
@@ -1277,9 +1279,38 @@ public final class MainView extends javax.swing.JFrame {
             System.out.println("" + cell.getStyle());
             actors.put(actor.getCod(), cell);
             graph.addCell(cell);
-           
+            if(actor.getDependencies() != null){
+                for (IStarElement element : actor.getDependencies()) {
+                     // cria caso de uso, sua geometria e estilo
+                     value = IStarUtils.createUseCase();
+                     value.setAttribute("label", element.getName().replace("\"", ""));
+                     geo = new mxGeometry(xCase, yCase, 120, 60);
+                     xCase = xCase == 400 ? 700 : 400;
+                     geo.setX(xCase);
+                     geo.setY(yCase);
+                     yCase += 100;
+                     cod = element.getCod();
+
+                      // verifica se o elemento ainda não foi adicionado no grafo
+                     if (dependencies.get(cod) == null) {
+                         dependencies.put(cod, new mxCell(value, geo, styleCase));
+                         dependencies.get(cod).setVertex(true);
+                         graph.addCell(dependencies.get(cod));
+                     }
+                     // cria uma aresta entre o ator e o elemento
+                     value = IStarUtils.createAssociation();
+                     aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, actors.get(actor.getCod()), dependencies.get(cod), "straight;endArrow=none;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                     aresta.setEdge(true);
+                     aresta.setStyle("straight;endArrow=none;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                     aresta.setSource(actors.get(actor.getCod()));
+                     aresta.setTarget(dependencies.get(cod));
+                     graph.addCell(aresta);
+                }
+            }
             yActor = yCase + 100;
         }
+        
+        
        
         graph.getModel().endUpdate();
         return graph;

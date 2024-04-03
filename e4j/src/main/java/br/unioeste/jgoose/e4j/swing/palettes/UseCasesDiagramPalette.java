@@ -51,6 +51,6 @@
 /* 51 */     addEdgeTemplate("Extend", new ImageIcon("resources/shapes/use cases diagram/extend.png"), "straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle", 80, 80, element);
              element = IStarUtils.createSystemBoundary();
 /* 51 */     addSwimlane("System Boundary", new ImageIcon("resources/shapes/bpmn/swimlane/pool.png"), 
-                "shape=swimlane;connectable=0;horizontal=false", 230, 580, element);
+                "shape=swimlane;connectable=0;horizontal=true; fillColor=none", 230, 580, element);
 /*    */   }
 /*    */ }

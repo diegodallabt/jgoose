@@ -19,11 +19,26 @@ import java.util.ArrayList;
     private String cod; //código (Element_x)
     private String name; //nome do Elemento ("Ator 1")
     private ArrayList<String> childrens; //filhos associados ao ATOR: SR ou ISA (códigos)
+    private ArrayList<IStarElement> dependencies;
     private ArrayList<String> links; //ligações (códigos)
 
     public IStarActorElement() {
         this.childrens = new ArrayList();
         this.links = new ArrayList();
+    }
+    
+    /**
+     * @return returns the dependencies.
+     */
+    public ArrayList<IStarElement> getDependencies() {
+        return dependencies;
+    }
+    
+    /**
+     * @param dependency the element to set.
+     */
+    public void setDependency(IStarElement dependency) {
+        this.dependencies.add(dependency);
     }
 
     /**

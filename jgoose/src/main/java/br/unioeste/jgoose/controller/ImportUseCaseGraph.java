@@ -62,7 +62,7 @@ public class ImportUseCaseGraph extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        LOG.debug("BPMN Traceability Horizontal init.");
+        LOG.debug("UseCase Traceability Horizontal init.");
         vertex.clear();
         edges.clear();
         modelUC = new TokensUseCase();
@@ -102,7 +102,7 @@ public class ImportUseCaseGraph extends AbstractAction {
 
         }
         try {
-            showActorPrimarySelectionView();
+            // showActorPrimarySelectionView();
             new MappingUCToIStar();
             
             mainView.setE4JUseCases(E4JUseCases);
