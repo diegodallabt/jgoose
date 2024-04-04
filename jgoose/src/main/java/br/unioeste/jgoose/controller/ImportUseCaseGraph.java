@@ -98,7 +98,19 @@ public class ImportUseCaseGraph extends AbstractAction {
 
             LOG.debug("total elements interpreted: " + vertex.size());
             LOG.debug("total links interpreted: " + edges.size());
-
+                
+            // 3) link actor and use cases
+            for (UCActor actor : modelUC.getActorUC()) {
+                for(UCLink link : modelUC.getLink()){
+                    if(link.getFrom().getCode() == actor.getCode()){
+                        for(UCUseCase useCase : modelUC.getUseCase()){
+                            if(link.getTo().getCode() == useCase.getCode()){
+                                actor.addUseCase(useCase);
+                            }
+                        }
+                    }
+                }
+            }
 
         }
         try {
@@ -195,7 +207,7 @@ public class ImportUseCaseGraph extends AbstractAction {
             }
 
             result = ucLink.getCode();
-            System.out.println(result);
+            
             mapped.put(cell, ucLink);
             modelUC.addLink(ucLink);
 

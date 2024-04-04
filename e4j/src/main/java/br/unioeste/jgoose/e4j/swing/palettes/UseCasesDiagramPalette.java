@@ -52,5 +52,7 @@
              element = IStarUtils.createSystemBoundary();
 /* 51 */     addSwimlane("System Boundary", new ImageIcon("resources/shapes/bpmn/swimlane/pool.png"), 
                 "shape=swimlane;connectable=0;horizontal=true; fillColor=none", 230, 580, element);
+            element = IStarUtils.createSecondaryActorUseCase();
+            addTemplate("Secondary Actor", new ImageIcon("resources/shapes/use cases diagram/actor_usecase.png"), "shape=actor_usecase;connectable=0;horizontal=true;", 80, 80, element);
 /*    */   }
 /*    */ }

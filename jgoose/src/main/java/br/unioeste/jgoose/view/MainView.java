@@ -1244,12 +1244,13 @@ public final class MainView extends javax.swing.JFrame {
         graph.removeCells(graph.getChildEdges(graph.getDefaultParent()));
         graph.getModel().beginUpdate();
         Element value;
+        Element test;
         File shapesFolder = new File("resources/shapes/elements/");
         File[] files = shapesFolder.listFiles(ShapeFilenameFilter.instance);
         String nodeXml = mxUtils.readFile(files[0].getAbsolutePath());
         mxStencilShape newShape = new mxStencilShape(nodeXml);
         String styleActor = "shape=" + newShape.getName() + ";";
-        nodeXml = mxUtils.readFile(files[1].getAbsolutePath());
+        nodeXml = mxUtils.readFile(files[4].getAbsolutePath());
         newShape = new mxStencilShape(nodeXml);
         String styleCase = "shape=" + newShape.getName() + ";";
         mxGeometry geo;
@@ -1282,8 +1283,11 @@ public final class MainView extends javax.swing.JFrame {
             if(actor.getDependencies() != null){
                 for (IStarElement element : actor.getDependencies()) {
                      // cria caso de uso, sua geometria e estilo
-                     value = IStarUtils.createUseCase();
-                     value.setAttribute("label", element.getName().replace("\"", ""));
+                     System.out.println("dependência mapped: " + element);
+                     
+                     test = IStarUtils.createActor();
+                     
+                     test.setAttribute("label", element.getName().replace("\"", ""));
                      geo = new mxGeometry(xCase, yCase, 120, 60);
                      xCase = xCase == 400 ? 700 : 400;
                      geo.setX(xCase);
@@ -1293,15 +1297,15 @@ public final class MainView extends javax.swing.JFrame {
 
                       // verifica se o elemento ainda não foi adicionado no grafo
                      if (dependencies.get(cod) == null) {
-                         dependencies.put(cod, new mxCell(value, geo, styleCase));
+                         dependencies.put(cod, new mxCell(test, geo, styleCase));
                          dependencies.get(cod).setVertex(true);
                          graph.addCell(dependencies.get(cod));
                      }
                      // cria uma aresta entre o ator e o elemento
-                     value = IStarUtils.createAssociation();
-                     aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, value, actors.get(actor.getCod()), dependencies.get(cod), "straight;endArrow=none;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                     test = IStarUtils.createDepndency();
+                     aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, test, actors.get(actor.getCod()), dependencies.get(cod), "straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
                      aresta.setEdge(true);
-                     aresta.setStyle("straight;endArrow=none;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                     aresta.setStyle("straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
                      aresta.setSource(actors.get(actor.getCod()));
                      aresta.setTarget(dependencies.get(cod));
                      graph.addCell(aresta);

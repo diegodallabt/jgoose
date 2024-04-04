@@ -23,6 +23,7 @@ import java.util.ArrayList;
     private ArrayList<String> links; //ligações (códigos)
 
     public IStarActorElement() {
+        this.dependencies = new ArrayList();
         this.childrens = new ArrayList();
         this.links = new ArrayList();
     }

@@ -96,9 +96,13 @@ public class MappingUCToIStar  {
             for (UCUseCase useCase : actor.getUseCases()){
                 IStarElement dependency = new IStarElement();
                 dependency.setCod(useCase.getCode());
-                dependency.setName(useCase.getCode());
+                dependency.setName(useCase.getName());
+                
+                dependency.setLink(null);
+                dependency.setParent(null);
                 
                 istarActor.setDependency(dependency);
+                
             }
             
             istarActors.add(istarActor);
@@ -113,23 +117,6 @@ public class MappingUCToIStar  {
             System.out.println(tokensIStar.getActors());
         }
         
-        // Mapeia casos de uso
-        for(UCUseCase useCase : useCases){
-            IStarElement istarElement = new IStarElement();
-            istarElement.setCod(useCase.getCode());
-            istarElement.setName(useCase.getName());
-            
-            istarElements.add(istarElement);
-            
-            tokensIStar = new TokensOpenOME();
-            
-            Controller.setOme(tokensIStar);
-
-            tokensIStar.setGoals(istarElements);
-            
-            System.out.println("Goals mapeados");
-            System.out.println(tokensIStar.getGoals());
-        }
 
         // Prints de teste
         System.out.println("Atores no Caso de Uso:");
