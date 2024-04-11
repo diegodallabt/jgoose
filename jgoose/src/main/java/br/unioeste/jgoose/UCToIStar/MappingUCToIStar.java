@@ -78,15 +78,6 @@ public class MappingUCToIStar  {
         System.out.println("LISTA DE LINKS");
         System.out.println(link);
         
-        for (UCLink links : link) {
-            System.out.println(links.getFrom() );
-            UCElement to = links.getTo();
-           
-            System.out.println(to.getCode());
-            System.out.println(to.getLabel());
-            
-        }
-        
         // Mapeamento de atores primários
         for (UCActor actor : actors) {
             IStarActorElement istarActor = new IStarActorElement();
@@ -127,6 +118,16 @@ public class MappingUCToIStar  {
         System.out.println("\nAtores no Modelo I*:");
         for (IStarActorElement istarActor : istarActors) {
             System.out.println(istarActor.getCod() + " - " + istarActor.getName());
+        }
+        
+        for (UCLink links : link) {
+            if(links.getType() == 2){
+                for(IStarActorElement actor : istarActors){
+                    if(actor.getCod() == links.getFrom().getCode()){
+                        actor.setChildren(links.getTo().getCode());
+                    }
+                }
+            }
         }
     }
     

@@ -1245,6 +1245,7 @@ public final class MainView extends javax.swing.JFrame {
         graph.getModel().beginUpdate();
         Element value;
         Element test;
+        Element link;
         File shapesFolder = new File("resources/shapes/elements/");
         File[] files = shapesFolder.listFiles(ShapeFilenameFilter.instance);
         String nodeXml = mxUtils.readFile(files[0].getAbsolutePath());
@@ -1258,7 +1259,7 @@ public final class MainView extends javax.swing.JFrame {
         HashMap<String, mxCell> actors = new HashMap<>();
         HashMap<String, mxCell> dependencies = new HashMap<>();
         mxCell aresta;
-        mxCell ext;
+        mxCell isa;
         // variaveis para controlar as posicoes X e Y dos elementos no diagrama
         int yActor = 110;
         int yCase = 30;
@@ -1280,6 +1281,7 @@ public final class MainView extends javax.swing.JFrame {
             System.out.println("" + cell.getStyle());
             actors.put(actor.getCod(), cell);
             graph.addCell(cell);
+            
             if(actor.getDependencies() != null){
                 for (IStarElement element : actor.getDependencies()) {
                      // cria caso de uso, sua geometria e estilo
@@ -1311,7 +1313,31 @@ public final class MainView extends javax.swing.JFrame {
                      graph.addCell(aresta);
                 }
             }
+            
+            
+            
+            
             yActor = yCase + 100;
+        }
+        
+        for(IStarActorElement actor : actorsMapped){
+            if(actor.getChildrens().size() > 0){
+                
+                for(IStarActorElement actor2 : actorsMapped){
+                    if(actor.getChildrens().contains(actor2.getCod())){
+                        link = IStarUtils.createIS_A();
+                        mxGeometry geom = new mxGeometry(0, 0, 80, 80);
+                        mxCell cell = new mxCell(link, geom, "straight;shape=curvedEdge;edgeStyle=curvedEdgeStyle;");
+                        
+                        cell.setEdge(true);
+                        
+                        cell.setSource(actors.get(actor.getCod()));
+                        cell.setTarget(actors.get(actor2.getCod()));
+                        graph.addCell(cell);
+                    }
+                }
+                
+            }
         }
         
         

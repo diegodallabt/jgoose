@@ -28,6 +28,6 @@
     <svg:line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="-3.22777" y1="-6.36842" x2="-3.22777" y2="-4.86842"/>
     <svg:line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="-3.22777" y1="-4.86842" x2="-4.42777" y2="-3.56842"/>
     <svg:line style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x1="-3.22777" y1="-4.86842" x2="-2.02777" y2="-3.56842"/>
-    <svg:text style="fill: #000000; text-anchor:middle; font-family: sans; font-style: normal; font-weight: normal" x="-3.22777" y="-2.32842" font-size="0.8" textLength="1.185">Actor</svg:text>
+    <svg:text style="fill: #000000; text-anchor:middle; font-family: sans; font-style: normal; font-weight: normal" x="-3.22777" y="-2.32842" font-size="0.8" textLength="1.185">Secondary Actor</svg:text>
   </svg:svg>
 </shape>

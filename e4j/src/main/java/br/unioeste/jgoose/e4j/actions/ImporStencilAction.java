@@ -3,6 +3,7 @@ package br.unioeste.jgoose.e4j.actions;
 import com.mxgraph.canvas.mxGraphics2DCanvas;
 import br.unioeste.jgoose.e4j.swing.BasicGraphEditor;
 import br.unioeste.jgoose.e4j.filters.DefaultFileFilter;
+import br.unioeste.jgoose.e4j.filters.ShapeFilenameFilter;
 import br.unioeste.jgoose.e4j.shape.ActorShape;
 import br.unioeste.jgoose.e4j.swing.EditorPalette;
 import br.unioeste.jgoose.util.IStarUtils;
@@ -38,7 +39,7 @@ public class ImporStencilAction extends AbstractAction {
      * @param path The path to the directory the shape exists in
      * @return the string name of the shape
      */
-    public static String addStencilShape(EditorPalette palette, String nodeXml, String path) {
+    public static String addStencilShape(EditorPalette palette, String nodeXml, String path) throws IOException {
         // Some editors place a 3 byte BOM at the start of files
         // Ensure the first char is a "<"
         int lessthanIndex = nodeXml.indexOf("<");
@@ -121,7 +122,7 @@ public class ImporStencilAction extends AbstractAction {
                     value = IStarUtils.createSystemBoundary();
                     break;
                 case "secondary actor":
-                    value = IStarUtils.createActorUseCase();
+                    value = IStarUtils.createSecondaryActorUseCase();
                     style += ";";
                     mxGraphics2DCanvas.putShape(name, new ActorShape(nodeXml));
                     break;

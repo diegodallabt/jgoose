@@ -6,6 +6,7 @@
 /*    */ import com.mxgraph.util.mxResources;
 /*    */ import com.mxgraph.util.mxUtils;
 /*    */ import java.io.File;
+import java.io.FilenameFilter;
 /*    */ import java.io.IOException;
 /*    */ import javax.swing.ImageIcon;
 /*    */ import javax.swing.JTabbedPane;
@@ -26,6 +27,7 @@
 /*    */ 
 /* 27 */     File shapesFolder = new File("resources/shapes/use cases diagram/");
 /* 28 */     File[] files = shapesFolder.listFiles(ShapeFilenameFilter.instance);
+
 /* 29 */     if ((files == null) || (files.length < 1)) {
 /* 30 */       CONSOLE.info("no shape found. " + shapesFolder.getAbsolutePath());
 /* 31 */       return;
@@ -35,6 +37,7 @@
 /*    */       try
 /*    */       {
 /* 37 */         String nodeXml = mxUtils.readFile(f.getAbsolutePath());
+                 
 /* 38 */         ImporStencilAction.addStencilShape(this, nodeXml, f.getParent() + File.separator);
 /*    */       } catch (IOException ex) {
 /* 40 */         CONSOLE.fatal(ex);
@@ -50,9 +53,8 @@
 /* 50 */     element = IStarUtils.createExtend();
 /* 51 */     addEdgeTemplate("Extend", new ImageIcon("resources/shapes/use cases diagram/extend.png"), "straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle", 80, 80, element);
              element = IStarUtils.createSystemBoundary();
-/* 51 */     addSwimlane("System Boundary", new ImageIcon("resources/shapes/bpmn/swimlane/pool.png"), 
-                "shape=swimlane;connectable=0;horizontal=true; fillColor=none", 230, 580, element);
-            element = IStarUtils.createSecondaryActorUseCase();
-            addTemplate("Secondary Actor", new ImageIcon("resources/shapes/use cases diagram/actor_usecase.png"), "shape=actor_usecase;connectable=0;horizontal=true;", 80, 80, element);
+/* 51 */     addSwimlane("System Boundary", new ImageIcon("resources/shapes/bpmn/swimlane/pool.png"), "shape=swimlane;connectable=0;horizontal=true;", 230, 580, element);
+             element = IStarUtils.createSecondaryActorUseCase();
+             addTemplate("Secondary Actor", new ImageIcon("resources/shapes/use cases diagram/actor_usecase.png"), "shape=actor_usecase;", 80, 80, element);
 /*    */   }
 /*    */ }

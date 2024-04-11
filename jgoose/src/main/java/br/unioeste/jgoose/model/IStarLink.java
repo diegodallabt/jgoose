@@ -16,9 +16,13 @@ package br.unioeste.jgoose.model;
  * @param to //para qual (destino) elemento essa ligação é feita (códigos)
  */
 public class IStarLink {
-
+    public static final Integer OR = 1;
+    public static final Integer AND = 2;
+    public static final Integer ISA = 3;
+    
     private String cod; //código (Element_x)
     private String name; //nome do Elemento ("Link 1")
+    private Integer type; // tipo de ligação
     private String from; //de (códigos)
     private String to; //para (códigos)
 

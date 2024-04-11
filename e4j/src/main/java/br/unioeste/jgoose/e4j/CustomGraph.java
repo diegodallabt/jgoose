@@ -24,6 +24,7 @@ import org.w3c.dom.Element;
 public class CustomGraph extends mxGraph {
 
     private static final Logger LOG = Logger.getLogger("console");
+    private boolean flag = false;
     /**
      * Holds the edge to be used as a template for inserting new edges.
      */
@@ -74,7 +75,7 @@ public class CustomGraph extends mxGraph {
     public Object createEdge(Object parent, String id, Object value,
             Object source, Object target, String style) {
         
-        if (edgeTemplate != null) {
+        if (edgeTemplate != null || flag) {
             mxCell edge = (mxCell) cloneCells(new Object[]{edgeTemplate})[0];
 
             if (edge == null) {
@@ -85,6 +86,10 @@ public class CustomGraph extends mxGraph {
             return edge;
         }
         return super.createEdge(parent, id, value, source, target, style);
+    }
+    
+    public void createIsaEdge(){
+        this.flag = true;
     }
 
 //    @Override
