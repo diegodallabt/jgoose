@@ -20,6 +20,7 @@ import br.unioeste.jgoose.e4j.swing.EditorJFrame;
 import br.unioeste.jgoose.e4j.swing.menubar.EditorMenuBar;
 import br.unioeste.jgoose.model.IStarActorElement;
 import br.unioeste.jgoose.model.IStarElement;
+import br.unioeste.jgoose.model.IStarLink;
 import br.unioeste.jgoose.model.TokensUseCase;
 import br.unioeste.jgoose.model.UCActor;
 import br.unioeste.jgoose.model.UCElement;
@@ -33,6 +34,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -80,32 +82,68 @@ public class MappingUCToIStar  {
         
         // Mapeamento de atores primários
         for (UCActor actor : actors) {
-            IStarActorElement istarActor = new IStarActorElement();
-            istarActor.setCod(actor.getCode());
-            istarActor.setName(actor.getName());
-            
-            for (UCUseCase useCase : actor.getUseCases()){
-                IStarElement dependency = new IStarElement();
-                dependency.setCod(useCase.getCode());
-                dependency.setName(useCase.getName());
+            if(!actor.getSecondary()){
                 
-                dependency.setLink(null);
-                dependency.setParent(null);
+                IStarActorElement istarActor = new IStarActorElement();
+                istarActor.setCod(actor.getCode());
+                istarActor.setName(actor.getName());
                 
-                istarActor.setDependency(dependency);
+                if(actor.getSystem()){
+                    istarActor.setSystem(true);
+                    for (UCUseCase useCase : actor.getUseCasesSystem()){
+                        IStarElement children = new IStarElement();
+                        children.setCod(useCase.getCode());
+                        children.setName(useCase.getName());
+
+                        children.setLink(null);
+                        children.setParent(null);
+
+                        istarActor.addChildren(children);
+                    }
+                    
+                }
                 
+                // Mapeamento de casos de uso
+                HashMap<String, Integer> useCaseNameCount = new HashMap<>();
+                HashSet<String> savedDependencies = new HashSet<>();
+
+                for (UCUseCase useCase : actor.getUseCases()){
+                    String useCaseName = useCase.getName();
+                    if(useCaseNameCount.containsKey(useCaseName)){
+                        useCaseNameCount.put(useCaseName, useCaseNameCount.get(useCaseName) + 1);
+                    } else {
+                        useCaseNameCount.put(useCaseName, 1);
+                    }
+                }
+
+                for (UCUseCase useCase : actor.getUseCases()){
+                    if(!savedDependencies.contains(useCase.getName())){
+                        System.out.println("SALVANDO CASO DE USO...");
+                        IStarElement dependency = new IStarElement();
+                        dependency.setCod(useCase.getCode());
+                        dependency.setName(useCase.getName());
+
+                        dependency.setLink(null);
+                        dependency.setParent(null);
+
+                        istarActor.setDependency(dependency);
+                        istarActor.setTask(dependency);
+                        
+                        savedDependencies.add(useCase.getName());
+                    }
+                }
+
+                istarActors.add(istarActor);
+
+                tokensIStar = new TokensOpenOME();
+
+                Controller.setOme(tokensIStar);
+
+                tokensIStar.setActors(istarActors);
+
+                System.out.println("Atores mapeados");
+                System.out.println(tokensIStar.getActors());
             }
-            
-            istarActors.add(istarActor);
-            
-            tokensIStar = new TokensOpenOME();
-            
-            Controller.setOme(tokensIStar);
-
-            tokensIStar.setActors(istarActors);
-
-            System.out.println("Atores mapeados");
-            System.out.println(tokensIStar.getActors());
         }
         
 
@@ -120,8 +158,9 @@ public class MappingUCToIStar  {
             System.out.println(istarActor.getCod() + " - " + istarActor.getName());
         }
         
+        // Mapeia ligações ISA
         for (UCLink links : link) {
-            if(links.getType() == 2){
+            if(links.getType() != null && links.getType() == 2){
                 for(IStarActorElement actor : istarActors){
                     if(actor.getCod() == links.getFrom().getCode()){
                         actor.setChildren(links.getTo().getCode());
@@ -129,6 +168,35 @@ public class MappingUCToIStar  {
                 }
             }
         }
+        
+//        // Mapeia relações AND E OR
+        for (UCLink links : link) {
+            if(links.getType() != null && links.getType() == links.INCLUDE){
+                // cria a ligação and
+                IStarLink linkAnd = new IStarLink();
+                linkAnd.setCod(links.getCode());
+                linkAnd.setName(links.getLabel());
+                linkAnd.setFrom(links.getFrom().getCode());
+                linkAnd.setTo(links.getTo().getCode());
+                linkAnd.setType(2);
+
+                tokensIStar.addAND(linkAnd);
+                System.out.println("AND ADICIONADO");
+                // consigo os 2 elementos ligados pelo include o From é um objetivo e o To uma tarefa do tipo and
+//                System.out.println(" DE " + links.getFrom() + "LINK PARA " + links.getTo()); ;
+            }
+            if(links.getType() != null && links.getType() == links.EXTEND){
+                IStarLink linkOr = new IStarLink();
+                linkOr.setCod(links.getCode());
+                linkOr.setName(links.getLabel());
+                linkOr.setFrom(links.getFrom().getCode());
+                linkOr.setTo(links.getTo().getCode());
+                linkOr.setType(3);
+                
+                tokensIStar.addOR(linkOr);
+                System.out.println("OR ADICIONADO");
+            }
+        };
     }
     
     // RGC 2: Mapear atores primários para atores genéricos no modelo iStar
@@ -139,23 +207,6 @@ public class MappingUCToIStar  {
         
         if (primaryActor.getFather() == null && primaryActor.getChildren().isEmpty()) {
             throw new RuntimeException("O ator primário deve possuir ao menos uma associação ou uma relação de especialização com outro ator.");
-        }
-        
-        Set<UCUseCase> uniqueUseCases = new HashSet<>(primaryActor.getUseCases());
-        if (uniqueUseCases.size() != primaryActor.getUseCases().size()) {
-            throw new RuntimeException("Um ator pode ter no máximo uma associação com um caso de uso.");
-        }
-        
-        for (UCLink link : primaryActor.getLinksFrom()) {
-            if (link.getType().equals(UCLink.ASSOCIATION) && link.getTo() instanceof UCActor) {
-                throw new RuntimeException("Um ator primário não pode se ligar diretamente a outro ator via associação.");
-            }
-        }
-
-        for (UCLink link : primaryActor.getLinksTo()) {
-            if (link.getType().equals(UCLink.ASSOCIATION) && link.getFrom() instanceof UCActor) {
-                throw new RuntimeException("Um ator primário não pode se ligar diretamente a outro ator via associação.");
-            }
         }
         
         
@@ -191,12 +242,3 @@ public class MappingUCToIStar  {
     
 }
 
-/*
-    VERSÃO ANTIGA DA RGC 3
-
-    public static void mapSystemBoundaryToIStarActor(SystemBoundary systemBoundary) {
-        // Como obtenho o limite do sistema?
-        IStarActor istarActor = new IStarActor(systemBoundary.getCode(), systemBoundary.getName() + "_Mapeado");
-        istarActors.add(istarActor);
-    }
-*/

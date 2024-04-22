@@ -41,8 +41,8 @@ public class IStarUtils {
     public static Element createTask() {return create(new IStarElement("ielement", "Task", "task")); }
     //
     //TODO: add: and | or value
-    public static Element createDecomposition() {return create(new IStarElement("ielementLink", "task-Decomposition", "decomposition")); }
-    public static Element createMeansEnd() {return create(new IStarElement("ielementLink", "Means-end", "meansend")); }
+    public static Element createDecomposition() {return create(new IStarElement("ielementLink", "OR", "decomposition")); }
+    public static Element createMeansEnd() {return create(new IStarElement("ielementLink", "AND", "meansend")); }
     //TODO: add contribution values
     public static Element createContribution() {
         return create(new IStarElement("ielementLink", "Contribution", "contribution"));
@@ -72,6 +72,6 @@ public class IStarUtils {
     public static Element createInclude() {return create(new IStarElement("ielementLink", "<< include >>", "include"));}
     public static Element createExtend() {return create(new IStarElement("ielementLink", "<< extend >>", "extend"));}
     public static Element createSystemBoundary() {return create(new IStarElement("ielementBoundary", "System Boundary", "boundary"));}
-    public static Element createSecondaryActorUseCase() {return create(new IStarElement("actorLink", "Secondary Actor", "secondary_actor")); }
+    public static Element createSecondaryActorUseCase() {return create(new IStarElement("actorLink", "Secondary Actor", "actor_usecase")); }
     
 }

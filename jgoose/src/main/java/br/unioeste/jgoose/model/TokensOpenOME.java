@@ -49,6 +49,26 @@ public class TokensOpenOME {
         this.occupiess = new ArrayList<>();
         this.playss = new ArrayList<>();
     }
+    
+    public ArrayList<IStarLink> getAND() {
+        return meansEnds;
+    }
+
+    public void addAND(IStarLink AND) {
+        this.meansEnds.add(AND);
+    }
+    
+    public ArrayList<IStarLink> getOR() {
+        return decompositions;
+    }
+
+    public void addOR(IStarLink OR) {
+        this.decompositions.add(OR);
+    }
+    
+    public void addTask(IStarElement task) {
+        this.tasks.add(task);
+    }
 
     /**
      * Método utilizado para abrir um arquivo de Entrada Telos Associa o

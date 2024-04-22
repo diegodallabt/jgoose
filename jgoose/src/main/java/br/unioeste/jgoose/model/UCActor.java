@@ -18,14 +18,19 @@ public class UCActor extends UCElement{
     private String code;
     private String bpmnElementoCode;
     private String name;
-    private List<UCUseCase> useCases; 
+    private List<UCUseCase> useCases;
+    private List<UCUseCase> useCasesSystem;
     private UCActor father;
+    private boolean system;
+    private boolean secondary;
     private List<UCActor> children;
 
     public UCActor() {
+        system = false;
         useCases = new ArrayList<>();
         father = null;
-        children = new ArrayList<>();        
+        children = new ArrayList<>();
+        useCasesSystem = new ArrayList<>();
     }
 
     @Override
@@ -52,6 +57,34 @@ public class UCActor extends UCElement{
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public boolean getSecondary() {
+        return secondary;
+    }
+
+    public void setSecondary(boolean secondary) {
+        this.secondary = secondary;
+    }
+    
+    public boolean getSystem() {
+        return system;
+    }
+
+    public void setSystem(boolean system) {
+        this.system = system;
+    }
+    
+    public List<UCUseCase> getUseCasesSystem() {
+        return useCasesSystem;
+    }
+
+    public void setUseCasesSystem(List<UCUseCase> useCasesSystem) {
+        this.useCasesSystem = useCasesSystem;
+    }
+
+    public void adduseCasesSystem(UCUseCase useCasesSystem){
+        this.useCasesSystem.add(useCasesSystem);
     }
 
     public List<UCUseCase> getUseCases() {

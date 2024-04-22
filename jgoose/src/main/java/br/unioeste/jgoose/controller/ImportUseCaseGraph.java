@@ -6,6 +6,7 @@ package br.unioeste.jgoose.controller;
 
 import br.unioeste.jgoose.UCToIStar.MappingUCToIStar;
 import br.unioeste.jgoose.e4j.swing.EditorJFrame;
+import br.unioeste.jgoose.model.BPMNParticipant;
 import br.unioeste.jgoose.model.IStarActorElement;
 import br.unioeste.jgoose.model.IStarElement;
 import br.unioeste.jgoose.model.TokensOpenOME;
@@ -167,6 +168,7 @@ public class ImportUseCaseGraph extends AbstractAction {
         mxCell source = (mxCell) cell.getSource();
         mxCell target = (mxCell) cell.getTarget();
 
+
         // 2) get mapped elements to create a link between then
         Object mappedSource = mapped.get(source);
         if (mappedSource == null) {
@@ -295,6 +297,36 @@ public class ImportUseCaseGraph extends AbstractAction {
                 result = usecase.getCode();
 
                 break;
+            case "ielementBoundary":
+                vertex.put(cell, element);
+                
+                UCActor actorSystem = new UCActor();             
+                actorSystem.setCode(cell.getId());
+                
+                actorSystem.setName(element.getAttribute("label").replaceAll("\n", " ").replaceAll("\\s+", " ").replaceAll("^\\s+", ""));
+                actorSystem.setSystem(true);
+                modelUC.addActor(actorSystem);
+                
+                mapped.put(cell, actorSystem);
+                // check if have children
+                int children = cell.getChildCount();
+                if (children > 0) {
+                    // iterate children
+                    for (int i = children - 1; i >= 0; i--) {
+                       mxCell child = (mxCell) cell.getChildAt(i);
+                       UCUseCase usecaseSystem = new UCUseCase();
+                       usecaseSystem.setUseCaseSystem(true);
+                       usecaseSystem.setCode(child.getId());
+                       
+                       usecaseSystem.setName(child.getAttribute("label").replaceAll("\n", " ").replaceAll("\\s+", " ").replaceAll("^\\s+", ""));
+                       modelUC.addUseCase(usecaseSystem);
+                       mapped.put(child, usecaseSystem);
+                       result = usecaseSystem.getCode();
+                       
+                       actorSystem.adduseCasesSystem(usecaseSystem);
+                    }
+                    
+                }
         }
         return result;
     

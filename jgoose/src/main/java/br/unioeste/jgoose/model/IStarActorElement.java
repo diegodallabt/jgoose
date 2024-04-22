@@ -19,10 +19,50 @@ import java.util.ArrayList;
     private String cod; //código (Element_x)
     private String name; //nome do Elemento ("Ator 1")
     private ArrayList<String> childrens; //filhos associados ao ATOR: SR ou ISA (códigos)
-    private ArrayList<IStarElement> dependencies;
+    private ArrayList<IStarElement> children; // dentro do boundary
+    private ArrayList<IStarElement> dependencies; // dependência derivada
+    private ArrayList<IStarElement> task; // task derivada
+    private boolean system;
+    
     private ArrayList<String> links; //ligações (códigos)
 
+    public ArrayList<IStarElement> getChildren() {
+        return children;
+    }
+
+    public void setChildren(ArrayList<IStarElement> children) {
+        this.children = children;
+    }
+    
+    public ArrayList<IStarElement> getTask() {
+        return task;
+    }
+
+    public void setTask(IStarElement task) {
+        this.task.add(task);
+    }
+    /**
+     * @param children the element to set.
+     */
+    public void addChildren(IStarElement children) {
+        this.children.add(children);
+    }
+    
+    
+
+    public boolean getSystem() {
+        return system;
+    }
+
+    public void setSystem(boolean system) {
+        this.system = system;
+    }
+    
+
     public IStarActorElement() {
+        this.task = new ArrayList();
+        this.children = new ArrayList();
+        this.system = false;
         this.dependencies = new ArrayList();
         this.childrens = new ArrayList();
         this.links = new ArrayList();
