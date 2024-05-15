@@ -62,6 +62,7 @@ public class ImporStencilAction extends AbstractAction {
             String style = "shape=" + name;
             Element value = null;
             String type = name.toLowerCase();
+
             switch (type) {
                 case "actor":
                     value = IStarUtils.createActor();

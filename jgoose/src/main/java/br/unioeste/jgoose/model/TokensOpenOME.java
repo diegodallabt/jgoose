@@ -49,6 +49,10 @@ public class TokensOpenOME {
         this.occupiess = new ArrayList<>();
         this.playss = new ArrayList<>();
     }
+
+    public void addDependency(IStarLink dependency) {
+        this.dependencies.add(dependency);
+    }
     
     public ArrayList<IStarLink> getAND() {
         return meansEnds;
@@ -742,7 +746,7 @@ public class TokensOpenOME {
     /**
      * @return Returns the actors.
      */
-    public ArrayList getActors() {
+    public ArrayList<IStarActorElement> getActors() {
         return actors;
     }
 

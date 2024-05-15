@@ -25,15 +25,6 @@ public class UCUseCase extends UCElement{
     private UCActor primaryActor;
     private List<UCActor> secondaryActors;
     private static long idCounter = 0;
-    private boolean useCaseSystem;
-
-    public boolean getUseCaseSystem() {
-        return useCaseSystem;
-    }
-
-    public void setUseCaseSystem(boolean useCaseSystem) {
-        this.useCaseSystem = useCaseSystem;
-    }
    
     public UCUseCase() {
         includedUseCases = new ArrayList<>();
@@ -41,6 +32,8 @@ public class UCUseCase extends UCElement{
         primaryActor = new UCActor();
         secondaryActors = new ArrayList<>();
     }
+    
+
 
     public String getCode() {
         return code;

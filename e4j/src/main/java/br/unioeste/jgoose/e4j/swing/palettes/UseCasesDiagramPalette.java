@@ -6,7 +6,6 @@
 /*    */ import com.mxgraph.util.mxResources;
 /*    */ import com.mxgraph.util.mxUtils;
 /*    */ import java.io.File;
-import java.io.FilenameFilter;
 /*    */ import java.io.IOException;
 /*    */ import javax.swing.ImageIcon;
 /*    */ import javax.swing.JTabbedPane;
@@ -27,7 +26,6 @@ import java.io.FilenameFilter;
 /*    */ 
 /* 27 */     File shapesFolder = new File("resources/shapes/use cases diagram/");
              
-             System.out.println(shapesFolder);
 /* 28 */     File[] files = shapesFolder.listFiles(ShapeFilenameFilter.instance);
 
 /* 29 */     if ((files == null) || (files.length < 1)) {
@@ -55,6 +53,6 @@ import java.io.FilenameFilter;
 /* 50 */     element = IStarUtils.createExtend();
 /* 51 */     addEdgeTemplate("Extend", new ImageIcon("resources/shapes/use cases diagram/extend.png"), "straight;dashed=1;endArrow=open;endSize=14;shape=curvedEdge;edgeStyle=curvedEdgeStyle", 80, 80, element);
              element = IStarUtils.createSystemBoundary();
-/* 51 */     addSwimlane("System Boundary", new ImageIcon("resources/shapes/bpmn/swimlane/pool.png"), "shape=swimlane;connectable=0;horizontal=true;", 580, 580, element);
+/* 51 */     addSwimlane("System Boundary", new ImageIcon("resources/shapes/bpmn/swimlane/pool.png"), "shape=swimlane;connectable=0;horizontal=true;", 480, 480, element);
 /*    */   }
 /*    */ }

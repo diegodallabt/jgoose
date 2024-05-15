@@ -214,7 +214,7 @@ public class CustomGraph extends mxGraph {
                         }
                         break;
                     case "association":
-                        if (!(sourceType.matches("actor_usecase") && targetType.matches("usecase"))) {
+                        if (!((sourceType.matches("actor_usecase") || sourceType.matches("secondary_actor")) && targetType.matches("usecase"))) {
                             String error = "Edge '"
                                     + "" + edgeType
                                     + "' between "
@@ -397,8 +397,9 @@ public class CustomGraph extends mxGraph {
                 Element value = (Element) v;
                 String label = newValue.toString();
                 value.setAttribute("label", label);
+
                 //se for um grupo, quando ele estiver Collapse e for editado, tbm editar o shape atras...
-                if (cell.getChildCount() > 0) {
+                if (cell.getChildCount() > 0 && !"boundary".equals(cell.getAttribute("type"))) {
                     super.cellLabelChanged(cell.getChildAt(0), newValue, autoSize);
                 }
                 newValue = v;

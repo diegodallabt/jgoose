@@ -16,7 +16,6 @@ import br.unioeste.jgoose.model.UCElement;
 import br.unioeste.jgoose.model.UCLink;
 import br.unioeste.jgoose.model.UCUseCase;
 import br.unioeste.jgoose.view.MainView;
-import br.unioeste.jgoose.view.SelectActorPrimary;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
@@ -37,7 +36,7 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author Diego
+ * @author Diego Dalla Bernardina Thedoldi
  */
 @SuppressWarnings(value = "serial")
 public class ImportUseCaseGraph extends AbstractAction {
@@ -63,7 +62,7 @@ public class ImportUseCaseGraph extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        LOG.debug("UseCase Traceability Horizontal init.");
+        LOG.debug("mapping for i* init.");
         vertex.clear();
         edges.clear();
         modelUC = new TokensUseCase();
@@ -275,8 +274,11 @@ public class ImportUseCaseGraph extends AbstractAction {
                 UCActor actor = new UCActor();
                 actor.setCode(cell.getId());
                 actor.setName(element.getAttribute("label").replaceAll("\n", " ").replaceAll("\\s+", " ").replaceAll("^\\s+", ""));
-                System.out.println("TYPE ACTOR:" + type);
-
+                
+                if("secondary_actor".equals(type)){
+                    actor.setSecondary(true);
+                    LOG.debug("set secondary actor.");
+                }
                 // set father, if exists
                 father = cell.getParent();
 
@@ -315,10 +317,9 @@ public class ImportUseCaseGraph extends AbstractAction {
                     for (int i = children - 1; i >= 0; i--) {
                        mxCell child = (mxCell) cell.getChildAt(i);
                        UCUseCase usecaseSystem = new UCUseCase();
-                       usecaseSystem.setUseCaseSystem(true);
                        usecaseSystem.setCode(child.getId());
                        
-                       usecaseSystem.setName(child.getAttribute("label").replaceAll("\n", " ").replaceAll("\\s+", " ").replaceAll("^\\s+", ""));
+                       usecaseSystem.setName(child.getAttribute("label"));
                        modelUC.addUseCase(usecaseSystem);
                        mapped.put(child, usecaseSystem);
                        result = usecaseSystem.getCode();
@@ -330,11 +331,6 @@ public class ImportUseCaseGraph extends AbstractAction {
         }
         return result;
     
-    }
-    
-    public static void showActorPrimarySelectionView() {
-        SelectActorPrimary atorPrimarioView = new SelectActorPrimary(mainView, true);
-        atorPrimarioView.setVisible(true);
     }
 } 
         

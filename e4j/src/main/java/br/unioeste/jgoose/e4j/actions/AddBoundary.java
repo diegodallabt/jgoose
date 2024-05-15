@@ -1,8 +1,10 @@
 /*    */ package br.unioeste.jgoose.e4j.actions;
 /*    */ 
        
+import br.unioeste.jgoose.controller.Controller;
 import br.unioeste.jgoose.e4j.filters.ShapeFilenameFilter;
 import br.unioeste.jgoose.model.IStarElement;
+import br.unioeste.jgoose.model.IStarLink;
 import br.unioeste.jgoose.util.IStarUtils;
 /*    */ import com.mxgraph.model.mxCell;
 /*    */ import com.mxgraph.model.mxGeometry;
@@ -16,6 +18,7 @@ import com.mxgraph.util.mxUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.w3c.dom.Element;
@@ -27,9 +30,9 @@ import org.w3c.dom.Element;
 /*    */ public class AddBoundary
 /*    */   extends AbstractAction
 /*    */ {
-/* 18 */   final int PORT_DIAMETER = 80;
+/* 18 */   final int PORT_DIAMETER = 700;
 /*    */   
-/* 20 */   final int PORT_RADIUS = 140;
+/* 20 */   final int PORT_RADIUS = 700;
 
            Map<String, mxCell> mapping = new HashMap<>();
            
@@ -97,10 +100,11 @@ import org.w3c.dom.Element;
 /*    */   }
             public Map<String, mxCell> setBoundary(mxCell cell, mxGraph graph, Integer sizeChildren, ArrayList<IStarElement> childrens) throws IOException
 /*    */   {
-/* 24 */     
+/* 24 */     ArrayList<IStarLink> ands = Controller.getOme().getAND();
+             ArrayList<IStarLink> ors = Controller.getOme().getOR();
             
 /* 25 */     if ((graph != null)) {
-/* 26 */      
+/* 26 */       
 /* 27 */       boolean isActor = cell.getAttribute("type").matches("actor|agent");
 /* 28 */       boolean hasChild = cell.getChildCount() > 0;
 /*    */       
@@ -113,10 +117,9 @@ import org.w3c.dom.Element;
 /*    */ 
 /*    */ 
 /* 38 */         mxGeometry geo = new mxGeometry(0, 0.5, 80.0D, 80.0D);
-/*    */         
 /*    */ 
 /*    */ 
-/* 42 */         geo.setOffset(new mxPoint(-25.0D, -25.0D));
+/* 42 */         geo.setOffset(new mxPoint(-25.0D, 25.0D));
 /* 43 */         geo.setRelative(true);
 /*    */         
 /*    */ 
@@ -149,20 +152,27 @@ import org.w3c.dom.Element;
                 mxStencilShape newShape = new mxStencilShape(nodeXml);
                 String styleCase = "shape=" + newShape.getName() + ";";
 /*    */        Element test;
-                double xCase = 400;
-                double yCase = 100;
+                Element newTask;
+                double xCase = 40;
+                double yCase = 20;
                 String cod;
+                mxCell aresta;
+                Element linkAND;
+                Element linkOR;
                 
-                
-                
-                 
+                Collections.reverse(childrens);
                  
                 for(IStarElement element : childrens){
+                    if("<< include >>".equals(element.getName()) || "<< extend >>".equals(element.getName())){
+                        continue;
+                    }
                     
                     test = IStarUtils.createTask();
-                    
                     test.setAttribute("label", element.getName().replace("\"", ""));
                     mxGeometry geoDep = new mxGeometry(xCase, yCase, 120, 60);
+                   
+                    xCase = xCase == 240? 40 : 240;
+                    yCase += 100;
                     geoDep.setX(xCase);
                     geoDep.setY(yCase);
 
@@ -170,10 +180,103 @@ import org.w3c.dom.Element;
                     depCell.setVertex(true);
                     graph.addCell(depCell, cell);
                     
+                    
                     mapping.put(element.getCod(), depCell);
                     
                 }
-/*    */ 
+                
+/*    */        for(IStarLink link : ands){
+                    String codTo = link.getTo();
+                    String codFrom = link.getFrom();
+
+                    mxCell to = mapping.get(codTo);
+                    mxCell from = mapping.get(codFrom);
+                  
+                    linkAND = IStarUtils.createDecomposition();
+                    mxGeometry geom = new mxGeometry(0, 0, 80, 80);
+                    mxCell cellAND = new mxCell(linkAND, geom, "straight;endArrow=decomposition;noLabel=1");
+
+                    cellAND.setEdge(true);
+
+                    cellAND.setSource(to);
+                    cellAND.setTarget(from);
+                    graph.addCell(cellAND);
+                }
+
+                
+                String name = "Default";
+                for(IStarLink link : ors){
+                  boolean rgc12_validation = false;
+                  String codTo = link.getTo();
+                  String codFrom = link.getFrom();
+                  
+                  for(IStarLink rgc12 : ands){
+                      
+                     if(rgc12.getFrom().equals(codTo)){
+                        Collections.reverse(childrens);
+                        for(IStarElement element : childrens){
+                            if(element.getCod().equals(codFrom)){
+                                name = element.getName();
+                            }
+                        }
+                        newTask = IStarUtils.createTask();
+                        newTask.setAttribute("label", name);
+                        mxGeometry geoDep = new mxGeometry(xCase, yCase, 120, 60);
+                        xCase += 80;
+                        yCase += yCase > 300? 100 : 300;
+                        geoDep.setX(xCase);
+                        geoDep.setY(yCase);
+                        System.out.println("NAME ::: " + name);
+                        mxCell depCell = new mxCell(name, geoDep, styleCase);
+                        depCell.setVertex(true);
+                        graph.addCell(depCell, cell);
+                        
+                        linkAND = IStarUtils.createDecomposition();
+                        mxGeometry geom = new mxGeometry(0, 0, 80, 80);
+                        mxCell cellAND = new mxCell(linkAND, geom, "straight;endArrow=decomposition;noLabel=1");
+
+                        cellAND.setEdge(true);
+                        
+                        mxCell to = mapping.get(rgc12.getFrom());
+                        
+                        
+                        cellAND.setSource(depCell);
+                        cellAND.setTarget(to);
+                        graph.addCell(cellAND);
+                        
+                        linkOR = IStarUtils.createMeansEnd();
+                        mxCell cellOR = new mxCell(linkOR, geom, "straight;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+
+                        cellOR.setEdge(true);
+
+                        to = mapping.get(codFrom);
+                        
+                        cellOR.setSource(to);
+                        cellOR.setTarget(depCell);
+                        graph.addCell(cellOR);
+                    
+                        rgc12_validation = true;
+                     }
+                     
+                  }
+                  
+                  if(rgc12_validation){
+                      continue;
+                  }
+                  
+                  mxCell to = mapping.get(codTo);
+                  mxCell from = mapping.get(codFrom);
+                  
+                  linkOR = IStarUtils.createMeansEnd();
+                  mxGeometry geom = new mxGeometry(0, 0, 80, 80);
+                  mxCell cellOR = new mxCell(linkOR, geom, "straight;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+
+                  cellOR.setEdge(true);
+
+                  cellOR.setSource(from);
+                  cellOR.setTarget(to);
+                  graph.addCell(cellOR);
+                }
 /* 71 */         cell.setStyle(cell.getStyle() + ";noLabel=1");
 /* 72 */         graph.cellsOrdered(new Object[] { cell }, true);
 /*    */         

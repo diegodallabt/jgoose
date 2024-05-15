@@ -1236,7 +1236,7 @@ public final class MainView extends javax.swing.JFrame {
     
     private mxGraph generateIStarFromUCDiagram() throws IOException {
         ArrayList<IStarActorElement> actorsMapped = Controller.getOme().getActors();
-        ArrayList<IStarLink> ands = Controller.getOme().getAND();
+        ArrayList<IStarLink> dependenciesMapped = Controller.getOme().getDependenciess();
         
         // comeca a atualizar o grafo
         mxGraph graph = ((BasicIStarEditor)E4JiStar.getEditor()).getGraphComponent().getGraph();
@@ -1260,25 +1260,28 @@ public final class MainView extends javax.swing.JFrame {
         HashMap<String, mxCell> actors = new HashMap<>();
         HashMap<String, mxCell> dependencies = new HashMap<>();
         Map<String, mxCell> mapTasks = new HashMap<>();
+        Map<String, mxCell> allTasks = new HashMap<>();
         mxCell aresta;
         mxCell isa;
         // variaveis para controlar as posicoes X e Y dos elementos no diagrama
-        int yActor = 110;
+        int yActor = 30;
         int yCase = 30;
-        int xCase = 400;
+        int xActor = 50; 
+        int xCase = 200;
         String cod;
         /*
          * Adicionar ao diagrama todos os atores com seus respectivos
          * casos de uso e arestas.
          */
+        
+        // força o desenho do ator sistema antes de todos os outros
         for (IStarActorElement actor : actorsMapped) {
-            // cria ator e sua geometria e estilo
             if(actor.getSystem()){
                 value = IStarUtils.createActor();
                 value.setAttribute("label", actor.getName());
-                geo = new mxGeometry(50, yActor, 80, 80);
-                geo.setX(50);
-                geo.setY(yActor);
+                geo = new mxGeometry(50, 100, 80, 80);
+                geo.setX(400);
+                geo.setY(100);
                 mxCell cell = new mxCell(value, geo, styleActor);
                 cell.setVertex(true);
                 actors.put(actor.getCod(), cell);
@@ -1287,11 +1290,12 @@ public final class MainView extends javax.swing.JFrame {
              
                 AddBoundary actorBoundary = new AddBoundary();
                 Integer childrensSize = actor.getChildren().size();
-                mapTasks = actorBoundary.setBoundary(cell, graph, childrensSize, actor.getChildren());
+                mapTasks.putAll(actorBoundary.setBoundary(cell, graph, childrensSize, actor.getChildren()));
              }
         }
         
         
+        // desenha atores
         for (IStarActorElement actor : actorsMapped) {
             if(actor.getSystem()){
                 continue;
@@ -1300,14 +1304,16 @@ public final class MainView extends javax.swing.JFrame {
             // cria ator e sua geometria e estilo
             value = IStarUtils.createActor();
             value.setAttribute("label", actor.getName());
-            geo = new mxGeometry(50, yActor, 80, 80);
-            geo.setX(50);
-            geo.setY(yActor);
+            geo = new mxGeometry(xActor, yActor, 80, 80);
             mxCell cell = new mxCell(value, geo, styleActor);
             cell.setVertex(true);
             actors.put(actor.getCod(), cell);
             graph.addCell(cell);
             
+            // Incrementando a posição Y do próximo ator
+            yActor += 120;
+            
+           
             // cria as goals que dependem do ator
             if(actor.getDependencies() != null){
                 for (IStarElement element : actor.getDependencies()) {
@@ -1315,44 +1321,62 @@ public final class MainView extends javax.swing.JFrame {
                      
                      goal.setAttribute("label", element.getName().replace("\"", ""));
                      geo = new mxGeometry(xCase, yCase, 120, 60);
-                     xCase = xCase == 400 ? 700 : 400;
+                     
                      geo.setX(xCase);
                      geo.setY(yCase);
                      yCase += 100;
                      cod = element.getCod();
-
-                      // verifica se o elemento ainda não foi adicionado no grafo
-                     if (dependencies.get(cod) == null) {
-                         dependencies.put(cod, new mxCell(goal, geo, styleCase));
-                         dependencies.get(cod).setVertex(true);
-                         graph.addCell(dependencies.get(cod));
-                     }
-                     // cria uma aresta entre o ator e o elemento
-                     dependency = IStarUtils.createDepndency();
-                     actor.getCod();
-                     aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, dependency, actors.get(actor.getCod()), dependencies.get(cod), "straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
-                     aresta.setEdge(true);
-                     aresta.setStyle("straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
-                     aresta.setSource(actors.get(actor.getCod()));
-                     aresta.setTarget(dependencies.get(cod));
-                     graph.addCell(aresta);
-                     
                     
-                     // ligar objetivo de fora do sistema com a tarefa do sistema
-                     dependency = IStarUtils.createDepndency();
-                        System.out.println(element.getCod());
-                        System.out.println("print do teste" + mapTasks + " " + mapTasks.get(element.getCod()));
-                     aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, dependency, dependencies.get(cod), mapTasks.get(element.getCod()), "straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
-                     aresta.setEdge(true);
-                     aresta.setStyle("straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
-                     aresta.setSource(dependencies.get(cod));
-                     aresta.setTarget(mapTasks.get(element.getCod()));
-                     graph.addCell(aresta);
+                    dependencies.put(cod, new mxCell(goal, geo, styleCase));
+                    dependencies.get(cod).setVertex(true);
+                    graph.addCell(dependencies.get(cod));
+                    
+                    yCase += 100;
+                    if(actor.isSecondary()){
+                        dependency = IStarUtils.createDepndency();
+                        actor.getCod();
+                        aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, dependency, dependencies.get(cod), actors.get(actor.getCod()), "straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                        aresta.setEdge(true);
+                        aresta.setStyle("straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                        aresta.setSource(dependencies.get(cod));
+                        aresta.setTarget(actors.get(actor.getCod()));
+                        graph.addCell(aresta);
+                        
+                        // ligar objetivo de fora do sistema com a tarefa do sistema
+                        dependency = IStarUtils.createDepndency();
+
+                        aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, dependency, mapTasks.get(element.getCod()),dependencies.get(cod) , "straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                        aresta.setEdge(true);
+                        aresta.setStyle("straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                        aresta.setSource(mapTasks.get(element.getCod()));
+                        aresta.setTarget(dependencies.get(cod));
+                        graph.addCell(aresta);
+                    } else {
+                        // cria uma aresta entre o ator e o elemento
+                        dependency = IStarUtils.createDepndency();
+
+                        aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, dependency, actors.get(actor.getCod()), dependencies.get(cod), "straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                        aresta.setEdge(true);
+                        aresta.setStyle("straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                        aresta.setSource(actors.get(actor.getCod()));
+                        aresta.setTarget(dependencies.get(cod));
+                        graph.addCell(aresta);
+
+                        // ligar objetivo de fora do sistema com a tarefa do sistema
+                        dependency = IStarUtils.createDepndency();
+
+
+                        aresta = (mxCell) graph.createEdge(graph.getDefaultParent(), null, dependency, dependencies.get(cod), mapTasks.get(element.getCod()), "straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                        aresta.setEdge(true);
+                        aresta.setStyle("straight;endArrow=dependency;noLabel=1;shape=curvedEdge;edgeStyle=curvedEdgeStyle");
+                        aresta.setSource(dependencies.get(cod));
+                        aresta.setTarget(mapTasks.get(element.getCod()));
+                        graph.addCell(aresta);
+                        // System.out.println("ARESTA COM ELEMENTO DE FORA CRIADA COM " + dependencies.get(cod).getAttribute("label") + " E " +  mapTasks.get(element.getCod()));
+                    }
                 }
             }
             
-            
-            yActor = yCase + 100;
         }
         
         // criação das ligações do tipo isa

@@ -295,6 +295,7 @@ public class CustomGraphBPMN extends mxGraph {
                 Element value = (Element) v;
                 String label = newValue.toString();
                 value.setAttribute("label", label);
+                System.out.println("HELLOOOO 2");
                 //se for um grupo, quando ele estiver Collapse e for editado, tbm editar o shape atras...
                 if (cell.getChildCount() >= 1) {
                     super.cellLabelChanged(cellChanged, newValue, autoSize);

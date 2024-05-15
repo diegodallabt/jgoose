@@ -16,6 +16,7 @@ import br.unioeste.jgoose.controller.HorizontalIStarTraceController;
 import br.unioeste.jgoose.controller.HorizontalUseCaseTraceController;
 import br.unioeste.jgoose.controller.ImportBPMNGraph;
 import br.unioeste.jgoose.controller.ImportIStarGraph;
+import br.unioeste.jgoose.controller.ImportUseCaseGraph;
 import br.unioeste.jgoose.controller.UCController;
 import br.unioeste.jgoose.controller.VerticalTraceController;
 import br.unioeste.jgoose.e4j.filters.ShapeFilenameFilter;
@@ -1222,8 +1223,9 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
             JMenuBar menubar = e4jInstance.getJMenuBar();
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
             String label = mxResources.get("istarMaker", null, "Generate iStar");
-            JMenuItem menuItem = new JMenuItem(editor.bind(label, (Action) new MappingUCToIStar()));
+            JMenuItem menuItem = new JMenuItem(editor.bind(label, new ImportUseCaseGraph(E4JUseCases)));
             fileMenu.add(menuItem, 3);
+            fileMenu.add(new JPopupMenu.Separator(), 4);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
             JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, this, useCasesViewBPMN, 3)));
             fileMenu.add(menuItem1, 3);
@@ -1253,7 +1255,7 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
         String nodeXml = mxUtils.readFile(files[0].getAbsolutePath());
         mxStencilShape newShape = new mxStencilShape(nodeXml);
         String styleActor = "shape=" + newShape.getName() + ";";
-        nodeXml = mxUtils.readFile(files[1].getAbsolutePath());
+        nodeXml = mxUtils.readFile(files[2].getAbsolutePath());
         newShape = new mxStencilShape(nodeXml);
         String styleCase = "shape=" + newShape.getName() + ";";
         mxGeometry geo;
@@ -1590,6 +1592,10 @@ public final class UseCasesViewIStar extends javax.swing.JFrame {
             BasicUseCasesEditor editor = (BasicUseCasesEditor) E4JUseCases.getEditor();
             JMenuBar menubar = E4JUseCases.getJMenuBar();
             JMenu fileMenu = ((EditorMenuBar) menubar).getFileMenu();
+            String label = mxResources.get("istarMaker", null, "Generate iStar");
+            JMenuItem menuItem = new JMenuItem(editor.bind(label, new ImportUseCaseGraph(E4JUseCases)));
+            fileMenu.add(menuItem, 3);
+            fileMenu.add(new JPopupMenu.Separator(), 4);
             String label1 = mxResources.get("traceabilityMaker", null, "Horizontal Traceability");
             JMenuItem menuItem1 = new JMenuItem(editor.bind(label1, (Action) new HorizontalControler(E4JiStar, E4JBPMN, E4JUseCases, this, useCasesViewBPMN, 3)));
             fileMenu.add(menuItem1, 3);

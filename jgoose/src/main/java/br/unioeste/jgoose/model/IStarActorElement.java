@@ -23,15 +23,28 @@ import java.util.ArrayList;
     private ArrayList<IStarElement> dependencies; // dependência derivada
     private ArrayList<IStarElement> task; // task derivada
     private boolean system;
-    
+    private boolean secondary;
     private ArrayList<String> links; //ligações (códigos)
+    
+    public IStarActorElement() {
+        this.task = new ArrayList();
+        this.children = new ArrayList();
+        this.system = false;
+        this.dependencies = new ArrayList();
+        this.childrens = new ArrayList();
+        this.links = new ArrayList();
+    }
+    
+    public boolean isSecondary() {
+        return secondary;
+    }
+
+    public void setSecondary(boolean secondary) {
+        this.secondary = secondary;
+    }
 
     public ArrayList<IStarElement> getChildren() {
         return children;
-    }
-
-    public void setChildren(ArrayList<IStarElement> children) {
-        this.children = children;
     }
     
     public ArrayList<IStarElement> getTask() {
@@ -47,8 +60,6 @@ import java.util.ArrayList;
     public void addChildren(IStarElement children) {
         this.children.add(children);
     }
-    
-    
 
     public boolean getSystem() {
         return system;
@@ -56,16 +67,6 @@ import java.util.ArrayList;
 
     public void setSystem(boolean system) {
         this.system = system;
-    }
-    
-
-    public IStarActorElement() {
-        this.task = new ArrayList();
-        this.children = new ArrayList();
-        this.system = false;
-        this.dependencies = new ArrayList();
-        this.childrens = new ArrayList();
-        this.links = new ArrayList();
     }
     
     /**
