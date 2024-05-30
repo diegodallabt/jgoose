@@ -1182,10 +1182,11 @@ public final class UseCasesViewBPMN extends javax.swing.JFrame {
         Element value;
         File shapesFolder = new File("resources/shapes/use cases diagram/");
         File[] files = shapesFolder.listFiles(ShapeFilenameFilter.instance);
+        System.out.println("TESTANDO ARQUIVOS" + files);
         String nodeXml = mxUtils.readFile(files[0].getAbsolutePath());
         mxStencilShape newShape = new mxStencilShape(nodeXml);
         String styleActor = "shape=" + newShape.getName() + ";";
-        nodeXml = mxUtils.readFile(files[1].getAbsolutePath());
+        nodeXml = mxUtils.readFile(files[2].getAbsolutePath());
         newShape = new mxStencilShape(nodeXml);
         String styleCase = "shape=" + newShape.getName() + ";";
         mxGeometry geo;
